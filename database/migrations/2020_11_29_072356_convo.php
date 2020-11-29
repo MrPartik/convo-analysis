@@ -21,6 +21,8 @@ class Convo extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $oTable->text('message');
+            $oTable->string('url')->nullable();
+            $oTable->timestamps();
         });
     }
 
