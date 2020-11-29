@@ -20,6 +20,11 @@ class Convo extends Migration
                 ->references('id')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $oTable->unsignedBigInteger('reply_user_id');
+            $oTable->foreign('reply_user_id')->on('users')
+                ->references('id')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $oTable->text('message');
             $oTable->string('url')->nullable();
             $oTable->timestamps();
