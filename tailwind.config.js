@@ -12,11 +12,13 @@ module.exports = {
             fontFamily: {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },
-        },
+        }
     },
 
     variants: {
         opacity: ['responsive', 'hover', 'focus', 'disabled'],
+        borderColor: ['responsive', 'group-hover', 'focus-within', 'hover', 'focus'],
+        textColor: ['responsive', 'group-hover', 'focus-within', 'hover', 'focus'],
     },
 
     plugins: [require('@tailwindcss/ui')],
