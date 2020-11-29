@@ -17,6 +17,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::group(['middleware' => ['auth:sanctum', 'verified', 'user.role']], function () {
+    Route::group(['prefix' => 'user'], function () {
+        Route::get('/thread', function () {
+            return view('thread');
+        })->name('thread-user');
+        Route::get('/import', function () {
+            return view('import');
+        })->name('import-user');
+    });
+});
+
+Route::group(['middleware' => ['auth:sanctum', 'verified', 'user.role']], function () {
+    Route::group(['prefix' => 'admin'], function () {
+        Route::get('/dashboard', function () {
+            return view('dashboard');
+        });
+    });
+});
