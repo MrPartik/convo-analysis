@@ -11,5 +11,5 @@ class convo extends Model
 
     protected $table = 't_convo';
 
-    protected $fillable = ['user_id', 'message', 'url'];
+    protected $fillable = ['user_id', 'message', 'url', 'reply_user_id'];
 }
