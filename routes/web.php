@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/logged-in', function () {
+    return redirect(Auth::user()->role . DS . 'thread');
+});
+
 Route::group(['middleware' => ['auth:sanctum', 'verified', 'user.role']], function () {
     Route::group(['prefix' => 'user'], function () {
         Route::get('/thread', function () {
