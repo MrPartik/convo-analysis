@@ -13,7 +13,6 @@
                         </span >
                     </div >
                 </div>
-
             </div>
         </div>
         @endforeach

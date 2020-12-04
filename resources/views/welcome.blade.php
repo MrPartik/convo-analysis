@@ -11,7 +11,7 @@
                             @if (Route::has('login'))
                                 <div class = "hidden fixed top-0 right-0 px-6 py-4 sm:block" >
                                     @auth
-                                        <a href = "{{ url(\Illuminate\Support\Facades\Auth::user()->role . '/thread') }}" class = "inline-block py-2 px-4 text-gray-700 bg-white hover:bg-gray-100 rounded-lg" > Dashboard </a >
+                                        <a href = "{{ url(\Illuminate\Support\Facades\Auth::user()->role) }}" class = "inline-block py-2 px-4 text-gray-700 bg-white hover:bg-gray-100 rounded-lg" > Dashboard </a >
                                     @else
                                         <a href = "{{ route('login') }}" class = "inline-block py-1 md:py-4 text-gray-500 hover:text-gray-600 mr-6" >Login</a >
                                         @if (Route::has('register'))
