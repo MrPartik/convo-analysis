@@ -1,11 +1,11 @@
-<div class="flex-1 p:2 sm:p-6 justify-between flex flex-col" style='height: inherit'>
-    <div id="messages" class="flex flex-col space-y-2 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
+<div id="convo-container"  class="flex-1 p:2 sm:p-6 justify-between flex flex-col"  style='height: 80vh'>
+    <div id='messages' class="flex flex-col space-y-2 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
         @foreach($convos as $convo)
         <div class="chat-message">
-            <div class="flex items-end {{ (\Illuminate\Support\Facades\Auth::id() === $convo->user_id)? 'justify-end' : '' }}">
-                <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 ">
+            <div class="flex items-end {{ (Auth::id() === $convo->user_id)? 'justify-end' : '' }}">
+                <div class="flex shadow-xl flex-col space-y-2 text-xs max-w-xs mx-2 order-2 ">
                     <div >
-                        <span class = "px-4 py-2 rounded-lg inline-block text-sm {{ (\Illuminate\Support\Facades\Auth::id() === $convo->user_id)? 'rounded-br-none bg-blue-600 text-white' : 'rounded-bl-none bg-gray-300 text-gray-600' }}" >{{ $convo->message }}
+                        <span class = "px-4 py-2 rounded-lg inline-block text-sm {{ (Auth::id() === $convo->user_id)? 'rounded-br-none bg-blue-600 text-white' : 'rounded-bl-none bg-gray-300 text-gray-600' }}" >{{ $convo->message }}
                         @if($convo->url !== null)
                                 <br> <a class="text-blue-800" target='_blank' href='{{ $convo->url }}'>show report</a>
                                 <iframe src="{{ $convo->url }}" class="mt-2" scrolling='no'  height='300' width='auto'> </iframe>
@@ -22,7 +22,7 @@
         <div class="relative flex">
          <span class="absolute inset-y-0 flex items-center">
          </span>
-            <input required wire:keydown.enter='sendConvo' wire:model='sContent' type="text" placeholder="Write Something" class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-5 pr-15 bg-gray-200 rounded-full py-3">
+            <input required wire:keydown.enter='sendConvo' wire:model='sContent' type="text" placeholder="Write Something" class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-5 pr-15 bg-gray-200 rounded-full py-3 font-semiboldbold">
             <div class="absolute right-0 items-center inset-y-0 sm:flex">
                 <button wire:click='sendConvo' type="button" class="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-6 w-6 transform rotate-90">
@@ -59,9 +59,14 @@
 
 <script>
     function scrollToLatest() {
-        const el = document.getElementById('messages')
+        var el = document.getElementById('messages')
         el.scrollTop = el.scrollHeight
     }
     scrollToLatest();
     window.livewire.on('scrollToLatest', scrollToLatest);
+
+    function toggleConvo() {
+        $('#convo-container').slideToggle();
+        $('#convo-wrapper').toggleClass('w-2/3');
+    }
 </script>

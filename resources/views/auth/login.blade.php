@@ -6,13 +6,13 @@
                     <div class="flex flex-col flex-1 justify-center mb-8">
                         <x-jet-authentication-card-logo />
                         <div class="w-full mt-4">
-                            <x-jet-validation-errors class="mb-4" />
-                            @if (session('status'))
-                                <div class="mb-4 font-medium text-sm text-green-600">
-                                    {{ session('status') }}
-                                </div>
-                            @endif
                             <form class="form-horizontal w-3/4 mx-auto" method="POST" action="{{ route('login') }}">
+                                <x-jet-validation-errors class="mb-4" />
+                                @if (session('status'))
+                                    <div class="mb-4 font-medium text-sm text-green-600">
+                                        {{ session('status') }}
+                                    </div>
+                                @endif
                                 @csrf
                                 <div class="flex flex-col mt-4">
                                     <x-jet-input id="email" class="flex-grow h-8 px-2 border rounded border-grey-400" placeholder="Email" type="email" name="email" :value="old('email')" required autofocus />
