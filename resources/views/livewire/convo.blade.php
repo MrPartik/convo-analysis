@@ -5,7 +5,7 @@
             <div class="flex items-end {{ (Auth::id() === $convo->user_id)? 'justify-end' : '' }}">
                 <div class="flex shadow-xl flex-col space-y-2 text-xs max-w-xs mx-2 order-2 ">
                     <div >
-                        <span class = "px-4 py-2 rounded-lg inline-block text-sm {{ (Auth::id() === $convo->user_id)? 'rounded-br-none bg-blue-600 text-white' : 'rounded-bl-none bg-gray-300 text-gray-600' }}" >{{ $convo->message }}
+                        <span class = "break-words px-4 py-2 rounded-lg inline-block text-sm {{ (Auth::id() === $convo->user_id)? 'rounded-br-none bg-blue-600 text-white' : 'rounded-bl-none bg-gray-300 text-gray-600' }}" >{{ $convo->message }}
                         @if($convo->url !== null)
                                 <br> <a class="text-blue-800" target='_blank' href='{{ $convo->url }}'>show report</a>
                                 <iframe src="{{ $convo->url }}" class="mt-2" scrolling='no'  height='300' width='auto'> </iframe>
@@ -32,40 +32,3 @@
         </div>
     </div>
 </div>
-
-<style>
-    .scrollbar-w-2::-webkit-scrollbar {
-        width: 0.25rem;
-        height: 0.25rem;
-    }
-
-    .scrollbar-track-blue-lighter::-webkit-scrollbar-track {
-        --bg-opacity: 1;
-        background-color: #f7fafc;
-        background-color: rgba(247, 250, 252, var(--bg-opacity));
-    }
-
-    .scrollbar-thumb-blue::-webkit-scrollbar-thumb {
-        --bg-opacity: 1;
-        background-color: #edf2f7;
-        background-color: rgba(237, 242, 247, var(--bg-opacity));
-    }
-
-    .scrollbar-thumb-rounded::-webkit-scrollbar-thumb {
-        border-radius: 0.25rem;
-    }
-</style>
-
-<script>
-    function scrollToLatest() {
-        var el = document.getElementById('messages')
-        el.scrollTop = el.scrollHeight
-    }
-    scrollToLatest();
-    window.livewire.on('scrollToLatest', scrollToLatest);
-
-    function toggleConvo() {
-        $('#convo-container').slideToggle();
-        $('#convo-wrapper').toggleClass('w-2/3');
-    }
-</script>
