@@ -39,8 +39,8 @@ class HeiModel extends Model
         'remarks',
         'website',
         'yr_established',
-        'upload_by',
-        'upload_at',
+        'updated_by',
+        'updated_at',
         'status'
     ];
 }

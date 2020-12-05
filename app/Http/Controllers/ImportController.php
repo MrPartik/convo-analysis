@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Imports\ExcelImport;
+use App\Imports\ImportHei;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -12,11 +12,11 @@ class ImportController extends Controller
     {
         return \view('user.import');
     }
-    
+
     public function import()
     {
         $oFile = \request()->file('file');
-        Excel::import(new ExcelImport, $oFile);
+        Excel::import(new ImportHei, $oFile);
         return back();
     }
 }
