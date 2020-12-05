@@ -2,9 +2,10 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\ConvoModel;
 use App\Repositories\convoRepository;
+use App\WitApp;
 use Illuminate\Support\Facades\Auth;
-use Jeylabs\Wit\Wit;
 use Livewire\Component;
 
 class Convo extends Component
@@ -29,20 +30,20 @@ class Convo extends Component
     public function sendConvo()
     {
         $this->validate();
-        $oConvo = new \App\Models\convo();
+        $oConvo = new ConvoModel();
         $oConvo->user_id = Auth::id();
         $oConvo->message = $this->sContent;
         $oConvo->reply_user_id = 1;
         $oConvo->save();
         $this->oConvos = convoRepository::getConvoPerLogin();
-        $wit = new Wit('JKPY6E2VOPCI52RP4CBEXLFEEMKH5I7Y', false);
+        $wit = new WitApp();
         $this->reply(\json_encode($wit->getIntentByText($this->sContent)));
         $this->sContent ='';
     }
 
     private function reply(string $sContent)
     {
-        $oConvo = new \App\Models\convo();
+        $oConvo = new ConvoModel();
         $oConvo->user_id = 1;
         $oConvo->message = $sContent;
         $oConvo->reply_user_id = Auth::id();

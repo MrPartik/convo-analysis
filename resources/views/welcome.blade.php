@@ -5,7 +5,7 @@
                 <div class = "bg-gray-200 px-4 py-4" >
                     <div class = "w-full md:max-w-6xl md:mx-auto md:flex md:items-center md:justify-between" >
                         <div >
-                            <a href = "/" class = "inline-block py-2 text-gray-800 text-2xl font-bold" >{{ \env('APP_NAME') }}</a >
+                            <a href = "/" class = "inline-block py-2 text-gray-800 text-2xl font-bold" >{{ \env('APP_NAME', 'BrixBo') }}</a >
                         </div >
                         <div class = "hidden md:block" >
                             @if (Route::has('login'))

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ThreadController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -26,13 +27,14 @@ Route::get('/logged-in', function () {
 
 Route::group(['middleware' => ['auth:sanctum', 'verified', 'user.role']], function () {
     Route::group(['prefix' => 'user'], function () {
-        Route::get('/', [ThreadController::class, 'front'])->name('thread-user');
-        Route::get('/import', [ImportController::class, 'front'])->name('import-user');
+        Route::get('/', [ThreadController::class, 'front']);
+        Route::get('/import', [ImportController::class, 'front']);
     });
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'verified', 'user.role']], function () {
     Route::group(['prefix' => 'admin'], function () {
-
+        Route::get('/', [UserController::class, 'front']);
+        Route::get('/import', [ImportController::class, 'front']);
     });
 });

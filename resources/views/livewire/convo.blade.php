@@ -1,20 +1,21 @@
-<div id="convo-container"  class="flex-1 p:2 sm:p-6 justify-between flex flex-col"  style='height: 80vh'>
-    <div id='messages' class="flex flex-col space-y-2 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
+<div id="convo-container" class="flex-1 px-6 py-2 justify-between flex flex-col" style='height: 80vh'>
+    <div id='messages'
+         class="flex flex-col space-y-2 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
         @foreach($convos as $convo)
-        <div class="chat-message">
-            <div class="flex items-end {{ (Auth::id() === $convo->user_id)? 'justify-end' : '' }}">
-                <div class="flex shadow-xl flex-col space-y-2 text-xs max-w-xs mx-2 order-2 ">
-                    <div >
-                        <span class = "break-words px-4 py-2 rounded-lg inline-block text-sm {{ (Auth::id() === $convo->user_id)? 'rounded-br-none bg-blue-600 text-white' : 'rounded-bl-none bg-gray-300 text-gray-600' }}" >{{ $convo->message }}
-                        @if($convo->url !== null)
-                                <br> <a class="text-blue-800" target='_blank' href='{{ $convo->url }}'>show report</a>
-                                <iframe src="{{ $convo->url }}" class="mt-2" scrolling='no'  height='300' width='auto'> </iframe>
-                        @endif
-                        </span >
-                    </div >
+            <div class="chat-message">
+                <div class="flex items-end {{ (Auth::id() === $convo->user_id)? 'justify-end' : '' }}">
+                    <div class="flex shadow-xl flex-col space-y-2 text-xs max-w-xs mx-2 order-2 ">
+                        <div>
+                            <span class="break-words px-4 py-2 rounded-lg inline-block text-sm {{ (Auth::id() === $convo->user_id)? 'rounded-br-none bg-blue-600 text-white' : 'rounded-bl-none bg-gray-300 text-gray-600' }}">{{ $convo->message }}
+                                @if($convo->url !== null)
+                                    <br> <a class="text-blue-800" target='_blank' href='{{ $convo->url }}'>show report</a>
+                                    <iframe src="{{ $convo->url }}" class="mt-2" scrolling='no' height='300' width='auto'> </iframe>
+                                @endif
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
         @endforeach
     </div>
     <div class="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">

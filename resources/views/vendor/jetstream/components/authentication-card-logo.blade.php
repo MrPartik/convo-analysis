@@ -1,1 +1,1 @@
-<a href="/" class="text-4xl text-center text-gray-800 font-bold">{{ \env('APP_NAME') }}</a>
+<a href="/" class="text-4xl text-center text-gray-800 font-bold">{{ \env('APP_NAME', 'BrixBo') }}</a>

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class convo extends Model
+class ConvoModel extends Model
 {
     use HasFactory;
 
@@ -16,11 +16,11 @@ class convo extends Model
 
     public function repliedUser()
     {
-        return $this->hasOne(User::class, 'id', 'reply_user_id');
+        return $this->hasOne(UserModel::class, 'id', 'reply_user_id');
     }
 
     public function messageUser()
     {
-        return $this->hasOne(User::class, 'id', 'user_id');
+        return $this->hasOne(UserModel::class, 'id', 'user_id');
     }
 }

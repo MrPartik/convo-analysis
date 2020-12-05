@@ -1,4 +1,4 @@
-@php $sUserRole = Auth::user()->role@endphp
+@php $sUserRole = Auth::user()->role @endphp
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -6,22 +6,29 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ route('thread-' . $sUserRole) }}">
-                        <x-jet-application-mark class="block h-9 w-auto" />
-                    </a>
+                    <x-jet-application-mark class="block h-9 w-auto" />
                 </div>
 
                 <!-- Navigation Links -->
+                @if($sUserRole === 'user')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('thread-' . $sUserRole) }}" :active="request()->routeIs('thread-' . $sUserRole)">
+                    <x-jet-nav-link href="{{ \url('user') }}" :active="request()->is('user')">
                         {{ __('Thread') }}
                     </x-jet-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ \route('import-' . $sUserRole) }}" :active="request()->routeIs('import-' . $sUserRole)">
+                    <x-jet-nav-link href="{{ \url('user/import') }}" :active="request()->is('user/import')">
                         {{ __('Import') }}
                     </x-jet-nav-link>
                 </div>
+                @else
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ \url('admin') }}" :active="request()->is('admin')">
+                            {{ __('Users Management') }}
+                        </x-jet-nav-link>
+                    </div>
+                @endif
+
             </div>
 
             <!-- Settings Dropdown -->
@@ -122,17 +129,20 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-jet-responsive-nav-link href="{{ \route('thread-' . $sUserRole) }}" :active="request()->routeIs('thread-' . $sUserRole)">
-                {{ __('Thread') }}
-            </x-jet-responsive-nav-link>
-        </div>
-        <div class="pt-2 pb-3 space-y-1">
-            <x-jet-responsive-nav-link href="{{ \route('import-' . $sUserRole) }}" :active="request()->routeIs('import-' . $sUserRole)">
-                {{ __('Import') }}
-            </x-jet-responsive-nav-link>
-        </div>
+        @if($sUserRole === 'user')
+            <div class="pt-2 pb-3 space-y-1">
+                <x-jet-responsive-nav-link href="{{ \url('user') }}" :active="request()->is('user')">
+                    {{ __('Thread') }}
+                </x-jet-responsive-nav-link>
+            </div>
+            <div class="pt-2 pb-3 space-y-1">
+                <x-jet-responsive-nav-link href="{{ \url('user/import') }}" :active="request()->is('user/import')">
+                    {{ __('Import') }}
+                </x-jet-responsive-nav-link>
+            </div>
+        @else
 
+        @endif
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="flex items-center px-4">
@@ -148,12 +158,12 @@
 
             <div class="mt-3 space-y-1">
                 <!-- Account Management -->
-                <x-jet-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
+                <x-jet-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->is('profile.show')">
                     {{ __('Profile') }}
                 </x-jet-responsive-nav-link>
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                    <x-jet-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">
+                    <x-jet-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->is('api-tokens.index')">
                         {{ __('API Tokens') }}
                     </x-jet-responsive-nav-link>
                 @endif
@@ -178,11 +188,11 @@
                     </div>
 
                     <!-- Team Settings -->
-                    <x-jet-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}" :active="request()->routeIs('teams.show')">
+                    <x-jet-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}" :active="request()->is('teams.show')">
                         {{ __('Team Settings') }}
                     </x-jet-responsive-nav-link>
 
-                    <x-jet-responsive-nav-link href="{{ route('teams.create') }}" :active="request()->routeIs('teams.create')">
+                    <x-jet-responsive-nav-link href="{{ route('teams.create') }}" :active="request()->is('teams.create')">
                         {{ __('Create New Team') }}
                     </x-jet-responsive-nav-link>
 
