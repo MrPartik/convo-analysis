@@ -5,7 +5,7 @@ library(plotly)
 library(RColorBrewer)
 #library( "ggplot2" )
 con <- dbConnect(MySQL(), user ='root',host ='localhost', dbname = 'convo_analysis')
-dbcon <- dbGetQuery(con, "SELECT CITY, COUNT(*) TOTAL FROM R_PROGRAM GROUP BY CITY")
+dbcon <- dbGetQuery(con, "SELECT CITY, COUNT(*) TOTAL FROM R_PROGRAM AS PROGRAM INNER JOIN R_HEI AS HEI ON PROGRAM.CODE = HEI.CODE GROUP BY CITY")
 
 ui <- fluidPage(
     title = "Programs",

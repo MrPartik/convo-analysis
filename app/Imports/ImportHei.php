@@ -23,6 +23,7 @@ class ImportHei implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFailure
                 'address'        => $aRow['ADDRESS'],
                 'type'           => $aRow['TYPE'],
                 'tel_no'         => $aRow['TEL_NUM'],
+                'city'           => $aRow['CITY'],
                 'email'          => $aRow['EMAIL_ADDRESS'],
                 'fax_no'         => $aRow['FAX_NUM'],
                 'head_tel_no'    => $aRow['HEAD_TEL'],
