@@ -24,6 +24,7 @@ class ImportProgram implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFai
                 'level_i'                => $aRow['LEVEL_I'],
                 'level_ii'               => $aRow['LEVEL_II'],
                 'level_iii'              => $aRow['LEVEL_III'],
+                'level_iv'               => $aRow['LEVEL_IV'],
                 'gr'                     => $aRow['GR'],
                 'accredited_level'       => $aRow['ACCREDITED_LEVEL'],
                 'accreditor'             => $aRow['ACCREDITOR'],

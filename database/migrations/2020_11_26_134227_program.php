@@ -21,6 +21,7 @@ class Program extends Migration
             $oTable->string('level_i')->nullable();
             $oTable->string('level_ii')->nullable();
             $oTable->string('level_iii')->nullable();
+            $oTable->string('level_iv')->nullable();
             $oTable->string('gr')->nullable();
             $oTable->string('accredited_level')->nullable();
             $oTable->string('accreditor')->nullable();
@@ -41,6 +42,7 @@ class Program extends Migration
                     'level_i',
                     'level_ii',
                     'level_iii',
+                    'level_iv',
                 ],'row_unique'
             );
         });

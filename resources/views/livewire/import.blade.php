@@ -15,7 +15,7 @@
                         HEI Profile
                     </p>
                     <p class="mb-2 text-xs text-gray-600 dark:text-gray-400">
-                        Note: Please be informed that HEI Profile should be extracted from excel book. no template provided
+                        Note: Please be informed that HEI Profile should be extracted from excel book. <a href="/storage/templates/template_hei.xlsx" class="text-blue-700 font-bold">Download template</a>
                     </p>
                     <!--
                     <p class="text-xl font-bold text-gray-700 dark:text-gray-200">
@@ -46,7 +46,7 @@
                         Programs
                     </p>
                     <p class="mb-2 text-xs text-gray-600 dark:text-gray-400">
-                        Note: Please be informed that Programs should be extracted from excel book. no template provided
+                        Note: Please be informed that Programs should be extracted from excel book. <a href="/storage/templates/template_program.xlsx" class="text-blue-700 font-bold">Download template</a>
                     </p>
                     <!--
                     <p class="text-xl font-bold text-gray-700 dark:text-gray-200">
