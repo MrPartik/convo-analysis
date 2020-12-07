@@ -9,7 +9,7 @@
                             <span class="break-words px-4 py-2 rounded-lg inline-block text-sm {{ (Auth::id() === $convo->user_id)? 'rounded-br-none bg-blue-600 text-white' : 'rounded-bl-none bg-gray-300 text-gray-600' }}">{{ $convo->message }}
                                 @if($convo->url !== null)
                                     <br> <a class="text-blue-800" target='_blank' href='{{ $convo->url }}'>show report</a>
-                                    <iframe src="{{ $convo->url }}" class="mt-2" scrolling='no' height='300' width='auto'> </iframe>
+                                    <iframe src="{{ $convo->url }}" class="mt-2" scrolling='no' height='400' width='auto'> </iframe>
                                 @endif
                             </span>
                         </div>
