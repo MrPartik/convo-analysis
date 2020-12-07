@@ -15,28 +15,36 @@ class Program extends Migration
     {
         Schema::create('r_program', function (Blueprint $oTable) {
             $oTable->bigIncrements('id');
-            $oTable->string('region', 10);
-            $oTable->string('code', 10);
-            $oTable->string('hei_name', 200);
-            $oTable->string('type', 10);
-            $oTable->string('city', 50);
-            $oTable->string('discipline', 100);
-            $oTable->string('major', 50);
-            $oTable->string('level_i', 50);
-            $oTable->string('level_ii', 50);
-            $oTable->string('level_iii', 50);
-            $oTable->string('gr', 50);
-            $oTable->string('accredited_level', 50);
-            $oTable->string('accreditor', 50);
-            $oTable->string('validity', 50);
-            $oTable->string('coe_cod', 50);
-            $oTable->string('anonymous_deregulated', 50);
-            $oTable->string('gpr', 50);
-            $oTable->string('gpr_gr_no', 50);
-            $oTable->string('created_at', 50);
-            $oTable->string('issued_by', 50);
-            $oTable->string('remarks', 100);
-            $oTable->string('status', 50);
+            $oTable->string('code')->nullable();
+            $oTable->string('program')->nullable();
+            $oTable->string('major')->nullable();
+            $oTable->string('level_i')->nullable();
+            $oTable->string('level_ii')->nullable();
+            $oTable->string('level_iii')->nullable();
+            $oTable->string('level_iv')->nullable();
+            $oTable->string('gr')->nullable();
+            $oTable->string('accredited_level')->nullable();
+            $oTable->string('accreditor')->nullable();
+            $oTable->string('validity')->nullable();
+            $oTable->string('coe_cod')->nullable();
+            $oTable->string('autonomous_deregulated')->nullable();
+            $oTable->string('gpr')->nullable();
+            $oTable->string('gp_gr_no')->nullable();
+            $oTable->string('created_at')->nullable();
+            $oTable->string('issued_by')->nullable();
+            $oTable->string('remarks')->nullable();
+            $oTable->string('status')->nullable();
+
+            $oTable->unique([
+                    'code',
+                    'program',
+                    'major',
+                    'level_i',
+                    'level_ii',
+                    'level_iii',
+                    'level_iv',
+                ],'row_unique'
+            );
         });
     }
 

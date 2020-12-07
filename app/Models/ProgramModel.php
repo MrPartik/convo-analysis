@@ -12,13 +12,10 @@ class ProgramModel extends Model
     protected $table = 'r_program';
     public $timestamps = false;
     protected $fillable = [
-        'region',
         'code',
-        'hei_name',
-        'type',
-        'city',
-        'discipline',
+        'name',
         'major',
+        'program',
         'level_i',
         'level_ii',
         'level_iii',
@@ -27,9 +24,9 @@ class ProgramModel extends Model
         'accreditor',
         'validity',
         'coe_cod',
-        'anonymous_deregulated',
+        'autonomous_deregulated',
         'gpr',
-        'gpr_gr_no',
+        'gp_gr_no',
         'created_at',
         'issued_by',
         'remarks',
