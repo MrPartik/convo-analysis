@@ -36,18 +36,13 @@ class Convo extends Component
         $oConvo->reply_user_id = 1;
         $oConvo->save();
         $this->oConvos = convoRepository::getConvoPerLogin();
-        $wit = new WitApp();
-        $this->reply(\json_encode($wit->getIntentByText($this->sContent)));
-        $this->sContent ='';
+        $this->reply($this->sContent);
+        $this->sContent = '';
     }
 
     private function reply(string $sContent)
     {
-        $oConvo = new ConvoModel();
-        $oConvo->user_id = 1;
-        $oConvo->message = $sContent;
-        $oConvo->reply_user_id = Auth::id();
-        $oConvo->save();
+        convoRepository::reply($sContent);
         $this->emit('scrollToLatest');
     }
 }
