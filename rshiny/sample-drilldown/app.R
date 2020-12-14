@@ -5,7 +5,7 @@ library(readr)
 library(RMySQL)
 
 con <- dbConnect(MySQL(), user ='root',host ='localhost', dbname = 'convo_analysis')
-total <- dbGetQuery(con, "SELECT DISCIPLINE id ,REGION category, CITY sub_category, CREATED_AT year ,COUNT(*) total FROM R_PROGRAM GROUP BY CITY")
+total <- dbGetQuery(con, "SELECT PROGRAM id, HEI.REGION category, CITY sub_category, HEI.CREATED_AT year ,COUNT(*) total FROM R_PROGRAM AS PROGRAM INNER JOIN R_HEI AS HEI ON PROGRAM.CODE = HEI.CODE GROUP BY CITY")
 categories <- unique(total$category)
 sub_categories <- unique(total$sub_category)
 ids <- unique(total$id)

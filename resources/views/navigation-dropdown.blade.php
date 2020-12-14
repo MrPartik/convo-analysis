@@ -16,15 +16,15 @@
                         {{ __('Thread') }}
                     </x-jet-nav-link>
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ \url('user/import') }}" :active="request()->is('user/import')">
-                        {{ __('Import') }}
-                    </x-jet-nav-link>
-                </div>
                 @else
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ \url('admin') }}" :active="request()->is('admin')">
                             {{ __('Users Management') }}
+                        </x-jet-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ \url('admin/import') }}" :active="request()->is('admin/import')">
+                            {{ __('Import') }}
                         </x-jet-nav-link>
                     </div>
                 @endif
@@ -135,13 +135,17 @@
                     {{ __('Thread') }}
                 </x-jet-responsive-nav-link>
             </div>
+        @else
             <div class="pt-2 pb-3 space-y-1">
-                <x-jet-responsive-nav-link href="{{ \url('user/import') }}" :active="request()->is('user/import')">
+                <x-jet-responsive-nav-link href="{{ \url('admin') }}" :active="request()->is('admin')">
+                    {{ __('Users Management') }}
+                </x-jet-responsive-nav-link>
+            </div>
+            <div class="pt-2 pb-3 space-y-1">
+                <x-jet-responsive-nav-link href="{{ \url('admin/import') }}" :active="request()->is('admin/import')">
                     {{ __('Import') }}
                 </x-jet-responsive-nav-link>
             </div>
-        @else
-
         @endif
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">

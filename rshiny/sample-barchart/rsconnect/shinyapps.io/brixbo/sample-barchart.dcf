@@ -1,0 +1,12 @@
+name: sample-barchart
+title: sample-barchart
+username:
+account: brixbo
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3371006
+bundleId: 3959091
+url: https://brixbo.shinyapps.io/sample-barchart/
+when: 1607414440.48096
+asMultiple: FALSE
+asStatic: FALSE

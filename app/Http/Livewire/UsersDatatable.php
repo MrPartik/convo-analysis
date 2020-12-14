@@ -18,11 +18,13 @@ class UsersDatatable extends LivewireDatatable
     public $confirmAdd = false;
     public $name = '';
     public $email = '';
+    public $role = '';
     public $iId = '';
 
     public $rules = [
         'name'  => 'required | min:10',
-        'email' => 'required | email'
+        'email' => 'required | email',
+        'role'  => 'required | in:admin,user'
     ];
 
     public function columns()
@@ -38,6 +40,7 @@ class UsersDatatable extends LivewireDatatable
             }),
             Column::name('name')->label('Name'),
             Column::name('email')->label('Email'),
+            Column::name('role')->label('Role'),
             DateColumn::name('updated_at')->label('Updated at'),
             Column::callback(['id'], function ($iId) {
                 return view('livewire.users-datatable', [
@@ -53,6 +56,7 @@ class UsersDatatable extends LivewireDatatable
         $oUser = UserModel::find($iId);
         $this->name = $oUser->name;
         $this->email = $oUser->email;
+        $this->role = $oUser->role;
         $this->iId = $oUser->id;
     }
 
@@ -75,7 +79,7 @@ class UsersDatatable extends LivewireDatatable
         $oUser = new UserModel();
         $oUser->name = $this->name;
         $oUser->email = $this->email;
-        $oUser->role = 'user';
+        $oUser->role = $this->role;
         $oUser->password = \bcrypt((\env('APP_ENV', 'local') === 'local') ? 'password' : 'password' . rand(20));
         if ($oUser->save()) {
             $this->confirmAdd = false;
@@ -90,6 +94,7 @@ class UsersDatatable extends LivewireDatatable
         $oUser = UserModel::find($this->iId);
         $oUser->name = $this->name;
         $oUser->email = $this->email;
+        $oUser->role = $this->role;
         if ($oUser->save()) {
             $this->confirmEdit = false;
             $this->clear();
@@ -100,6 +105,7 @@ class UsersDatatable extends LivewireDatatable
     {
         $this->name = '';
         $this->email = '';
+        $this->role = '';
         $this->iId = 0;
         $this->clearValidation();
     }

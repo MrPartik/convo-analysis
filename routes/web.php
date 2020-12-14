@@ -28,7 +28,6 @@ Route::get('/logged-in', function () {
 Route::group(['middleware' => ['auth:sanctum', 'verified', 'user.role']], function () {
     Route::group(['prefix' => 'user'], function () {
         Route::get('/', [ThreadController::class, 'front']);
-        Route::get('/import', [ImportController::class, 'front']);
     });
 });
 

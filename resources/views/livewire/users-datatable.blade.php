@@ -42,6 +42,16 @@
                     <x-jet-input wire:model.lazy="email" type="email" class="mt-1 block w-3/4" placeholder="{{ __('Email') }}"/>
                     <x-jet-input-error for="email" class="mt-2"/>
                 </div>
+                <div class="col-span-6 sm:col-span-4 mt-5">
+                    <label class="block font-medium text-sm text-gray-700" for="role">
+                        User Role
+                    </label>
+                    <select wire:model.lazy="role"  id="role" class="form-select rounded-md shadow-sm mt-1 block w-3/4">
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                    <x-jet-input-error for="role" class="mt-2"/>
+                </div>
             </div>
         </x-slot>
         <x-slot name="footer">
@@ -76,6 +86,16 @@
                     </label>
                     <x-jet-input  wire:model.lazy="email"  type="email" class="mt-1 block w-3/4" placeholder="{{ __('Email') }}"/>
                     <x-jet-input-error for="email" class="mt-2"/>
+                </div>
+                <div class="col-span-6 sm:col-span-4 mt-5">
+                    <label class="block font-medium text-sm text-gray-700" for="role">
+                        User Role
+                    </label>
+                    <select wire:model.lazy="role"  id="role" class="form-select rounded-md shadow-sm mt-1 block w-3/4">
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                    <x-jet-input-error for="role" class="mt-2"/>
                 </div>
             </div>
         </x-slot>
