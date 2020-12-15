@@ -47,7 +47,7 @@
                         User Role
                     </label>
                     <select wire:model.lazy="role"  id="role" class="form-select rounded-md shadow-sm mt-1 block w-3/4">
-                        <option value="user">User</option>
+                        <option value="user">Top Management</option>
                         <option value="admin">Admin</option>
                     </select>
                     <x-jet-input-error for="role" class="mt-2"/>
@@ -92,7 +92,7 @@
                         User Role
                     </label>
                     <select wire:model.lazy="role"  id="role" class="form-select rounded-md shadow-sm mt-1 block w-3/4">
-                        <option value="user">User</option>
+                        <option value="user">Top Management</option>
                         <option value="admin">Admin</option>
                     </select>
                     <x-jet-input-error for="role" class="mt-2"/>

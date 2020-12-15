@@ -40,7 +40,9 @@ class UsersDatatable extends LivewireDatatable
             }),
             Column::name('name')->label('Name'),
             Column::name('email')->label('Email'),
-            Column::name('role')->label('Role'),
+            Column::callback(['role'], function ($sRole) {
+                return (\strtolower($sRole) === 'admin') ? 'Admin' : 'Top Management';
+            })->label('Role'),
             DateColumn::name('updated_at')->label('Updated at'),
             Column::callback(['id'], function ($iId) {
                 return view('livewire.users-datatable', [
