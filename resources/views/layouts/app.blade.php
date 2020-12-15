@@ -52,6 +52,11 @@
         </div>
     </div>
     <style>
+        @media screen and (max-width: 640px) and (min-width: 0px) {
+            #convo-wrapper {
+                width: 100%;
+            }
+        }
         .scrollbar-w-2::-webkit-scrollbar {
             width: 0.25rem;
             height: 0.25rem;

@@ -7,9 +7,9 @@
                         <div >
                             <a href = "/" class = "inline-block py-2 text-gray-800 text-2xl font-bold" >{{ \env('APP_NAME', 'BrixBo') }}</a >
                         </div >
-                        <div class = "hidden md:block" >
+                        <div class = "md:block" >
                             @if (Route::has('login'))
-                                <div class = "hidden fixed top-0 right-0 px-6 py-4 sm:block" >
+                                <div class= "fixed top-0 right-0 px-6 py-4 sm:block" >
                                     @auth
                                         <a href = "{{ url(\Illuminate\Support\Facades\Auth::user()->role) }}" class = "inline-block py-2 px-4 text-gray-700 bg-white hover:bg-gray-100 rounded-lg" > Dashboard </a >
                                     @else
