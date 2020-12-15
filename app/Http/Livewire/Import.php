@@ -93,6 +93,9 @@ class Import extends Component
         Excel::import(new ImportProgram, $this->programFile);
         $this->heiFile = '';
         $this->programFile = '';
+        $this->sucFile = '';
+        $this->lucFile = '';
+        $this->pheisFile = '';
         $this->success = 'Program data was successfully imported!';
         $this->clear();
     }

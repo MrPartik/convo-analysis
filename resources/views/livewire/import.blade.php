@@ -68,7 +68,7 @@
                     <p class="mb-2 text-xs text-gray-600 dark:text-gray-400">
                         Note: Please be informed that SUC Profile should be extracted from excel book. <a href="/storage/templates/template_suc.xlsx" class="text-blue-700 font-bold">Download template</a>
                     </p>
-                    <input wire:model="SucFile" type="file" class="hidden">
+                    <input wire:model="sucFile" type="file" class="hidden">
                 </div>
 
                 @if($heiFile !== '')
@@ -93,7 +93,7 @@
                     <p class="mb-2 text-xs text-gray-600 dark:text-gray-400">
                         Note: Please be informed that LUC Profile should be extracted from excel book. <a href="/storage/templates/template_luc.xlsx" class="text-blue-700 font-bold">Download template</a>
                     </p>
-                    <input wire:model="LucFile" type="file" class="hidden">
+                    <input wire:model="lucFile" type="file" class="hidden">
                 </div>
                 @if($programFile !== '')
                     <button wire:click="importLuc" wire:loading.attr="disabled" class="flex items-center space-x-2 px-3 border border-blue-400 rounded-md bg-white text-blue-500 text-xs leading-4 font-medium uppercase tracking-wider hover:bg-blue-200 focus:outline-none">
@@ -117,7 +117,7 @@
                     <p class="mb-2 text-xs text-gray-600 dark:text-gray-400">
                         Note: Please be informed that PHEIS Profile should be extracted from excel book. <a href="/storage/templates/template_pheis.xlsx" class="text-blue-700 font-bold">Download template</a>
                     </p>
-                    <input wire:model="PheisFile" type="file" class="hidden">
+                    <input wire:model="pheisFile" type="file" class="hidden">
                 </div>
                 @if($programFile !== '')
                     <button wire:click="importPheis" wire:loading.attr="disabled" class="flex items-center space-x-2 px-3 border border-blue-400 rounded-md bg-white text-blue-500 text-xs leading-4 font-medium uppercase tracking-wider hover:bg-blue-200 focus:outline-none">

@@ -4,6 +4,8 @@ library(RMySQL)
 library(plotly)
 library(RColorBrewer)
 #library( "ggplot2" )
+options(shiny.host = '192.168.31.163')
+options(shiny.port = 5677)
 con <- dbConnect(MySQL(), user ='root',host ='localhost', dbname = 'convo_analysis')
 
 ui <- fluidPage(
