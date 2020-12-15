@@ -8,11 +8,11 @@
             <div class = "grid grid-cols-4 gap-4 bg-white overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch p-2 rounded-lg" style = "height: 80vh" >
                 @php
                     $aSideNav = [
-                        'faculty'  => 'Faculty',
-                        'sucs'     => 'SUCS',
-                        'lucs'     => 'LUCS',
-                        'pheis'    => 'PHEIS',
-                        'programs' => 'Programs'
+                        //'faculty'  => 'Faculty',
+                        'Suc'     => 'SUCS',
+                        'Luc'     => 'LUCS',
+                        'Pheis'    => 'PHEIS',
+                        'Program' => 'Programs'
                         ];
                 @endphp
                 <div class='col-span-1 shadow-lg'>
@@ -20,7 +20,7 @@
                         <div id='sidenav-{{ $sKey }}' class ="mb-1 flex max-w-md bg-white shadow rounded-lg overflow-hidden" >
                             <div class = "flex items-center px-2 py-3" >
                                 <div class="p-3 mr-2 text-blue-500 bg-blue-100 rounded-full dark:text-orange-100 dark:bg-orange-500">
-                                    10
+                                    {{ \call_user_func(\App\Repositories\derivedRepository::class . '::get' . $sKey)->count() }}
                                 </div>
                                 <div class = "mx-3" >
                                     <h3 class = "text-sm font-bold text-gray-800" >Total record for {{ $sValue }}</h3 >
