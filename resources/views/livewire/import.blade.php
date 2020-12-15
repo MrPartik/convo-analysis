@@ -71,7 +71,7 @@
                     <input wire:model="sucFile" type="file" class="hidden">
                 </div>
 
-                @if($heiFile !== '')
+                @if($sucFile !== '')
                     <button wire:click="importSuc" wire:loading.attr="disabled" class="flex items-center space-x-2 px-3 border border-blue-400 rounded-md bg-white text-blue-500 text-xs leading-4 font-medium uppercase tracking-wider hover:bg-blue-200 focus:outline-none">
                         <span>Proceed</span>
                         <svg  class="h-5 w-5 stroke-current m-2" viewBox="0 0 20 20" fill="currentColor">
@@ -95,7 +95,7 @@
                     </p>
                     <input wire:model="lucFile" type="file" class="hidden">
                 </div>
-                @if($programFile !== '')
+                @if($lucFile !== '')
                     <button wire:click="importLuc" wire:loading.attr="disabled" class="flex items-center space-x-2 px-3 border border-blue-400 rounded-md bg-white text-blue-500 text-xs leading-4 font-medium uppercase tracking-wider hover:bg-blue-200 focus:outline-none">
                         <span>Proceed</span>
                         <svg  class="h-5 w-5 stroke-current m-2" viewBox="0 0 20 20" fill="currentColor">
@@ -119,7 +119,7 @@
                     </p>
                     <input wire:model="pheisFile" type="file" class="hidden">
                 </div>
-                @if($programFile !== '')
+                @if($pheisFile !== '')
                     <button wire:click="importPheis" wire:loading.attr="disabled" class="flex items-center space-x-2 px-3 border border-blue-400 rounded-md bg-white text-blue-500 text-xs leading-4 font-medium uppercase tracking-wider hover:bg-blue-200 focus:outline-none">
                         <span>Proceed</span>
                         <svg  class="h-5 w-5 stroke-current m-2" viewBox="0 0 20 20" fill="currentColor">
@@ -134,6 +134,15 @@
         @error('*') <span class="alert-message text-red-500">{{ $message }}</span> @enderror
         <div wire:loading wire:target="programFile">
             <span class="text-green-700 font-bold text-xl">Excel File for Program is Uploading, once done, you can now proceed....</span>
+        </div>
+        <div wire:loading wire:target="sucFile">
+            <span class="text-green-700 font-bold text-xl">Excel File for SUC is Uploading, once done, you can now proceed....</span>
+        </div>
+        <div wire:loading wire:target="lucFile">
+            <span class="text-green-700 font-bold text-xl">Excel File for LUC is Uploading, once done, you can now proceed....</span>
+        </div>
+        <div wire:loading wire:target="pheisFile">
+            <span class="text-green-700 font-bold text-xl">Excel File for PHEIS is Uploading, once done, you can now proceed....</span>
         </div>
         <div wire:loading wire:target="heiFile">
             <span class="text-green-700 font-bold text-xl">Excel File for HEI is Uploading, once done, you can now proceed....</span>
