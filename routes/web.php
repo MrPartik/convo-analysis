@@ -17,6 +17,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/**
+ * sample api
+ */
+Route::get('/get/sample', function(){
+    $sIntent = \request()->get('intent');
+    $aData = [];
+//    if($sIntent === 'getHeis')
+        $aData = \Illuminate\Support\Facades\DB::select('SELECT PROGRAM id, HEI.region category, CITY sub_category, HEI.yr_established year , COUNT(*)  total FROM R_PROGRAM AS PROGRAM INNER JOIN R_HEI AS HEI ON PROGRAM.code = HEI.code GROUP BY city');
+    return [
+        'data_source' =>  $aData,
+        'chart'       => \request()->get('chart') ?? 'bar'
+    ];
+});
+
 Route::get('/', function () {
     return view('welcome');
 });

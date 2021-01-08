@@ -11,7 +11,7 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
-total <- fromJSON(paste("http://127.0.0.1:8000/get/sample", isolate(session$clientData$url_search), sep = ""))
+total <- fromJSON(paste("http://127.0.0.1:8000/get/sample", isolate(session$clientData$url_search), sep = ""))$data_source
 categories <- unique(total$category)
 sub_categories <- unique(total$sub_category)
 ids <- unique(total$id)
@@ -24,7 +24,7 @@ ids <- unique(total$id)
     )
     # filter the data based on active drill-downs
     # also create a column, value, which keeps track of which
-    # variable we're interested in 
+    # variable we're interested in
     datasource <- reactive({
         if (!length(drills$category)) {
             return(mutate(total, value = category))
@@ -36,17 +36,17 @@ ids <- unique(total$id)
         total <- filter(total, sub_category %in% drills$sub_category)
         mutate(total, value = id)
     })
-    
+
     # bar chart of total by 'current level of category'
     output$bars <- renderPlotly({
         d <- count(datasource(), value, wt = total)
-        
+
         p <- plot_ly(d, x = ~value, y = ~n, source = "bars") %>%
             layout(
-                yaxis = list(title = "Total"), 
+                yaxis = list(title = "Total"),
                 xaxis = list(title = "")
             )
-        
+
         if (!length(drills$sub_category)) {
             add_bars(p, color = ~value)
         } else if (!length(drills$id)) {
@@ -66,7 +66,7 @@ ids <- unique(total$id)
                 )
         }
     })
-    
+
     # time-series chart of the total
     output$lines <- renderPlotly({
         p <- if (!length(drills$sub_category)) {
@@ -83,21 +83,21 @@ ids <- unique(total$id)
             datasource() %>%
                 filter(id %in% drills$id) %>%
                 select(-value) %>%
-                plot_ly() %>% 
+                plot_ly() %>%
                 add_table()
         }
         p %>%
             layout(
-                yaxis = list(title = "Total"), 
+                yaxis = list(title = "Total"),
                 xaxis = list(title = "")
             )
     })
-    
+
     # control the state of the drilldown by clicking the bar graph
     observeEvent(event_data("plotly_click", source = "bars"), {
         x <- event_data("plotly_click", source = "bars")$x
         if (!length(x)) return()
-        
+
         if (!length(drills$category)) {
             drills$category <- x
         } else if (!length(drills$sub_category)) {
@@ -106,41 +106,41 @@ ids <- unique(total$id)
             drills$id <- x
         }
     })
-    
-    # populate a `selectInput()` for each active drilldown 
+
+    # populate a `selectInput()` for each active drilldown
     output$history <- renderUI({
-        if (!length(drills$category)) 
+        if (!length(drills$category))
             return("Click the bar chart to drilldown")
-        
+
         categoryInput <- selectInput(
-            "category", "Category", 
+            "category", "Category",
             choices = categories, selected = drills$category
         )
         if (!length(drills$sub_category)) return(categoryInput)
         sd <- filter(total, category %in% drills$category)
         subCategoryInput <- selectInput(
-            "sub_category", "Sub-category", 
-            choices = unique(sd$sub_category), 
+            "sub_category", "Sub-category",
+            choices = unique(sd$sub_category),
             selected = drills$sub_category
         )
         if (!length(drills$id)) {
             return(fluidRow(
-                column(3, categoryInput), 
+                column(3, categoryInput),
                 column(3, subCategoryInput)
             ))
         }
         sd <- filter(sd, sub_category %in% drills$sub_category)
         idInput <- selectInput(
-            "id", "Program", 
+            "id", "Program",
             choices = unique(sd$id), selected = drills$id
         )
         fluidRow(
-            column(3, categoryInput), 
+            column(3, categoryInput),
             column(3, subCategoryInput),
             column(3, idInput)
         )
     })
-    
+
     # control the state of the drilldown via the `selectInput()`s
     observeEvent(input$category, {
         drills$category <- input$category
