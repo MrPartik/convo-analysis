@@ -14,7 +14,7 @@ class Convo extends Migration
     public function up()
     {
         Schema::create('t_convo', function (Blueprint $oTable) {
-            $oTable->bigIncrements('id');
+            $oTable->id();
             $oTable->unsignedBigInteger('user_id');
             $oTable->foreign('user_id')->on('users')
                 ->references('id')

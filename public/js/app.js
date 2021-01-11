@@ -21315,9 +21315,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\loyol\Documents\My Web Applications\convoModel-analysis\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! C:\Users\loyol\Documents\My Web Applications\convoModel-analysis\resources\js\script.js */"./resources/js/script.js");
-module.exports = __webpack_require__(/*! C:\Users\loyol\Documents\My Web Applications\convoModel-analysis\resources\css\app.css */"./resources/css/app.css");
+__webpack_require__(/*! C:\Users\loyol\Documents\My Web Applications\ConvoModel-analysis\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\Users\loyol\Documents\My Web Applications\ConvoModel-analysis\resources\js\script.js */"./resources/js/script.js");
+module.exports = __webpack_require__(/*! C:\Users\loyol\Documents\My Web Applications\ConvoModel-analysis\resources\css\app.css */"./resources/css/app.css");
 
 
 /***/ })
