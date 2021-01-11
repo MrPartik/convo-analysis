@@ -18,7 +18,7 @@ class UsersDatatable extends LivewireDatatable
     public $confirmAdd = false;
     public $name = '';
     public $email = '';
-    public $role = '';
+    public $role = 'user';
     public $iId = '';
 
     public $rules = [

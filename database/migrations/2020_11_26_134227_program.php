@@ -14,7 +14,7 @@ class Program extends Migration
     public function up()
     {
         Schema::create('r_program', function (Blueprint $oTable) {
-            $oTable->bigIncrements('id');
+            $oTable->id();
             $oTable->string('code')->nullable();
             $oTable->string('program')->nullable();
             $oTable->string('major')->nullable();
@@ -34,16 +34,11 @@ class Program extends Migration
             $oTable->string('issued_by')->nullable();
             $oTable->string('remarks')->nullable();
             $oTable->string('status')->nullable();
-
             $oTable->unique([
                     'code',
                     'program',
-                    'major',
-                    'level_i',
-                    'level_ii',
-                    'level_iii',
-                    'level_iv',
-                ],'row_unique'
+                    'major'
+                ],'row_unique_program'
             );
         });
     }

@@ -1,6 +1,6 @@
 <?php namespace App\Repositories;
 
-use App\Models\convoModel;
+use App\Models\ConvoModel;
 use App\WitApp;
 use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Expr\Cast\Bool_;
@@ -10,7 +10,7 @@ class convoRepository
 
     public static function getConvoPerLogin()
     {
-        return convoModel::with(['repliedUser', 'messageUser'])->where('user_id', Auth::id())
+        return ConvoModel::with(['repliedUser', 'messageUser'])->where('user_id', Auth::id())
             ->orWhere('reply_user_id', Auth::id())
             ->get();
     }

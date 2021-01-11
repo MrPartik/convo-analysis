@@ -14,7 +14,7 @@ class Hei extends Migration
     public function up()
     {
         Schema::create('r_hei', function (Blueprint $oTable) {
-            $oTable->bigIncrements('id');
+            $oTable->id();
             $oTable->string('region', 10)->nullable();
             $oTable->string('code', 20)->unique();
             $oTable->string('hei_name')->nullable();
@@ -45,6 +45,12 @@ class Hei extends Migration
             $oTable->string('updated_by')->nullable();
             $oTable->string('updated_at')->nullable();
             $oTable->string('status')->nullable();
+            $oTable->unique([
+                'code',
+                'hei_name',
+                'head_hea'
+            ],'row_unique_hei'
+            );
         });
     }
 

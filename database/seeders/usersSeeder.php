@@ -15,6 +15,7 @@ class usersSeeder extends Seeder
     public function run()
     {
         $oUser = new UserModel();
+        $oUser->id = 1;
         $oUser->name = 'Ma. Michaela Alejandria';
         $oUser->email = 'mikaalej@gmail.com';
         $oUser->role = 'admin';
@@ -22,6 +23,7 @@ class usersSeeder extends Seeder
         $oUser->save();
 
         $oUser = new UserModel();
+        $oUser->id = 2;
         $oUser->name = 'John Patrick Loyola';
         $oUser->email = 'loyolapat04@gmail.com';
         $oUser->role = 'user';
