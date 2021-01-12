@@ -16,7 +16,7 @@ class Hei extends Migration
         Schema::create('r_hei', function (Blueprint $oTable) {
             $oTable->id();
             $oTable->string('region', 10)->nullable();
-            $oTable->string('code', 20)->unique();
+            $oTable->string('code', 20)->nullable();
             $oTable->string('hei_name')->nullable();
             $oTable->string('address')->nullable();
             $oTable->string('city')->nullable();
@@ -45,12 +45,6 @@ class Hei extends Migration
             $oTable->string('updated_by')->nullable();
             $oTable->string('updated_at')->nullable();
             $oTable->string('status')->nullable();
-            $oTable->unique([
-                'code',
-                'hei_name',
-                'head_hea'
-            ],'row_unique_hei'
-            );
         });
     }
 

@@ -34,12 +34,6 @@ class Program extends Migration
             $oTable->string('issued_by')->nullable();
             $oTable->string('remarks')->nullable();
             $oTable->string('status')->nullable();
-            $oTable->unique([
-                    'code',
-                    'program',
-                    'major'
-                ],'row_unique_program'
-            );
         });
     }
 

@@ -14,18 +14,13 @@ class ImportProgram implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFai
 {
     use SkipsErrors, SkipsFailures;
 
-    public function batchSize(): int
-    {
-        return 1000;
-    }
-
     public function model(array $aRow)
     {
         try {
             $aRow = \array_change_key_case($aRow, CASE_UPPER);
             return new ProgramModel([
-                'code'                   => (isset($aRow['CODE']) === true) ? $aRow['CODE'] : $aRow['INST_CODE'],
-                'program'                => (isset($aRow['PROGRAM']) === true) ? $aRow['PROGRAM'] : $aRow['DISCIPLINE'],
+                'code'                   => (isset($aRow['CODE']) === true) ? $aRow['CODE'] : @$aRow['INST_CODE'],
+                'program'                => (isset($aRow['PROGRAM']) === true) ? $aRow['PROGRAM'] : @$aRow['DISCIPLINE'],
                 'major'                  => $aRow['MAJOR'],
                 'level_i'                => $aRow['LEVEL_I']  ?? null,
                 'level_ii'               => $aRow['LEVEL_II']  ?? null,
@@ -48,4 +43,10 @@ class ImportProgram implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFai
             return [];
         }
     }
+
+    public function batchSize(): int
+    {
+        return 1000;
+    }
+
 }

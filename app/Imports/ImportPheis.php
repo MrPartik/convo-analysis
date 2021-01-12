@@ -13,18 +13,13 @@ class ImportPheis implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFailu
 {
     use SkipsErrors, SkipsFailures;
 
-    public function batchSize(): int
-    {
-        return 1000;
-    }
-
     public function model(array $aRow)
     {
         try {
             $aRow = \array_change_key_case($aRow, CASE_UPPER);
             return new HeiModel([
                 'region'         => $aRow['REGION'],
-                'code'           => (isset($aRow['CODE']) === true) ? $aRow['CODE'] : $aRow['INST_CODE'],
+                'code'           => (isset($aRow['CODE']) === true) ? $aRow['CODE'] : @$aRow['INST_CODE'],
                 'hei_name'       => $aRow['HEI_NAME'],
                 'address'        => $aRow['ADDRESS'],
                 'type'           => 'PHEIS',
@@ -40,16 +35,16 @@ class ImportPheis implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFailu
                 'official_title' => $aRow['OFFICIAL_TITLE'],
                 'official_hea'   => $aRow['OFFICIAL_HEA'],
                 'registrar'      => $aRow['REGISTRAR'],
-                'lo'             => $aRow['LO'],
-                'name1'          => $aRow['NAME1'],
-                'name2'          => $aRow['NAME2'],
-                'name3'          => $aRow['NAME3'],
-                'name4'          => $aRow['NAME4'],
-                'name5'          => $aRow['NAME5'],
+                'lo'             => $aRow['LO'] ?? '',
+                'name1'          => $aRow['NAME1'] ?? '',
+                'name2'          => $aRow['NAME2'] ?? '',
+                'name3'          => $aRow['NAME3'] ?? '',
+                'name4'          => $aRow['NAME4'] ?? '',
+                'name5'          => $aRow['NAME5'] ?? '',
                 'hei_type'       => $aRow['HEI_TYPE'],
                 'remarks'        => $aRow['REMARKS'],
                 'website'        => $aRow['WEBSITE'],
-                'yr_established' => (isset($aRow['YR_ESTABLISMENT']) === true) ? $aRow['YR_ESTABLISMENT'] : $aRow['YR_ESTABLISHMENT'],
+                'yr_established' => (isset($aRow['YR_ESTABLISMENT']) === true) ? $aRow['YR_ESTABLISMENT'] : @$aRow['YR_ESTABLISHMENT'],
                 'updated_by'     => $aRow['UPDATED_BY'],
                 'updated_at'     => $aRow['DATE_UPDATED'],
                 'status'         => $aRow['STATUS'],
@@ -57,5 +52,10 @@ class ImportPheis implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFailu
         } catch (\ErrorException $oError) {
             return [];
         }
+    }
+
+    public function batchSize(): int
+    {
+        return 1000;
     }
 }
