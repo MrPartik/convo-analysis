@@ -6,11 +6,17 @@ use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class ImportHei implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFailure
+class ImportHei implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFailure, WithBatchInserts
 {
     use SkipsErrors, SkipsFailures;
+
+    public function batchSize(): int
+    {
+        return 1000;
+    }
 
     public function model(array $aRow)
     {
