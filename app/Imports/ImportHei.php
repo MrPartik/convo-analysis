@@ -1,8 +1,5 @@
 <?php namespace App\Imports;
 
-use App\Models\HeiModel;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnError;
@@ -10,10 +7,8 @@ use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Concerns\WithValidation;
-use phpDocumentor\Reflection\Types\Parent_;
 
-class ImportHei implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFailure, WithBatchInserts, WithValidation
+class ImportHei implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFailure, WithBatchInserts
 {
     use SkipsErrors, SkipsFailures;
 
@@ -72,12 +67,4 @@ class ImportHei implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFailure
         return 1000;
     }
 
-    public function rules(): array
-    {
-        return [
-            'region'   => Rule::unique('r_hei', 'region'),
-            'code'     => Rule::unique('r_hei', 'code'),
-            'hei_name' => Rule::unique('r_hei', 'hei_name'),
-        ];
-    }
 }

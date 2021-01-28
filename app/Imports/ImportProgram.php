@@ -9,9 +9,8 @@ use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ImportProgram implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFailure, WithBatchInserts, WithValidation
+class ImportProgram implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFailure, WithBatchInserts
 {
     use SkipsErrors, SkipsFailures;
 
@@ -48,14 +47,5 @@ class ImportProgram implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFai
     public function batchSize(): int
     {
         return 1000;
-    }
-
-    public function rules(): array
-    {
-        return [
-            'code'    => Rule::unique('r_program', 'code'),
-            'program' => Rule::unique('r_program', 'program'),
-            'major'   => Rule::unique('r_program', 'major'),
-        ];
     }
 }

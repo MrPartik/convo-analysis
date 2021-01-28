@@ -1,8 +1,30 @@
 <div class="bg-white p-10">
     <p class="text-center font-bold text-xl mb-10">Import/ Restore from Excel File</p>
     <div class="container  mx-auto grid">
+        <div>
+            @error('*') <span class="alert-message text-red-500">{{ $message }}</span> @enderror
+            @foreach([
+                'hei'          => 'HEI',
+                'suc'          => 'SUC',
+                'luc'          => 'LUC',
+                'pheis'        => 'PHEIS',
+                'program'      => 'Program',
+                'graduate'     => 'Graduate Data',
+                'enrollment'   => 'Enrollment Data',
+                'academicYear' => 'Academic Year Data',
+            ] as $sKey => $sValue)
+                <div wire:loading wire:target="{{ $sKey }}File">
+                    <span class="text-green-700 font-bold text-xl">Excel File for {{ $sValue }} is Uploading, once done, you can now proceed....</span>
+                </div>
+            @endforeach
+            <div wire:loading wire:target="importProgram, importHei">
+                <span class="text-green-700 font-bold text-xl">Import Excel in Progress....</span>
+            </div>
+            <div class="alert-message">
+                <span class="text-green-700 font-bold text-xl">{{ $success }}</span>
+            </div>
+        </div>
         <!-- Cards -->
-
         <div class="grid gap-6 mb-8 md:grid-cols-3">
             <label class="cursor-pointer flex items-center p-4 bg-white hover:bg-gray-100 rounded-lg shadow-xs dark:bg-gray-800 shadow-lg">
                 <div class="p-3 mr-4 text-yellow-500 bg-yellow-100 rounded-full dark:text-yellow-100 dark:bg-yellow-500">
@@ -207,28 +229,6 @@
             </label>
         </div>
 
-
-        @error('*') <span class="alert-message text-red-500">{{ $message }}</span> @enderror
-        @foreach([
-            'hei'          => 'HEI',
-            'suc'          => 'SUC',
-            'luc'          => 'LUC',
-            'pheis'        => 'PHEIS',
-            'program'      => 'Program',
-            'graduate'     => 'Graduate Data',
-            'enrollment'   => 'Enrollment Data',
-            'academicYear' => 'Academic Year Data',
-        ] as $sKey => $sValue)
-            <div wire:loading wire:target="{{ $sKey }}File">
-                <span class="text-green-700 font-bold text-xl">Excel File for {{ $sValue }} is Uploading, once done, you can now proceed....</span>
-            </div>
-        @endforeach
-        <div wire:loading wire:target="importProgram, importHei">
-            <span class="text-green-700 font-bold text-xl">Import Excel in Progress....</span>
-        </div>
-        <div class="alert-message">
-            <span class="text-green-700 font-bold text-xl">{{ $success }}</span>
-        </div>
     </div>
 </div>
 

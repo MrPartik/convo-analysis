@@ -45,6 +45,13 @@ class Hei extends Migration
             $oTable->string('updated_by')->nullable();
             $oTable->string('updated_at')->nullable();
             $oTable->string('status')->nullable();
+
+            $oTable->unique([
+                'region',
+                'code',
+                'hei_name',
+                'head_title',
+            ]);
         });
     }
 
