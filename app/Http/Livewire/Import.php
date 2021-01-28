@@ -1,10 +1,8 @@
 <?php namespace App\Http\Livewire;
 
 use App\Imports\ImportHei;
-use App\Imports\ImportLuc;
-use App\Imports\ImportPheis;
 use App\Imports\ImportProgram;
-use App\Imports\ImportSuc;
+use App\Models\HeiModel;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Maatwebsite\Excel\Facades\Excel;
@@ -17,6 +15,9 @@ class Import extends Component
     public $sucFile = '';
     public $lucFile = '';
     public $pheisFile = '';
+    public $academicYearFile = '';
+    public $enrollmentFile = '';
+    public $graduateFile = '';
     public $programFile = '';
     public $success = '';
 
@@ -30,12 +31,8 @@ class Import extends Component
         $this->validate([
             'heiFile' => 'required',
         ]);
-        Excel::import(new ImportHei, $this->heiFile);
-        $this->heiFile = '';
-        $this->programFile = '';
-        $this->sucFile = '';
-        $this->lucFile = '';
-        $this->pheisFile = '';
+        Excel::import(new ImportHei(HeiModel::class, ''), $this->heiFile);
+        $this->clearInput();
         $this->success = 'Hei data was successfully imported!';
         $this->clear();
     }
@@ -45,12 +42,8 @@ class Import extends Component
         $this->validate([
             'sucFile' => 'required',
         ]);
-        Excel::import(new ImportSuc, $this->sucFile);
-        $this->heiFile = '';
-        $this->programFile = '';
-        $this->sucFile = '';
-        $this->lucFile = '';
-        $this->pheisFile = '';
+        Excel::import(new ImportHei(HeiModel::class, 'SUC'), $this->sucFile);
+        $this->clearInput();
         $this->success = 'SUC data was successfully imported!';
         $this->clear();
     }
@@ -60,12 +53,8 @@ class Import extends Component
         $this->validate([
             'lucFile' => 'required',
         ]);
-        Excel::import(new ImportLuc, $this->lucFile);
-        $this->heiFile = '';
-        $this->programFile = '';
-        $this->sucFile = '';
-        $this->lucFile = '';
-        $this->pheisFile = '';
+        Excel::import(new ImportHei(HeiModel::class, 'LUC'), $this->lucFile);
+        $this->clearInput();
         $this->success = 'LUC data was successfully imported!';
         $this->clear();
     }
@@ -75,12 +64,8 @@ class Import extends Component
         $this->validate([
             'pheisFile' => 'required',
         ]);
-        Excel::import(new ImportPheis, $this->pheisFile);
-        $this->heiFile = '';
-        $this->programFile = '';
-        $this->sucFile = '';
-        $this->lucFile = '';
-        $this->pheisFile = '';
+        Excel::import(new ImportHei(HeiModel::class, 'PHEIS'), $this->pheisFile);
+        $this->clearInput();
         $this->success = 'PHEIS data was successfully imported!';
         $this->clear();
     }
@@ -91,13 +76,21 @@ class Import extends Component
             'programFile' => 'required',
         ]);
         Excel::import(new ImportProgram, $this->programFile);
+        $this->clearInput();
+        $this->success = 'Program data was successfully imported!';
+        $this->clear();
+    }
+
+    private function clearInput()
+    {
         $this->heiFile = '';
         $this->programFile = '';
         $this->sucFile = '';
         $this->lucFile = '';
         $this->pheisFile = '';
-        $this->success = 'Program data was successfully imported!';
-        $this->clear();
+        $this->academicYearFile = '';
+        $this->enrollmentFile = '';
+        $this->graduateFile = '';
     }
 
     private function clear()

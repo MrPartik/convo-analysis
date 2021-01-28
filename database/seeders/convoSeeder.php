@@ -35,7 +35,7 @@ class convoSeeder extends Seeder
         $oConvo = new ConvoModel();
         $oConvo->user_id = 1;
         $oConvo->message = 'Here is the list of enrolled students';
-        $oConvo->url = '//gallery.shinyapps.io/084-single-file';
+        $oConvo->url = '?';
         $oConvo->reply_user_id = 2;
         $oConvo->save();
 

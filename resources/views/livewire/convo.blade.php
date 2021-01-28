@@ -8,8 +8,7 @@
                         <div>
                             <span class="break-words px-4 py-2 rounded-lg inline-block text-sm {{ (Auth::id() === $convo->user_id)? 'rounded-br-none bg-blue-600 text-white' : 'rounded-bl-none bg-gray-300 text-gray-600' }}">{{ $convo->message }}
                                 @if($convo->url !== null)
-                                     <a class="text-blue-800" target='_blank' href='{{\env('RSHINY_SERVER', 'https://127.0.0.1:5718') . $convo->url . '&static=false' }} '> Show Report</a>
-                                    <iframe src="{{\env('RSHINY_SERVER', 'https://127.0.0.1:5718') .  $convo->url . '&static=false'}}" class="mt-2" scrolling='no' height='400' width='auto'> </iframe>
+                                     <p><a class="text-blue-800" target='_blank' href='{{\env('RSHINY_SERVER', 'https://127.0.0.1:5718') . $convo->url . '&static=false' }} '> Show Report <img src='/img/report.jpg'/></a></p>
                                 @endif
                             </span>
                         </div>

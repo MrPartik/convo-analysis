@@ -1,6 +1,7 @@
 <?php namespace App\Imports;
 
 use App\Models\ProgramModel;
+use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnError;
@@ -8,9 +9,9 @@ use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Validators\Failure;
+use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ImportProgram implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFailure, WithBatchInserts
+class ImportProgram implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFailure, WithBatchInserts, WithValidation
 {
     use SkipsErrors, SkipsFailures;
 
@@ -22,22 +23,22 @@ class ImportProgram implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFai
                 'code'                   => (isset($aRow['CODE']) === true) ? $aRow['CODE'] : @$aRow['INST_CODE'],
                 'program'                => (isset($aRow['PROGRAM']) === true) ? $aRow['PROGRAM'] : @$aRow['DISCIPLINE'],
                 'major'                  => $aRow['MAJOR'],
-                'level_i'                => $aRow['LEVEL_I']  ?? null,
-                'level_ii'               => $aRow['LEVEL_II']  ?? null,
-                'level_iii'              => $aRow['LEVEL_III']  ?? null,
+                'level_i'                => $aRow['LEVEL_I'] ?? null,
+                'level_ii'               => $aRow['LEVEL_II'] ?? null,
+                'level_iii'              => $aRow['LEVEL_III'] ?? null,
                 'level_iv'               => $aRow['LEVEL_IV'] ?? null,
-                'gr'                     => $aRow['GR'],
-                'accredited_level'       => $aRow['ACCREDITED_LEVEL'],
-                'accreditor'             => $aRow['ACCREDITOR'],
-                'validity'               => $aRow['VALIDITY'],
-                'coe_cod'                => $aRow['COE_COD'],
-                'autonomous_deregulated' => $aRow['AUTONOMOUS_DEREGULATED'],
-                'gpr'                    => $aRow['GPR'],
-                'gp_gr_no'               => $aRow['GP_GR_NO'],
-                'created_at'             => $aRow['DATE'],
-                'issued_by'              => $aRow['ISSUED_BY'],
-                'remarks'                => $aRow['REMARKS'],
-                'status'                 => $aRow['STATUS'],
+                'gr'                     => $aRow['GR'] ?? null,
+                'accredited_level'       => $aRow['ACCREDITED_LEVEL'] ?? null,
+                'accreditor'             => $aRow['ACCREDITOR'] ?? null,
+                'validity'               => $aRow['VALIDITY'] ?? null,
+                'coe_cod'                => $aRow['COE_COD'] ?? null,
+                'autonomous_deregulated' => $aRow['AUTONOMOUS_DEREGULATED'] ?? null,
+                'gpr'                    => $aRow['GPR'] ?? null,
+                'gp_gr_no'               => $aRow['GP_GR_NO'] ?? null,
+                'created_at'             => $aRow['DATE'] ?? null,
+                'issued_by'              => $aRow['ISSUED_BY'] ?? null,
+                'remarks'                => $aRow['REMARKS'] ?? null,
+                'status'                 => $aRow['STATUS'] ?? null,
             ]);
         } catch (\ErrorException $oError) {
             return [];
@@ -49,4 +50,12 @@ class ImportProgram implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFai
         return 1000;
     }
 
+    public function rules(): array
+    {
+        return [
+            'code'    => Rule::unique('r_program', 'code'),
+            'program' => Rule::unique('r_program', 'program'),
+            'major'   => Rule::unique('r_program', 'major'),
+        ];
+    }
 }
