@@ -38,7 +38,8 @@ class Program extends Migration
             $oTable->unique([
                 'code',
                 'program',
-                'major'
+                'major',
+                'accredited_level'
             ]);
         });
     }

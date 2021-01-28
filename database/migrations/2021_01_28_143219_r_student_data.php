@@ -15,9 +15,19 @@ class RStudentData extends Migration
     {
         Schema::create('r_student_data', function (Blueprint $oTable) {
             $oTable->id();
-            $oTable->string('year');
+            $oTable->string('year', 20);
             $oTable->string('hei');
-            $oTable->string('region');
+            $oTable->string('region', 20);
+            $oTable->string('count', 20)->nullable();
+            $oTable->string('type', 20);
+
+            $oTable->unique([
+               'year',
+               'hei',
+               'region',
+               'count',
+               'type'
+            ]);
         });
     }
 

@@ -1,7 +1,9 @@
 <?php namespace App\Http\Livewire;
 
+use App\Imports\ImportAcademicYear;
 use App\Imports\ImportHei;
 use App\Imports\ImportProgram;
+use App\Imports\ImportStudentData;
 use App\Models\HeiModel;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -78,6 +80,42 @@ class Import extends Component
         Excel::import(new ImportProgram, $this->programFile);
         $this->clearInput();
         $this->success = 'Program data was successfully imported!';
+        $this->clear();
+    }
+
+
+    public function importAcademicYear()
+    {
+        $this->validate([
+            'academicYearFile' => 'required',
+        ]);
+        Excel::import(new importAcademicYear, $this->academicYearFile);
+        $this->clearInput();
+        $this->success = 'Academic Year data was successfully imported!';
+        $this->clear();
+    }
+
+
+    public function importGraduate()
+    {
+        $this->validate([
+            'graduateFile' => 'required',
+        ]);
+        Excel::import(new ImportStudentData('graduate'), $this->graduateFile);
+        $this->clearInput();
+        $this->success = 'Graduate Student data was successfully imported!';
+        $this->clear();
+    }
+
+
+    public function importEnrollment()
+    {
+        $this->validate([
+            'enrollmentFile' => 'required',
+        ]);
+        Excel::import(new ImportStudentData('enrollment'), $this->enrollmentFile);
+        $this->clearInput();
+        $this->success = 'Enrollment Student data was successfully imported!';
         $this->clear();
     }
 

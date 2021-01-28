@@ -37,7 +37,7 @@
                         Academic Year
                     </p>
                     <p class="mb-2 text-xs text-gray-600 dark:text-gray-400">
-                        Note: Please be informed that Academic Year should be extracted from excel book. <a href="/storage/templates/template_academic_year.xlsx" class="text-blue-700 font-bold">Download template</a>
+                        Note: Please be informed that Academic Year should be extracted from excel book. <a href="/templates/template_academic_year.xlsx" class="text-blue-700 font-bold">Download template</a>
                     </p>
                     <input wire:model="academicYearFile" type="file" class="hidden">
                 </div>
@@ -62,7 +62,7 @@
                         Enrollment Data
                     </p>
                     <p class="mb-2 text-xs text-gray-600 dark:text-gray-400">
-                        Note: Please be informed that Enrollment Data should be extracted from excel book. <a href="/storage/templates/template_enrollment.xlsx" class="text-blue-700 font-bold">Download template</a>
+                        Note: Please be informed that Enrollment Data should be extracted from excel book. <a href="/templates/template_enrollment.xlsx" class="text-blue-700 font-bold">Download template</a>
                     </p>
                     <input wire:model="enrollmentFile" type="file" class="hidden">
                 </div>
@@ -86,7 +86,7 @@
                         Graduate Data
                     </p>
                     <p class="mb-2 text-xs text-gray-600 dark:text-gray-400">
-                        Note: Please be informed that Graduate Data should be extracted from excel book. <a href="/storage/templates/template_graduate.xlsx" class="text-blue-700 font-bold">Download template</a>
+                        Note: Please be informed that Graduate Data should be extracted from excel book. <a href="/templates/template_graduate.xlsx" class="text-blue-700 font-bold">Download template</a>
                     </p>
                     <input wire:model="graduateFile" type="file" class="hidden">
                 </div>
@@ -113,7 +113,7 @@
                         HEI Profile
                     </p>
                     <p class="mb-2 text-xs text-gray-600 dark:text-gray-400">
-                        Note: Please be informed that HEI Profile should be extracted from excel book. <a href="/storage/templates/template_hei.xlsx" class="text-blue-700 font-bold">Download template</a>
+                        Note: Please be informed that HEI Profile should be extracted from excel book. <a href="/templates/template_hei.xlsx" class="text-blue-700 font-bold">Download template</a>
                     </p>
                     <input wire:model="heiFile" type="file" class="hidden">
                 </div>
@@ -138,7 +138,7 @@
                         Programs
                     </p>
                     <p class="mb-2 text-xs text-gray-600 dark:text-gray-400">
-                        Note: Please be informed that Programs should be extracted from excel book. <a href="/storage/templates/template_program.xlsx" class="text-blue-700 font-bold">Download template</a>
+                        Note: Please be informed that Programs should be extracted from excel book. <a href="/templates/template_program.xlsx" class="text-blue-700 font-bold">Download template</a>
                     </p>
                     <input wire:model="programFile" type="file" class="hidden">
                 </div>
@@ -165,7 +165,7 @@
                         SUC Profile
                     </p>
                     <p class="mb-2 text-xs text-gray-600 dark:text-gray-400">
-                        Note: Please be informed that SUC Profile should be extracted from excel book. <a href="/storage/templates/template_suc.xlsx" class="text-blue-700 font-bold">Download template</a>
+                        Note: Please be informed that SUC Profile should be extracted from excel book. <a href="/templates/template_suc.xlsx" class="text-blue-700 font-bold">Download template</a>
                     </p>
                     <input wire:model="sucFile" type="file" class="hidden">
                 </div>
@@ -190,7 +190,7 @@
                         LUC Profile
                     </p>
                     <p class="mb-2 text-xs text-gray-600 dark:text-gray-400">
-                        Note: Please be informed that LUC Profile should be extracted from excel book. <a href="/storage/templates/template_luc.xlsx" class="text-blue-700 font-bold">Download template</a>
+                        Note: Please be informed that LUC Profile should be extracted from excel book. <a href="/templates/template_luc.xlsx" class="text-blue-700 font-bold">Download template</a>
                     </p>
                     <input wire:model="lucFile" type="file" class="hidden">
                 </div>
@@ -214,7 +214,7 @@
                         PHEIS Profile
                     </p>
                     <p class="mb-2 text-xs text-gray-600 dark:text-gray-400">
-                        Note: Please be informed that PHEIS Profile should be extracted from excel book. <a href="/storage/templates/template_pheis.xlsx" class="text-blue-700 font-bold">Download template</a>
+                        Note: Please be informed that PHEIS Profile should be extracted from excel book. <a href="/templates/template_pheis.xlsx" class="text-blue-700 font-bold">Download template</a>
                     </p>
                     <input wire:model="pheisFile" type="file" class="hidden">
                 </div>
