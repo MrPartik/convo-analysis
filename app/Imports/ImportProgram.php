@@ -39,7 +39,7 @@ class ImportProgram implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFai
                 'remarks'                => $aRow['REMARKS'] ?? null,
                 'status'                 => $aRow['STATUS'] ?? null,
             ]);
-        } catch (\ErrorException $oError) {
+        } catch (\Exception $oError) {
             return [];
         }
     }

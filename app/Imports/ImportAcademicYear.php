@@ -22,7 +22,7 @@ class ImportAcademicYear implements WithHeadingRow, ToModel, SkipsOnError, Skips
             return new AcademicYearModel([
                 'year' => $aRow['YEAR'] ?? null
             ]);
-        } catch (\ErrorException $oError) {
+        } catch (\Exception $oError) {
             return [];
         }
     }

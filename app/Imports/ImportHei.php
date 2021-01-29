@@ -57,7 +57,7 @@ class ImportHei implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFailure
                 'updated_at'     => $aRow['DATE_UPDATED'] ?? null,
                 'status'         => $aRow['STATUS'] ?? null,
             ]);
-        } catch (\ErrorException $oError) {
+        } catch (\Exception $oError) {
             return [];
         }
     }

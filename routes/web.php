@@ -3,6 +3,8 @@
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\UserController;
+use App\Models\AcademicYearModel;
+use App\Models\HeiDataCountModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 

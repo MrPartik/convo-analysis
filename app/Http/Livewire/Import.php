@@ -3,7 +3,7 @@
 use App\Imports\ImportAcademicYear;
 use App\Imports\ImportHei;
 use App\Imports\ImportProgram;
-use App\Imports\ImportStudentData;
+use App\Imports\ImportHeiData;
 use App\Models\HeiModel;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -101,7 +101,7 @@ class Import extends Component
         $this->validate([
             'graduateFile' => 'required',
         ]);
-        Excel::import(new ImportStudentData('graduate'), $this->graduateFile);
+        Excel::import(new ImportHeiData('graduate'), $this->graduateFile);
         $this->clearInput();
         $this->success = 'Graduate Student data was successfully imported!';
         $this->clear();
@@ -113,7 +113,7 @@ class Import extends Component
         $this->validate([
             'enrollmentFile' => 'required',
         ]);
-        Excel::import(new ImportStudentData('enrollment'), $this->enrollmentFile);
+        Excel::import(new ImportHeiData('enrollment'), $this->enrollmentFile);
         $this->clearInput();
         $this->success = 'Enrollment Student data was successfully imported!';
         $this->clear();

@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class StudentDataModel extends Model
+class HeiDataModel extends Model
 {
     use HasFactory;
 
-    protected $table = 'r_student_data';
+    protected $table = 'r_hei_data';
     public $timestamps = false;
     protected $fillable = [
-        'year',
         'hei',
         'region',
         'type'
