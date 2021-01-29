@@ -1,25 +1,13 @@
 <div class="bg-white p-10">
+    <div wire:loading class="w-full h-full fixed block top-0 left-0 bg-white opacity-75 z-50">
+      <span class="text-green-500 opacity-75 top-1/2 my-0 mx-auto block relative w-0 h-0" style=" top: 50%; ">
+        <i class="fas fa-circle-notch fa-spin fa-5x"></i>
+      </span>
+    </div>
     <p class="text-center font-bold text-xl mb-10">Import/ Restore from Excel File</p>
     <div class="container  mx-auto grid">
-        <div>
+            <div>
             @error('*') <span class="alert-message text-red-500">{{ $message }}</span> @enderror
-            @foreach([
-                'hei'          => 'HEI',
-                'suc'          => 'SUC',
-                'luc'          => 'LUC',
-                'pheis'        => 'PHEIS',
-                'program'      => 'Program',
-                'graduate'     => 'Graduate Data',
-                'enrollment'   => 'Enrollment Data',
-                'academicYear' => 'Academic Year Data',
-            ] as $sKey => $sValue)
-                <div wire:loading wire:target="{{ $sKey }}File">
-                    <span class="text-green-700 font-bold text-xl">Excel File for {{ $sValue }} is Uploading, once done, you can now proceed....</span>
-                </div>
-            @endforeach
-            <div wire:loading wire:target="importProgram, importHei, importGraduate, importAcademicYear, importEnrollment">
-                <span class="text-green-700 font-bold text-xl">Import Excel in Progress....</span>
-            </div>
             <div class="alert-message">
                 <span class="text-green-700 font-bold text-xl">{{ $success }}</span>
             </div>

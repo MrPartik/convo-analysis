@@ -9,6 +9,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <link rel="stylesheet" href="{{ \url('/css/font-awesome/all.min.css') }}">
 
     @livewireStyles
     @livewireScripts
