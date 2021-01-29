@@ -17,7 +17,7 @@
                     <span class="text-green-700 font-bold text-xl">Excel File for {{ $sValue }} is Uploading, once done, you can now proceed....</span>
                 </div>
             @endforeach
-            <div wire:loading wire:target="importProgram, importHei">
+            <div wire:loading wire:target="importProgram, importHei, importGraduate, importAcademicYear, importEnrollment">
                 <span class="text-green-700 font-bold text-xl">Import Excel in Progress....</span>
             </div>
             <div class="alert-message">
