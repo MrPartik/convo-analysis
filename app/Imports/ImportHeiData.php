@@ -28,7 +28,6 @@ class ImportHeiData implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFai
     {
         try {
             $aRow = \array_change_key_case($aRow, CASE_UPPER);
-            $oHeiData = [];
             $mHeiDataPrev = HeiDataModel::where('region', $aRow['REGION'])
                 ->where('hei', $aRow['HEI_NAME'])
                 ->where('type', $this->sType)
@@ -36,7 +35,7 @@ class ImportHeiData implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFai
             if ($mHeiDataPrev !== null) {
                 $iHeiDataId = $mHeiDataPrev->id;
             } else {
-                $oHeiData = new HeiDataModel([
+                $oHeiData = HeiDataModel::updateOrCreate([
                     'hei'    => $aRow['HEI_NAME'] ?? null,
                     'region' => $aRow['REGION'] ?? null,
                     'type'   => $this->sType
@@ -44,13 +43,13 @@ class ImportHeiData implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFai
                 $iHeiDataId = $oHeiData->id;
             }
             foreach (AcademicYearModel::all() ?? [] as $aValue) {
-                (isset($aRow[$aValue['year']]) === true) && (new HeiDataCountModel([
+                (isset($aRow[$aValue['year']]) === true) && (HeiDataCountModel::updateOrCreate([
                     'hei_data_id' => $iHeiDataId,
                     'year'=> $aValue['year'],
                     'count' => $aRow[$aValue['year']]
-                ]))->save();
+                ]));
             }
-            return $oHeiData;
+            return [];
         } catch (\Exception $oError) {
             return [];
         }

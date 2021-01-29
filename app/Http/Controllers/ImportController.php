@@ -13,11 +13,4 @@ class ImportController extends Controller
     {
         return \view('user.import');
     }
-
-    public function import()
-    {
-        $oFile = \request()->file('file');
-        Excel::import(new ImportHei(HeiModel::class, ''), $oFile);
-        return back();
-    }
 }

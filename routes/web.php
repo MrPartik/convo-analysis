@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\getDataController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\UserController;
@@ -31,6 +32,8 @@ Route::get('/get/data-source', function(){
         'chart'       => \request()->get('chart') ?? 'bar'
     ];
 });
+
+Route::get('/get/data', [getDataController::class, 'get']);
 
 Route::get('/', function () {
     return view('welcome');
