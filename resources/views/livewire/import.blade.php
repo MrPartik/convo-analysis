@@ -225,6 +225,6 @@
         setTimeout(function () {
             $('.alert-message').fadeOut('fast');
             window.location.reload();
-        }, 1000);
+        }, 500);
     });
 </script>

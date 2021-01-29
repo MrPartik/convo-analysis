@@ -32,12 +32,12 @@ class ImportHeiData implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFai
                 ->where('hei', $aRow['HEI_NAME'])
                 ->where('type', $this->sType)
                 ->first();
-            if ($mHeiDataPrev !== null) {
+            if ($mHeiDataPrev !== 'N/A') {
                 $iHeiDataId = $mHeiDataPrev->id;
             } else {
                 $oHeiData = HeiDataModel::updateOrCreate([
-                    'hei'    => $aRow['HEI_NAME'] ?? null,
-                    'region' => $aRow['REGION'] ?? null,
+                    'hei'    => $aRow['HEI_NAME'] ?? 'N/A',
+                    'region' => $aRow['REGION'] ?? 'N/A',
                     'type'   => $this->sType
                 ]);
                 $iHeiDataId = $oHeiData->id;

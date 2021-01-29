@@ -23,17 +23,8 @@ use Illuminate\Support\Facades\Route;
 /**
  * sample api
  */
-Route::get('/get/data-source', function(){
-    $sIntent = \request()->get('intent');
-    $aData = [];
-        $aData = \Illuminate\Support\Facades\DB::select('SELECT PROGRAM id, HEI.region category, CITY sub_category, HEI.yr_established year , COUNT(*)  total FROM R_PROGRAM AS PROGRAM INNER JOIN R_HEI AS HEI ON PROGRAM.code = HEI.code GROUP BY city');
-    return [
-        'data_source' =>  $aData,
-        'chart'       => \request()->get('chart') ?? 'bar'
-    ];
-});
-
-Route::get('/get/data', [getDataController::class, 'get']);
+Route::get('/get/data-source', [getDataController::class, 'get']);
+Route::get('/get/data', [getDataController::class, 'debug']);
 
 Route::get('/', function () {
     return view('welcome');

@@ -20,7 +20,7 @@ class ImportAcademicYear implements WithHeadingRow, ToModel, SkipsOnError, Skips
         try {
             $aRow = \array_change_key_case($aRow, CASE_UPPER);
             return new AcademicYearModel([
-                'year' => $aRow['YEAR'] ?? null
+                'year' => $aRow['YEAR'] ?? 'N/A'
             ]);
         } catch (\Exception $oError) {
             return [];
