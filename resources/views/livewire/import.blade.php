@@ -1,5 +1,5 @@
 <div class="bg-white p-10">
-    <div wire:loading class="w-full h-full fixed block top-0 left-0 bg-white opacity-75 z-50">
+    <div wire:loading wire:target="importHei, importSuc, importLuc, importPheis, importProgram, importAcademicYear, importGraduate, importEnrollment, heiFile, sucFile, lucFile, pheisFile, academicYearFile, enrollmentFile, graduateFile, programFile" class="w-full h-full fixed block top-0 left-0 bg-white opacity-75 z-50">
       <span class="text-green-500 opacity-75 top-1/2 my-0 mx-auto block relative w-0 h-0" style=" top: 50%; ">
         <i class="fas fa-circle-notch fa-spin fa-5x"></i>
       </span>
@@ -224,7 +224,7 @@
     window.livewire.on('success', function() {
         setTimeout(function () {
             $('.alert-message').fadeOut('fast');
-            window.location.reload();
-        }, 500);
+            @this.success = '';
+        }, 1000);
     });
 </script>

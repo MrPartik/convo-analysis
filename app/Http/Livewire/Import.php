@@ -133,8 +133,8 @@ class Import extends Component
 
     private function clear()
     {
-        $this->clearValidation();
         $this->emit('success');
+        $this->clearValidation();
     }
 
 }

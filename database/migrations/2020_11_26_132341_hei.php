@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class Hei extends Migration
@@ -53,6 +54,7 @@ class Hei extends Migration
                 'head_title',
             ]);
         });
+        DB::statement('ALTER TABLE r_hei ADD FULLTEXT full(hei_name, address)');
     }
 
     /**

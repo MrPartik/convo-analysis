@@ -4,8 +4,6 @@ use App\Http\Controllers\getDataController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\UserController;
-use App\Models\AcademicYearModel;
-use App\Models\HeiDataCountModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -19,10 +17,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-/**
- * sample api
- */
 Route::get('/get/data-source', [getDataController::class, 'get']);
 Route::get('/get/data', [getDataController::class, 'debug']);
 

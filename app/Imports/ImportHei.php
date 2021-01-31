@@ -7,8 +7,9 @@ use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithUpserts;
 
-class ImportHei implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFailure, WithBatchInserts
+class ImportHei implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFailure, WithBatchInserts, WithUpserts
 {
     use SkipsErrors, SkipsFailures;
 
@@ -26,13 +27,13 @@ class ImportHei implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFailure
         try {
             $aRow = \array_change_key_case($aRow, CASE_UPPER);
             return new $this->oModel([
-                'region'         => $aRow['REGION'],
-                'code'           => (isset($aRow['CODE']) === true) ? $aRow['CODE'] : @$aRow['INST_CODE'],
-                'hei_name'       => $aRow['HEI_NAME'],
-                'address'        => $aRow['ADDRESS'],
-                'type'           => ($this->sType === 'N/A') ? $aRow['TYPE'] : $this->sType,
+                'region'         => $aRow['REGION'] ?? 'N/A',
+                'code'           => ((isset($aRow['CODE']) === true) ? $aRow['CODE'] : @$aRow['INST_CODE']) ?? 'N/A',
+                'hei_name'       => $aRow['HEI_NAME'] ?? 'N/A',
+                'address'        => $aRow['ADDRESS'] ?? 'N/A',
+                'type'           => ($this->sType === '') ? $aRow['TYPE'] : $this->sType,
                 'tel_no'         => $aRow['TEL_NUM'] ?? 'N/A',
-                'city'           => $aRow['CITY'],
+                'city'           => $aRow['CITY'] ?? 'N/A',
                 'email'          => $aRow['EMAIL_ADDRESS'] ?? 'N/A',
                 'fax_no'         => $aRow['FAX_NUM'] ?? 'N/A',
                 'head_tel_no'    => $aRow['HEAD_TEL'] ?? 'N/A',
@@ -67,4 +68,13 @@ class ImportHei implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFailure
         return 1000;
     }
 
+    public function uniqueBy()
+    {
+        return [
+            'region',
+            'code',
+            'hei_name',
+            'head_title',
+        ];
+    }
 }
