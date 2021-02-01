@@ -16,6 +16,7 @@ class ProgramModel extends Model
         'name',
         'major',
         'program',
+        'program_category_id',
         'level_i',
         'level_ii',
         'level_iii',

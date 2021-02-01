@@ -8,6 +8,7 @@ use App\Models\HeiModel;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpParser\Error;
 
 class Import extends Component
 {
@@ -101,7 +102,11 @@ class Import extends Component
         $this->validate([
             'graduateFile' => 'required',
         ]);
-        Excel::import(new ImportHeiData('graduate'), $this->graduateFile);
+        try {
+            Excel::import(new ImportHeiData('graduate'), $this->graduateFile);
+        } catch (\ErrorException $oExcept) {
+            return $this->addError('Graduate Data Import Error', $oExcept->getMessage());
+        }
         $this->clearInput();
         $this->success = 'Graduate Student data was successfully imported!';
         $this->clear();
@@ -113,7 +118,11 @@ class Import extends Component
         $this->validate([
             'enrollmentFile' => 'required',
         ]);
-        Excel::import(new ImportHeiData('enrollment'), $this->enrollmentFile);
+        try {
+            Excel::import(new ImportHeiData('enrollment'), $this->enrollmentFile);
+        } catch (\ErrorException $oExcept) {
+            return $this->addError('Enrollment Data Import Error', $oExcept->getMessage());
+        }
         $this->clearInput();
         $this->success = 'Enrollment Student data was successfully imported!';
         $this->clear();

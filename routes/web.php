@@ -4,7 +4,9 @@ use App\Http\Controllers\getDataController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\UserController;
+use App\Models\ProgramModel;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +19,15 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//Route::get('/sample', function(){
+//    $oProgram = ProgramModel::all();
+//    foreach($oProgram as $oVal){
+//        $oProgCat = collect(DB::select('select * from r_program_categories where match(title) against(?) limit 1', [$oVal->program]))->first();
+//        $iPordCatId = $oProgCat->id ?? null;
+//        DB::update('update r_program set program_category_id = ? where id = ?',
+//            [$iPordCatId, $oVal->id]);
+//    }
+//});
 Route::get('/get/data-source', [getDataController::class, 'get']);
 Route::get('/get/data', [getDataController::class, 'debug']);
 

@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Library\utils;
 use App\Models\AcademicYearModel;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
@@ -20,7 +21,7 @@ class ImportAcademicYear implements WithHeadingRow, ToModel, SkipsOnError, Skips
         try {
             $aRow = \array_change_key_case($aRow, CASE_UPPER);
             return new AcademicYearModel([
-                'year' => $aRow['YEAR'] ?? 'N/A'
+                'year' => utils::getNAForNull($aRow['YEAR'])
             ]);
         } catch (\Exception $oError) {
             return [];

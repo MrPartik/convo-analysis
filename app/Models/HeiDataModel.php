@@ -12,8 +12,7 @@ class HeiDataModel extends Model
     protected $table = 'r_hei_data';
     public $timestamps = false;
     protected $fillable = [
-        'hei',
-        'region',
+        'program_id',
         'type'
     ];
 }

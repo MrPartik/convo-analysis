@@ -1,6 +1,8 @@
 <?php namespace App\Imports;
 
+use App\Library\utils;
 use App\Models\ProgramModel;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
@@ -9,9 +11,8 @@ use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Concerns\WithUpserts;
 
-class ImportProgram implements WithHeadingRow, ToModel, SkipsOnFailure, WithBatchInserts, WithUpserts
+class ImportProgram implements WithHeadingRow, ToModel, SkipsOnFailure, WithBatchInserts
 {
     use SkipsErrors, SkipsFailures;
 
@@ -20,43 +21,42 @@ class ImportProgram implements WithHeadingRow, ToModel, SkipsOnFailure, WithBatc
         try {
             $aRow = \array_change_key_case($aRow, CASE_UPPER);
             return new ProgramModel([
-                'code'                   => ((isset($aRow['CODE']) === true) ? $aRow['CODE'] : @$aRow['INST_CODE']) ?? 'N/A',
-                'program'                => ((isset($aRow['PROGRAM']) === true) ? $aRow['PROGRAM'] : @$aRow['DISCIPLINE']) ?? 'N/A',
-                'major'                  => $aRow['MAJOR'] ?? 'N/A',
-                'level_i'                => $aRow['LEVEL_I'] ?? 'N/A',
-                'level_ii'               => $aRow['LEVEL_II'] ?? 'N/A',
-                'level_iii'              => $aRow['LEVEL_III'] ?? 'N/A',
-                'level_iv'               => $aRow['LEVEL_IV'] ?? 'N/A',
-                'gr'                     => $aRow['GR'] ?? 'N/A',
-                'accredited_level'       => $aRow['ACCREDITED_LEVEL'] ?? 'N/A',
-                'accreditor'             => $aRow['ACCREDITOR'] ?? 'N/A',
-                'validity'               => $aRow['VALIDITY'] ?? 'N/A',
-                'coe_cod'                => $aRow['COE_COD'] ?? 'N/A',
-                'autonomous_deregulated' => $aRow['AUTONOMOUS_DEREGULATED'] ?? 'N/A',
-                'gpr'                    => $aRow['GPR'] ?? 'N/A',
-                'gp_gr_no'               => $aRow['GP_GR_NO'] ?? 'N/A',
-                'created_at'             => $aRow['DATE'] ?? 'N/A',
-                'issued_by'              => $aRow['ISSUED_BY'] ?? 'N/A',
-                'remarks'                => $aRow['REMARKS'] ?? 'N/A',
-                'status'                 => $aRow['STATUS'] ?? 'N/A',
+                'code'                   => utils::getNAForNull(((isset($aRow['CODE']) === true) ? $aRow['CODE'] : @$aRow['INST_CODE'])),
+                'program'                => utils::getNAForNull(((isset($aRow['PROGRAM']) === true) ? $aRow['PROGRAM'] : @$aRow['DISCIPLINE'])),
+                'program_category_id'    => $this->getCategoryId(utils::getNAForNull(((isset($aRow['PROGRAM']) === true) ? $aRow['PROGRAM'] : @$aRow['DISCIPLINE']))),
+                'major'                  => utils::getNAForNull(@$aRow['MAJOR']),
+                'level_i'                => utils::getNAForNull(@$aRow['LEVEL_I']),
+                'level_ii'               => utils::getNAForNull(@$aRow['LEVEL_II']),
+                'level_iii'              => utils::getNAForNull(@$aRow['LEVEL_III']),
+                'level_iv'               => utils::getNAForNull(@$aRow['LEVEL_IV']),
+                'gr'                     => utils::getNAForNull(@$aRow['GR']),
+                'accredited_level'       => utils::getNAForNull(@$aRow['ACCREDITED_LEVEL']),
+                'accreditor'             => utils::getNAForNull(@$aRow['ACCREDITOR']),
+                'validity'               => utils::getNAForNull(@$aRow['VALIDITY']),
+                'coe_cod'                => utils::getNAForNull(@$aRow['COE_COD']),
+                'autonomous_deregulated' => utils::getNAForNull(@$aRow['AUTONOMOUS_DEREGULATED']),
+                'gpr'                    => utils::getNAForNull(@$aRow['GPR']),
+                'gp_gr_no'               => utils::getNAForNull(@$aRow['GP_GR_NO']),
+                'created_at'             => utils::getNAForNull(@$aRow['DATE']),
+                'issued_by'              => utils::getNAForNull(@$aRow['ISSUED_BY']),
+                'remarks'                => utils::getNAForNull(@$aRow['REMARKS']),
+                'status'                 => utils::getNAForNull(@$aRow['STATUS']),
             ]);
         } catch (\Exception $oError) {
             return [];
         }
     }
 
+    private function getCategoryId($mProgram)
+    {
+        if ($mProgram === null || $mProgram === 'N/A')
+            return null;
+        $oProgCat = \collect(DB::select('select * from r_program_categories where match(title) against(?) > 1 limit 1', [$mProgram]))->first();
+        return $oProgCat->id ?? null;
+    }
+
     public function batchSize(): int
     {
         return 1000;
-    }
-
-    public function uniqueBy()
-    {
-        return [
-            'code',
-            'program',
-            'major',
-            'accredited_level'
-        ];
     }
 }

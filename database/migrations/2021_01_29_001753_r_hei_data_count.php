@@ -17,17 +17,11 @@ class RHeiDataCount extends Migration
             $oTable->id();
             $oTable->unsignedBigInteger('hei_data_id');
             $oTable->string('year', 20);
-            $oTable->string('count', 20);
+            $oTable->string('semester', 20)->nullable();
+            $oTable->string('m', 20);
+            $oTable->string('f', 20);
 
-            $oTable->foreign('hei_data_id')
-                ->on('r_hei_data')
-                ->references('id');
-
-            $oTable->unique([
-                'year',
-                'hei_data_id',
-                'count'
-            ]);
+            $oTable->foreign('hei_data_id')->on('r_hei_data')->references('id');
         });
     }
 

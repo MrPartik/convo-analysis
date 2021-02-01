@@ -18,8 +18,8 @@ class Hei extends Migration
             $oTable->id();
             $oTable->string('region', 10)->nullable();
             $oTable->string('code', 20)->nullable();
-            $oTable->string('hei_name')->nullable();
-            $oTable->string('address')->nullable();
+            $oTable->text('hei_name')->nullable();
+            $oTable->text('address')->nullable();
             $oTable->string('city')->nullable();
             $oTable->string('type')->nullable();
             $oTable->string('tel_no')->nullable();
@@ -54,7 +54,6 @@ class Hei extends Migration
                 'head_title',
             ]);
         });
-        DB::statement('ALTER TABLE r_hei ADD FULLTEXT full(hei_name, address)');
     }
 
     /**

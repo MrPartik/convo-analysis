@@ -13,7 +13,9 @@ class HeiDataCountModel extends Model
     public $timestamps = false;
     protected $fillable = [
         'hei_data_id',
+        'semester',
         'year',
-        'count'
+        'm',
+        'f',
     ];
 }

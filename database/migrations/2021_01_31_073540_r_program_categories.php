@@ -17,11 +17,9 @@ class RProgramCategories extends Migration
             $oTable->id();
             $oTable->string('code', 20)->nullable();
             $oTable->string('title');
-            $oTable->unsignedBigInteger('parent_program_id')->nullable();
-
-            $oTable->foreign('parent_program_id')->on('r_program_categories')
-                ->references('id');
         });
+
+        DB::statement('ALTER TABLE r_program_categories ADD FULLTEXT program_category(title)');
     }
 
     /**

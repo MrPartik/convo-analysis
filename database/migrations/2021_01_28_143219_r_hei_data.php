@@ -15,15 +15,15 @@ class RHeiData extends Migration
     {
         Schema::create('r_hei_data', function (Blueprint $oTable) {
             $oTable->id();
-            $oTable->string('hei');
-            $oTable->string('region', 20);
+            $oTable->unsignedBigInteger('program_id')->nullable();
             $oTable->string('type', 20);
 
             $oTable->unique([
-               'hei',
-               'region',
+               'program_id',
                'type'
             ]);
+
+            $oTable->foreign('program_id')->on('r_program')->references('id');
         });
     }
 

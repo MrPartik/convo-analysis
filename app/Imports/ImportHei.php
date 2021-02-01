@@ -1,5 +1,6 @@
 <?php namespace App\Imports;
 
+use App\Library\utils;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnError;
@@ -7,9 +8,8 @@ use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Concerns\WithUpserts;
 
-class ImportHei implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFailure, WithBatchInserts, WithUpserts
+class ImportHei implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFailure, WithBatchInserts
 {
     use SkipsErrors, SkipsFailures;
 
@@ -27,36 +27,36 @@ class ImportHei implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFailure
         try {
             $aRow = \array_change_key_case($aRow, CASE_UPPER);
             return new $this->oModel([
-                'region'         => $aRow['REGION'] ?? 'N/A',
-                'code'           => ((isset($aRow['CODE']) === true) ? $aRow['CODE'] : @$aRow['INST_CODE']) ?? 'N/A',
-                'hei_name'       => $aRow['HEI_NAME'] ?? 'N/A',
-                'address'        => $aRow['ADDRESS'] ?? 'N/A',
+                'region'         => utils::getNAForNull(@$aRow['REGION']),
+                'code'           => utils::getNAForNull(((isset($aRow['CODE']) === true) ? $aRow['CODE'] : @$aRow['INST_CODE'])),
+                'hei_name'       => utils::getNAForNull(@$aRow['HEI_NAME']),
+                'address'        => utils::getNAForNull(@$aRow['ADDRESS']),
                 'type'           => ($this->sType === '') ? $aRow['TYPE'] : $this->sType,
-                'tel_no'         => $aRow['TEL_NUM'] ?? 'N/A',
-                'city'           => $aRow['CITY'] ?? 'N/A',
-                'email'          => $aRow['EMAIL_ADDRESS'] ?? 'N/A',
-                'fax_no'         => $aRow['FAX_NUM'] ?? 'N/A',
-                'head_tel_no'    => $aRow['HEAD_TEL'] ?? 'N/A',
-                'head'           => $aRow['HEAD'] ?? 'N/A',
-                'head_title'     => $aRow['HEAD_TITLE'] ?? 'N/A',
-                'head_hea'       => $aRow['HEAD_HEA'] ?? 'N/A',
-                'official'       => $aRow['OFFICIAL'] ?? 'N/A',
-                'official_title' => $aRow['OFFICIAL_TITLE'] ?? 'N/A',
-                'official_hea'   => $aRow['OFFICIAL_HEA'] ?? 'N/A',
-                'registrar'      => $aRow['REGISTRAR'] ?? 'N/A',
-                'lo'             => $aRow['LO'] ?? 'N/A',
-                'name1'          => $aRow['NAME1'] ?? 'N/A',
-                'name2'          => $aRow['NAME2'] ?? 'N/A',
-                'name3'          => $aRow['NAME3'] ?? 'N/A',
-                'name4'          => $aRow['NAME4'] ?? 'N/A',
-                'name5'          => $aRow['NAME5'] ?? 'N/A',
-                'hei_type'       => $aRow['HEI_TYPE'] ?? 'N/A',
-                'remarks'        => $aRow['REMARKS'] ?? 'N/A',
-                'website'        => $aRow['WEBSITE'] ?? 'N/A',
-                'yr_established' => (isset($aRow['YR_ESTABLISMENT']) === true) ? $aRow['YR_ESTABLISMENT'] : @$aRow['YR_ESTABLISHMENT'],
-                'updated_by'     => $aRow['UPDATED_BY'] ?? 'N/A',
-                'updated_at'     => $aRow['DATE_UPDATED'] ?? 'N/A',
-                'status'         => $aRow['STATUS'] ?? 'N/A',
+                'tel_no'         => utils::getNAForNull(@$aRow['TEL_NUM']),
+                'city'           => utils::getNAForNull(@$aRow['CITY']),
+                'email'          => utils::getNAForNull(@$aRow['EMAIL_ADDRESS']),
+                'fax_no'         => utils::getNAForNull(@$aRow['FAX_NUM']),
+                'head_tel_no'    => utils::getNAForNull(@$aRow['HEAD_TEL']),
+                'head'           => utils::getNAForNull(@$aRow['HEAD']),
+                'head_title'     => utils::getNAForNull(@$aRow['HEAD_TITLE']),
+                'head_hea'       => utils::getNAForNull(@$aRow['HEAD_HEA']),
+                'official'       => utils::getNAForNull(@$aRow['OFFICIAL']),
+                'official_title' => utils::getNAForNull(@$aRow['OFFICIAL_TITLE']),
+                'official_hea'   => utils::getNAForNull(@$aRow['OFFICIAL_HEA']),
+                'registrar'      => utils::getNAForNull(@$aRow['REGISTRAR']),
+                'lo'             => utils::getNAForNull(@$aRow['LO']),
+                'name1'          => utils::getNAForNull(@$aRow['NAME1']),
+                'name2'          => utils::getNAForNull(@$aRow['NAME2']),
+                'name3'          => utils::getNAForNull(@$aRow['NAME3']),
+                'name4'          => utils::getNAForNull(@$aRow['NAME4']),
+                'name5'          => utils::getNAForNull(@$aRow['NAME5']),
+                'hei_type'       => utils::getNAForNull(@$aRow['HEI_TYPE']),
+                'remarks'        => utils::getNAForNull(@$aRow['REMARKS']),
+                'website'        => utils::getNAForNull(@$aRow['WEBSITE']),
+                'yr_established' => utils::getNAForNull((isset($aRow['YR_ESTABLISMENT']) === true) ? $aRow['YR_ESTABLISMENT'] : @$aRow['YR_ESTABLISHMENT']),
+                'updated_by'     => utils::getNAForNull(@$aRow['UPDATED_BY']),
+                'updated_at'     => utils::getNAForNull(@$aRow['DATE_UPDATED']),
+                'status'         => utils::getNAForNull(@$aRow['STATUS']),
             ]);
         } catch (\Exception $oError) {
             return [];
@@ -68,13 +68,4 @@ class ImportHei implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFailure
         return 1000;
     }
 
-    public function uniqueBy()
-    {
-        return [
-            'region',
-            'code',
-            'hei_name',
-            'head_title',
-        ];
-    }
 }

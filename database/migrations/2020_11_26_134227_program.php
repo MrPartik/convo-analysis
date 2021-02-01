@@ -17,8 +17,9 @@ class Program extends Migration
         Schema::create('r_program', function (Blueprint $oTable) {
             $oTable->id();
             $oTable->string('code')->nullable();
-            $oTable->string('program')->nullable();
-            $oTable->string('major')->nullable();
+            $oTable->text('program')->nullable();
+            $oTable->unsignedBigInteger('program_category_id')->nullable();
+            $oTable->text('major')->nullable();
             $oTable->string('level_i')->nullable();
             $oTable->string('level_ii')->nullable();
             $oTable->string('level_iii')->nullable();
@@ -40,10 +41,13 @@ class Program extends Migration
                 'code',
                 'program',
                 'major',
-                'accredited_level'
-            ]);
+                'accredited_level',
+                'gr',
+                'level_i',
+                'level_ii',
+                'level_iii'
+            ],'unique_cols');
         });
-        DB::statement('ALTER TABLE r_program ADD FULLTEXT full(program, major)');
     }
 
     /**
