@@ -27,7 +27,7 @@ class getDataController extends Controller
                                 join r_program prog on hd.program_id = prog.id
                                 join r_hei hei on prog.code = hei.code
                                 join r_program_categories progc on progc.id = prog.program_category_id
-                                GROUP BY hdc.YEAR, hei.region'
+                                GROUP BY hdc.YEAR, hei.region, prog.program'
        );
     }
 }
