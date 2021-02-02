@@ -16,16 +16,16 @@ class Program extends Migration
     {
         Schema::create('r_program', function (Blueprint $oTable) {
             $oTable->id();
-            $oTable->string('code')->nullable();
-            $oTable->text('program')->nullable();
+            $oTable->string('code', 50)->nullable();
+            $oTable->string('program', 300)->nullable();
             $oTable->unsignedBigInteger('program_category_id')->nullable();
-            $oTable->text('major')->nullable();
+            $oTable->string('major', 300)->nullable();
             $oTable->string('level_i')->nullable();
             $oTable->string('level_ii')->nullable();
             $oTable->string('level_iii')->nullable();
             $oTable->string('level_iv')->nullable();
             $oTable->string('gr')->nullable();
-            $oTable->string('accredited_level')->nullable();
+            $oTable->string('accredited_level', 50)->nullable();
             $oTable->string('accreditor')->nullable();
             $oTable->string('validity')->nullable();
             $oTable->string('coe_cod')->nullable();
@@ -36,17 +36,6 @@ class Program extends Migration
             $oTable->string('issued_by')->nullable();
             $oTable->string('remarks')->nullable();
             $oTable->string('status')->nullable();
-
-            $oTable->unique([
-                'code',
-                'program',
-                'major',
-                'accredited_level',
-                'gr',
-                'level_i',
-                'level_ii',
-                'level_iii'
-            ],'unique_cols');
         });
     }
 

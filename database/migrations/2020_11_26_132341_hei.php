@@ -18,8 +18,8 @@ class Hei extends Migration
             $oTable->id();
             $oTable->string('region', 10)->nullable();
             $oTable->string('code', 20)->nullable();
-            $oTable->text('hei_name')->nullable();
-            $oTable->text('address')->nullable();
+            $oTable->string('hei_name', 300)->nullable();
+            $oTable->string('address', 300)->nullable();
             $oTable->string('city')->nullable();
             $oTable->string('type')->nullable();
             $oTable->string('tel_no')->nullable();
@@ -46,13 +46,6 @@ class Hei extends Migration
             $oTable->string('updated_by')->nullable();
             $oTable->string('updated_at')->nullable();
             $oTable->string('status')->nullable();
-
-            $oTable->unique([
-                'region',
-                'code',
-                'hei_name',
-                'head_title',
-            ]);
         });
     }
 

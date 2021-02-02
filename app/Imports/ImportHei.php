@@ -26,6 +26,12 @@ class ImportHei implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFailure
     {
         try {
             $aRow = \array_change_key_case($aRow, CASE_UPPER);
+            if($this->oModel::where([
+                ['region', utils::getNAForNull(@$aRow['REGION'])],
+                ['code', utils::getNAForNull(((isset($aRow['CODE']) === true) ? $aRow['CODE'] : @$aRow['INST_CODE']))],
+                ['hei_name', utils::getNAForNull(@$aRow['HEI_NAME'])],
+                ['address', utils::getNAForNull(@$aRow['ADDRESS'])]
+            ])->first() !== null) return [];
             return new $this->oModel([
                 'region'         => utils::getNAForNull(@$aRow['REGION']),
                 'code'           => utils::getNAForNull(((isset($aRow['CODE']) === true) ? $aRow['CODE'] : @$aRow['INST_CODE'])),

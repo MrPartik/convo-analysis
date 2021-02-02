@@ -20,6 +20,7 @@ class ImportAcademicYear implements WithHeadingRow, ToModel, SkipsOnError, Skips
     {
         try {
             $aRow = \array_change_key_case($aRow, CASE_UPPER);
+            if(AcademicYearModel::where('year', utils::getNAForNull($aRow['YEAR']))->first() !== null) return [];
             return new AcademicYearModel([
                 'year' => utils::getNAForNull($aRow['YEAR'])
             ]);

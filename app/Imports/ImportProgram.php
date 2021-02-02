@@ -20,6 +20,16 @@ class ImportProgram implements WithHeadingRow, ToModel, SkipsOnFailure, WithBatc
     {
         try {
             $aRow = \array_change_key_case($aRow, CASE_UPPER);
+            if(ProgramModel::where([
+                ['code', utils::getNAForNull(((isset($aRow['CODE']) === true) ? $aRow['CODE'] : @$aRow['INST_CODE']))],
+                ['program', utils::getNAForNull(((isset($aRow['PROGRAM']) === true) ? $aRow['PROGRAM'] : @$aRow['DISCIPLINE']))],
+                ['major', utils::getNAForNull(@$aRow['MAJOR'])],
+                ['level_i', utils::getNAForNull(@$aRow['LEVEL_I'])],
+                ['level_ii', utils::getNAForNull(@$aRow['LEVEL_II'])],
+                ['level_iii', utils::getNAForNull(@$aRow['LEVEL_III'])],
+                ['gr', utils::getNAForNull(@$aRow['GR'])],
+                ['accredited_level', utils::getNAForNull(@$aRow['ACCREDITED_LEVEL'])],
+            ])->first() !== null) return [];
             return new ProgramModel([
                 'code'                   => utils::getNAForNull(((isset($aRow['CODE']) === true) ? $aRow['CODE'] : @$aRow['INST_CODE'])),
                 'program'                => utils::getNAForNull(((isset($aRow['PROGRAM']) === true) ? $aRow['PROGRAM'] : @$aRow['DISCIPLINE'])),
