@@ -27,7 +27,15 @@ use Illuminate\Support\Facades\Route;
 //        DB::update('update r_program set program_category_id = ? where id = ?',
 //            [$iPordCatId, $oVal->id]);
 //    }
+
+//    $oHeiData = \App\Models\HeiDataModel::all();
+//    foreach($oHeiData as $oVal) {
+//        $sProgramCode = ProgramModel::where('id', $oVal->program_id)->first();
+//        DB::update('update r_hei_data set hei_code = ? where id = ?',
+//            [$sProgramCode->code, $oVal->id]);
+//    }
 //});
+
 Route::get('/get/data-source', [getDataController::class, 'get']);
 Route::get('/get/data', [getDataController::class, 'debug']);
 

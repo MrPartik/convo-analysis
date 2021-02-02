@@ -32,7 +32,7 @@ class ImportHeiData implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFai
             ->where('major', utils::getNAForNull($aRow['MAJOR']))
             ->where('code', utils::getNAForNull($aRow['HEI_CODE']))
             ->first();
-        if ($mProgramData === null)  throw new \ErrorException('Please import the program data first, it seems that you are trying to import ' . \ucfirst($this->sType) . ' data that is not existing to program data!');
+        if ($mProgramData === null) throw new \ErrorException('Please import the program data first, it seems that you are trying to import ' . \ucfirst($this->sType) . ' data that is not existing to program data!');
         $mHeiDataPrev = HeiDataModel::where('program_id', $mProgramData->id)
             ->where('type', $this->sType)
             ->first();
@@ -41,6 +41,7 @@ class ImportHeiData implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFai
         } else {
             $oHeiData = HeiDataModel::updateOrCreate([
                 'program_id' => $mProgramData->id ?? null,
+                'hei_code'   => @$aRow['HEI_CODE'] ?? null,
                 'type'       => $this->sType
             ]);
             $iHeiDataId = $oHeiData->id;

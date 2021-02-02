@@ -13,6 +13,7 @@ class HeiDataModel extends Model
     public $timestamps = false;
     protected $fillable = [
         'program_id',
+        'hei_code',
         'type'
     ];
 }

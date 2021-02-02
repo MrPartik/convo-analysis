@@ -21,6 +21,13 @@ class getDataController extends Controller
 
     private function generateDataSource($sIntent, $sBy)
     {
-       return DB::select('SELECT PROGRAM id, HEI.region category, CITY sub_category, HEI.yr_established year , COUNT(*)  total FROM R_PROGRAM AS PROGRAM INNER JOIN R_HEI AS HEI ON PROGRAM.code = HEI.code GROUP BY city');
+       return DB::select('SELECT hdc.year year, hei.region region, HEI.HEI_NAME hei, progc.title category, PROG.program program, count(hdc.YEAR) total
+                                from r_hei_data_count hdc
+                                join r_hei_data hd on hdc.hei_data_id = hd.id
+                                join r_program prog on hd.program_id = prog.id
+                                join r_hei hei on prog.code = hei.code
+                                join r_program_categories progc on progc.id = prog.program_category_id
+                                GROUP BY hdc.YEAR, hei.region'
+       );
     }
 }
