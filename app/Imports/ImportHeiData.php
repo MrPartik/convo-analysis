@@ -46,14 +46,19 @@ class ImportHeiData implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFai
             ]);
             $iHeiDataId = $oHeiData->id;
         }
+        $aBulkInsert = [];
         foreach (AcademicYearModel::all() ?? [] as $aValue) {
-            (isset($aRow[$aValue['year'] . '_' . 'M']) === true && isset($aRow[$aValue['year'] . '_' . 'F']) === true) && (HeiDataCountModel::updateOrCreate([
-                'hei_data_id' => $iHeiDataId,
-                'year'        => $aValue['year'],
-                'm'           => $aRow[$aValue['year'] . '_' . 'M'],
-                'f'           => $aRow[$aValue['year'] . '_' . 'F']
-            ]));
+            if (isset($aRow[$aValue['year'] . '_' . 'M']) === true && isset($aRow[$aValue['year'] . '_' . 'F']) === true) {
+                $aBulkInsert[] = [
+                    'hei_data_id' => $iHeiDataId,
+                    'year'        => $aValue['year'],
+                    'semester'    => @$aRow['SEMESTER'],
+                    'm'           => $aRow[$aValue['year'] . '_' . 'M'],
+                    'f'           => $aRow[$aValue['year'] . '_' . 'F']
+                ];
+            }
         }
+        HeiDataCountModel::insert($aBulkInsert);
         return [];
     }
 }

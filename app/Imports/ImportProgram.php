@@ -61,7 +61,7 @@ class ImportProgram implements WithHeadingRow, ToModel, SkipsOnFailure, WithBatc
     {
         if ($mProgram === null || $mProgram === 'N/A')
             return null;
-        $oProgCat = \collect(DB::select('select * from r_program_categories where match(title) against(?) > 1 limit 1', [$mProgram]))->first();
+        $oProgCat = \collect(DB::select('select id from r_program_categories where match(title) against(?) > 1 limit 1', [$mProgram]))->first();
         return $oProgCat->id ?? null;
     }
 
