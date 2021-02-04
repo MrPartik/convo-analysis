@@ -10,6 +10,7 @@ use App\Models\queueJobModel;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpParser\Error;
@@ -28,12 +29,9 @@ class Import extends Component
     public $graduateFile = '';
     public $programFile = '';
     public $success = '';
-    private $oFileSystem;
 
     public function __construct($id = null)
     {
-        $this->oFileSystem = Storage::disk('local');
-
         parent::__construct($id);
     }
 
@@ -133,12 +131,13 @@ class Import extends Component
         $this->clear();
     }
 
-    private function prepareQueueImport($oFile, $sType){ 
+    private function prepareQueueImport($oFile, $sType){
         $oQueue = new queueJobModel();
         $oQueue->file = $oFile->getFilename();
         $oQueue->type = $sType;
         $oQueue->save();
-        ImportExcelBackground::dispatch();
+        Storage::disk('tmp')->put($oFile->getFilename(), \file_get_contents($oFile->getRealPath()));
+        ImportExcelBackground::dispatch()->delay('3');
     }
 
     private function clearInput()
