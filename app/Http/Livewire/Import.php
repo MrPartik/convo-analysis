@@ -4,11 +4,16 @@ use App\Imports\ImportAcademicYear;
 use App\Imports\ImportHei;
 use App\Imports\ImportProgram;
 use App\Imports\ImportHeiData;
+use App\Jobs\ImportExcelBackground;
 use App\Models\HeiModel;
+use App\Models\queueJobModel;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpParser\Error;
+use Symfony\Component\Process\Process;
 
 class Import extends Component
 {
@@ -23,6 +28,14 @@ class Import extends Component
     public $graduateFile = '';
     public $programFile = '';
     public $success = '';
+    private $oFileSystem;
+
+    public function __construct($id = null)
+    {
+        $this->oFileSystem = Storage::disk('local');
+
+        parent::__construct($id);
+    }
 
     public function render()
     {
@@ -34,7 +47,7 @@ class Import extends Component
         $this->validate([
             'heiFile' => 'required',
         ]);
-        Excel::import(new ImportHei(HeiModel::class, ''), $this->heiFile);
+        $this->prepareQueueImport($this->heiFile, 'HEI');
         $this->clearInput();
         $this->success = 'Hei data was successfully imported!';
         $this->clear();
@@ -45,7 +58,7 @@ class Import extends Component
         $this->validate([
             'sucFile' => 'required',
         ]);
-        Excel::import(new ImportHei(HeiModel::class, 'SUC'), $this->sucFile);
+        $this->prepareQueueImport($this->heiFile, 'SUC');
         $this->clearInput();
         $this->success = 'SUC data was successfully imported!';
         $this->clear();
@@ -56,7 +69,7 @@ class Import extends Component
         $this->validate([
             'lucFile' => 'required',
         ]);
-        Excel::import(new ImportHei(HeiModel::class, 'LUC'), $this->lucFile);
+        $this->prepareQueueImport($this->heiFile, 'LUC');
         $this->clearInput();
         $this->success = 'LUC data was successfully imported!';
         $this->clear();
@@ -67,7 +80,7 @@ class Import extends Component
         $this->validate([
             'pheisFile' => 'required',
         ]);
-        Excel::import(new ImportHei(HeiModel::class, 'PHEIS'), $this->pheisFile);
+        $this->prepareQueueImport($this->heiFile, 'PHEIS');
         $this->clearInput();
         $this->success = 'PHEIS data was successfully imported!';
         $this->clear();
@@ -78,7 +91,7 @@ class Import extends Component
         $this->validate([
             'programFile' => 'required',
         ]);
-        Excel::import(new ImportProgram, $this->programFile);
+        $this->prepareQueueImport($this->programFile, 'PROGRAM');
         $this->clearInput();
         $this->success = 'Program data was successfully imported!';
         $this->clear();
@@ -90,7 +103,7 @@ class Import extends Component
         $this->validate([
             'academicYearFile' => 'required',
         ]);
-        Excel::import(new importAcademicYear, $this->academicYearFile);
+        $this->prepareQueueImport($this->academicYearFile, 'YEAR');
         $this->clearInput();
         $this->success = 'Academic Year data was successfully imported!';
         $this->clear();
@@ -102,11 +115,7 @@ class Import extends Component
         $this->validate([
             'graduateFile' => 'required',
         ]);
-        try {
-            Excel::import(new ImportHeiData('graduate'), $this->graduateFile);
-        } catch (\ErrorException $oExcept) {
-            return $this->addError('Graduate Data Import Error', $oExcept->getMessage());
-        }
+        $this->prepareQueueImport($this->graduateFile, 'GRADUATE');
         $this->clearInput();
         $this->success = 'Graduate Student data was successfully imported!';
         $this->clear();
@@ -118,14 +127,18 @@ class Import extends Component
         $this->validate([
             'enrollmentFile' => 'required',
         ]);
-        try {
-            Excel::import(new ImportHeiData('enrollment'), $this->enrollmentFile);
-        } catch (\ErrorException $oExcept) {
-            return $this->addError('Enrollment Data Import Error', $oExcept->getMessage());
-        }
+        $this->prepareQueueImport($this->enrollmentFile, 'ENROLLMENT');
         $this->clearInput();
         $this->success = 'Enrollment Student data was successfully imported!';
         $this->clear();
+    }
+
+    private function prepareQueueImport($oFile, $sType){
+        $oQueue = new queueJobModel();
+        $oQueue->file = $oFile->getFilename();
+        $oQueue->type = $sType;
+        $oQueue->save();
+        ImportExcelBackground::dispatch();
     }
 
     private function clearInput()

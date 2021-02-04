@@ -15,6 +15,11 @@
         </div>
         @enderror
     </div>
+    @if (session()->has('message'))
+        <div class="alert alert-success">
+            {{ session('message') }}
+        </div>
+    @endif
     <div wire:loading wire:target="importHei, importSuc, importLuc, importPheis, importProgram, importAcademicYear, importGraduate, importEnrollment, heiFile, sucFile, lucFile, pheisFile, academicYearFile, enrollmentFile, graduateFile, programFile" class="w-full h-full fixed block top-0 left-0 bg-white opacity-75 z-50">
       <span class="text-green-500 opacity-75 top-1/2 my-0 mx-auto block relative w-0 h-0" style=" top: 50%; ">
         <i class="fas fa-circle-notch fa-spin fa-5x"></i>
@@ -231,7 +236,7 @@
 </div>
 
 <script>
-    window.livewire.on('success', function() {
+    window.livewire.on('success', function(oResult) {
         setTimeout(function () {
             $('.alert-message').fadeOut('fast');
             @this.success = '';

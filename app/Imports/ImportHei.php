@@ -37,7 +37,7 @@ class ImportHei implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFailure
                 'code'           => utils::getNAForNull(((isset($aRow['CODE']) === true) ? $aRow['CODE'] : @$aRow['INST_CODE'])),
                 'hei_name'       => utils::getNAForNull(@$aRow['HEI_NAME']),
                 'address'        => utils::getNAForNull(@$aRow['ADDRESS']),
-                'type'           => ($this->sType === '') ? $aRow['TYPE'] : $this->sType,
+                'type'           => ($this->sType === 'HEI') ? $aRow['TYPE'] : $this->sType,
                 'tel_no'         => utils::getNAForNull(@$aRow['TEL_NUM']),
                 'city'           => utils::getNAForNull(@$aRow['CITY']),
                 'email'          => utils::getNAForNull(@$aRow['EMAIL_ADDRESS']),

@@ -4,6 +4,7 @@ use App\Http\Controllers\getDataController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\UserController;
+use App\Models\ProgramCategoryModel;
 use App\Models\ProgramModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-//Route::get('/sample', function(){
+Route::get('/sample', function(){
 //    $oProgram = ProgramModel::all();
 //    foreach($oProgram as $oVal){
 //        $oProgCat = collect(DB::select('select * from r_program_categories where match(title) against(?) limit 1', [$oVal->program]))->first();
@@ -34,7 +35,12 @@ use Illuminate\Support\Facades\Route;
 //        DB::update('update r_hei_data set hei_code = ? where id = ?',
 //            [$sProgramCode->code, $oVal->id]);
 //    }
-//});
+
+//    return array_column(ProgramCategoryModel::all()->toArray(), 'title');
+    $fuzzy = new FuzzySearch\FuzzySearch(ProgramCategoryModel::all()->toArray(), 'title');
+    return $fuzzy->search('Arts', 20);
+
+});
 
 Route::get('/get/data-source', [getDataController::class, 'get']);
 Route::get('/get/data', [getDataController::class, 'debug']);
