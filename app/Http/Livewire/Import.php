@@ -49,7 +49,7 @@ class Import extends Component
         ]);
         $this->prepareQueueImport($this->heiFile, 'HEI');
         $this->clearInput();
-        $this->success = 'Hei data was successfully imported!';
+        $this->success = 'Hei data was on the queue, please wait util the import is finished.!';
         $this->clear();
     }
 
@@ -60,7 +60,7 @@ class Import extends Component
         ]);
         $this->prepareQueueImport($this->heiFile, 'SUC');
         $this->clearInput();
-        $this->success = 'SUC data was successfully imported!';
+        $this->success = 'SUC data was on the queue, please wait util the import is finished.!';
         $this->clear();
     }
 
@@ -71,7 +71,7 @@ class Import extends Component
         ]);
         $this->prepareQueueImport($this->heiFile, 'LUC');
         $this->clearInput();
-        $this->success = 'LUC data was successfully imported!';
+        $this->success = 'LUC data was on the queue, please wait util the import is finished.!';
         $this->clear();
     }
 
@@ -82,7 +82,7 @@ class Import extends Component
         ]);
         $this->prepareQueueImport($this->heiFile, 'PHEIS');
         $this->clearInput();
-        $this->success = 'PHEIS data was successfully imported!';
+        $this->success = 'PHEIS data was on the queue, please wait util the import is finished.!';
         $this->clear();
     }
 
@@ -93,7 +93,7 @@ class Import extends Component
         ]);
         $this->prepareQueueImport($this->programFile, 'PROGRAM');
         $this->clearInput();
-        $this->success = 'Program data was successfully imported!';
+        $this->success = 'Program data was on the queue, please wait util the import is finished.!';
         $this->clear();
     }
 
@@ -105,7 +105,7 @@ class Import extends Component
         ]);
         $this->prepareQueueImport($this->academicYearFile, 'YEAR');
         $this->clearInput();
-        $this->success = 'Academic Year data was successfully imported!';
+        $this->success = 'Academic Year data was on the queue, please wait util the import is finished.!';
         $this->clear();
     }
 
@@ -117,7 +117,7 @@ class Import extends Component
         ]);
         $this->prepareQueueImport($this->graduateFile, 'GRADUATE');
         $this->clearInput();
-        $this->success = 'Graduate Student data was successfully imported!';
+        $this->success = 'Graduate Student data was on the queue, please wait util the import is finished.!';
         $this->clear();
     }
 
@@ -129,7 +129,7 @@ class Import extends Component
         ]);
         $this->prepareQueueImport($this->enrollmentFile, 'ENROLLMENT');
         $this->clearInput();
-        $this->success = 'Enrollment Student data was successfully imported!';
+        $this->success = 'Enrollment Student data was on the queue, please wait util the import is finished.!';
         $this->clear();
     }
 
