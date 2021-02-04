@@ -2,19 +2,15 @@
 
 use App\Library\utils;
 use App\Models\ProgramModel;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
-use Maatwebsite\Excel\Concerns\SkipsOnError;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
-use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class ImportProgram implements WithHeadingRow, ToModel, SkipsOnFailure, WithBatchInserts, ShouldQueue, WithChunkReading
+class ImportProgram implements WithHeadingRow, ToModel, SkipsOnFailure, WithBatchInserts
 {
     use SkipsErrors, SkipsFailures;
 
@@ -68,11 +64,6 @@ class ImportProgram implements WithHeadingRow, ToModel, SkipsOnFailure, WithBatc
     }
 
     public function batchSize(): int
-    {
-        return 1000;
-    }
-
-    public function chunkSize(): int
     {
         return 1000;
     }

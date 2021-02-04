@@ -17,9 +17,9 @@ class Program extends Migration
         Schema::create('r_program', function (Blueprint $oTable) {
             $oTable->id();
             $oTable->string('code', 50)->nullable();
-            $oTable->string('program', 300)->nullable();
+            $oTable->text('program')->nullable();
             $oTable->unsignedBigInteger('program_category_id')->nullable();
-            $oTable->string('major', 300)->nullable();
+            $oTable->text('major')->nullable();
             $oTable->string('level_i')->nullable();
             $oTable->string('level_ii')->nullable();
             $oTable->string('level_iii')->nullable();
