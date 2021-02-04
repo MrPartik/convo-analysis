@@ -134,6 +134,7 @@ class Import extends Component
     }
 
     private function prepareQueueImport($oFile, $sType){
+        dd($oFile);
         $oQueue = new queueJobModel();
         $oQueue->file = $oFile->getFilename();
         $oQueue->type = $sType;
