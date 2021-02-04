@@ -133,8 +133,7 @@ class Import extends Component
         $this->clear();
     }
 
-    private function prepareQueueImport($oFile, $sType){
-        dd($oFile);
+    private function prepareQueueImport($oFile, $sType){ 
         $oQueue = new queueJobModel();
         $oQueue->file = $oFile->getFilename();
         $oQueue->type = $sType;
