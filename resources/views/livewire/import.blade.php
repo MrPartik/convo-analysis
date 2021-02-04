@@ -1,4 +1,20 @@
 <div class="bg-white p-10">
+    <div class="fixed right-0 top-0 m-5">
+        <div class="alert-message {{ ($success === '') ? 'hidden' : '' }} flex items-center bg-green-500 border-l-4 border-green-700 py-2 px-3 shadow-md mb-2">
+            <!-- message -->
+            <div class="text-white max-w-xs ">
+                {{ $success }}
+            </div>
+        </div>
+        @error('*')
+        <div class="alert-message  {{ ($message === '') ? 'hidden' : '' }} flex items-center bg-red-500 border-l-4 border-red-700 py-2 px-3 shadow-md mb-2">
+            <!-- message -->
+            <div class="text-white max-w-xs ">
+                {{ $message }}
+            </div>
+        </div>
+        @enderror
+    </div>
     <div wire:loading wire:target="importHei, importSuc, importLuc, importPheis, importProgram, importAcademicYear, importGraduate, importEnrollment, heiFile, sucFile, lucFile, pheisFile, academicYearFile, enrollmentFile, graduateFile, programFile" class="w-full h-full fixed block top-0 left-0 bg-white opacity-75 z-50">
       <span class="text-green-500 opacity-75 top-1/2 my-0 mx-auto block relative w-0 h-0" style=" top: 50%; ">
         <i class="fas fa-circle-notch fa-spin fa-5x"></i>
@@ -6,12 +22,6 @@
     </div>
     <p class="text-center font-bold text-xl mb-10">Import/ Restore from Excel File</p>
     <div class="container  mx-auto grid">
-            <div>
-            @error('*') <span class="alert-message text-red-500">{{ $message }}</span> @enderror
-            <div class="alert-message">
-                <span class="text-green-700 font-bold text-xl">{{ $success }}</span>
-            </div>
-        </div>
         <!-- Cards -->
         <div class="grid gap-6 mb-8 md:grid-cols-2">
             <label class="cursor-pointer flex items-center p-4 bg-white hover:bg-gray-100 rounded-lg shadow-xs dark:bg-gray-800 shadow-lg">
