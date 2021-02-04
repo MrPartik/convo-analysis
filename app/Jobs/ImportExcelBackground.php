@@ -43,9 +43,9 @@ class ImportExcelBackground implements ShouldQueue
      */
     public function handle()
     {
+        $oQueue = queueJobModel::where('is_imported', 0)->orderBy('id', 'DESC')->first();
         try {
-            $oQueue = queueJobModel::where('is_imported', 0)->orderBy('id', 'DESC')->first();
-            Log::info('ImportManager:start ' . time());
+            $oQueue->updated_at = time();
             if ($oQueue !== null) {
                 if ($oQueue->type === 'HEI') Excel::import(new ImportHei(HeiModel::class, $oQueue->type), $this->getFile($oQueue->file));
                 else if ($oQueue->type === 'SUC') Excel::import(new ImportHei(HeiModel::class, 'SUC'), $this->getFile($oQueue->file));
@@ -56,13 +56,13 @@ class ImportExcelBackground implements ShouldQueue
                 else if ($oQueue->type === 'GRADUATE') Excel::import(new ImportHeiData('GRADUATE'), $this->getFile($oQueue->file));
                 else if ($oQueue->type === 'ENROLLMENT') Excel::import(new ImportHeiData('ENROLLMENT'), $this->getFile($oQueue->file));
                 $oQueue->is_imported = 1;
-                $oQueue->save();
             }
-            Log::info('ImportManager:done ' . time());
-            return 0;
+            $oQueue->updated_at = time();
         } catch (\Exception $oExcept) {
-            Log::info('ImportManager:error ' . $oExcept->getMessage());
+            $oQueue->error = $oExcept->getMessage();
+            $oQueue->updated_at = time();
         }
+        $oQueue->save();
     }
 
     private function getFile($sFile)

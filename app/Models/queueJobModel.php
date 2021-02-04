@@ -12,6 +12,7 @@ class queueJobModel extends Model
     protected $fillable = [
         'file',
         'type',
+        'error',
         'is_imported'
     ];
 }

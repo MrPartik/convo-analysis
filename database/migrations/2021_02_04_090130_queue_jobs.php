@@ -17,6 +17,7 @@ class QueueJobs extends Migration
             $oTable->id();
             $oTable->string('file');
             $oTable->string('type');
+            $oTable->string('error')->nullable();
             $oTable->boolean('is_imported')->default(0);
             $oTable->timestamps();
         });
