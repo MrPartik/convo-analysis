@@ -33,7 +33,7 @@ class ImportProgram implements WithHeadingRow, ToModel, SkipsOnFailure, WithBatc
             return new ProgramModel([
                 'code'                   => utils::getNAForNull(((isset($aRow['CODE']) === true) ? $aRow['CODE'] : @$aRow['INST_CODE'])),
                 'program'                => utils::getNAForNull(((isset($aRow['PROGRAM']) === true) ? $aRow['PROGRAM'] : @$aRow['DISCIPLINE'])),
-                'program_category_id'    => $this->getCategoryId(utils::getNAForNull(((isset($aRow['PROGRAM']) === true) ? $aRow['PROGRAM'] : @$aRow['DISCIPLINE']))),
+//                'program_category_id'    => $this->getCategoryId(utils::getNAForNull(((isset($aRow['PROGRAM']) === true) ? $aRow['PROGRAM'] : @$aRow['DISCIPLINE']))),
                 'major'                  => utils::getNAForNull(@$aRow['MAJOR']),
                 'level_i'                => utils::getNAForNull(@$aRow['LEVEL_I']),
                 'level_ii'               => utils::getNAForNull(@$aRow['LEVEL_II']),
