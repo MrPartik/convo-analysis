@@ -16,6 +16,7 @@ class QueueJobs extends Migration
         Schema::create('r_queue_jobs', function (Blueprint $oTable) {
             $oTable->id();
             $oTable->string('file');
+            $oTable->string('url');
             $oTable->string('type');
             $oTable->string('error')->nullable();
             $oTable->boolean('is_imported')->default(0);

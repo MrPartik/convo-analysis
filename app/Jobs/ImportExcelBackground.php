@@ -67,6 +67,6 @@ class ImportExcelBackground implements ShouldQueue
 
     private function getFile($sFile)
     {
-        return new UploadedFile($this->sStoragePath . '\\' . $sFile, $sFile);
+        return new UploadedFile(\base_path('tmp/'. $sFile), $sFile);
     }
 }

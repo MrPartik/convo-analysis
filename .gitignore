@@ -3,7 +3,7 @@
 /node_modules
 /public/hot
 /storage/*.key
-/storage/app/livewire-tmp
+/storage/app/livewire-tmp/*
 /vendor
 .env
 .env.backup

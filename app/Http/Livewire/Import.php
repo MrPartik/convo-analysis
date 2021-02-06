@@ -1,20 +1,17 @@
 <?php namespace App\Http\Livewire;
 
-use App\Imports\ImportAcademicYear;
 use App\Imports\ImportHei;
-use App\Imports\ImportProgram;
-use App\Imports\ImportHeiData;
 use App\Jobs\ImportExcelBackground;
 use App\Models\HeiModel;
 use App\Models\queueJobModel;
+use Cloudinary\Api\Exception\ApiError;
+use CloudinaryLabs\CloudinaryLaravel\CloudinaryEngine;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
-use Livewire\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
 use Maatwebsite\Excel\Facades\Excel;
-use PhpParser\Error;
-use Symfony\Component\Process\Process;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 class Import extends Component
 {
@@ -32,6 +29,9 @@ class Import extends Component
 
     public function __construct($id = null)
     {
+//        $o = file_get_contents('https://res.cloudinary.com/hylcjkh8s/raw/upload/v1612552200/fcexc3u6xcxjigyjmznm.xlsx');
+//        $s = file_put_contents(base_path('..\tmp\fcexc3u6xcxjigyjmznm.xlsx'), $o);
+//        dd(new UploadedFile(base_path('..\tmp\fcexc3u6xcxjigyjmznm.xlsx'), 'asd.xls'));
         parent::__construct($id);
     }
 
@@ -131,13 +131,20 @@ class Import extends Component
         $this->clear();
     }
 
-    private function prepareQueueImport($oFile, $sType){
-        $oQueue = new queueJobModel();
-        $oQueue->file = $oFile->getFilename();
-        $oQueue->type = $sType;
-        $oQueue->save();
-        Storage::disk('tmp')->put($oFile->getFilename(), \file_get_contents($oFile->getRealPath()));
-        ImportExcelBackground::dispatch()->delay('3');
+    private function prepareQueueImport(UploadedFile $oFile, $sType){
+
+        try {
+//            $sPath = $oFile->storeOnCloudinary()->getSecurePath();
+            $oQueue = new queueJobModel();
+//            $oQueue->file = $sPath;
+            $oQueue->file = $oFile->getFilename();
+            $oQueue->type = $sType;
+            $oQueue->save();
+            file_put_contents(\base_path('tmp/'. $oFile->getFilename()), $oFile->getFilename());
+            ImportExcelBackground::dispatch()->delay('3');
+        } catch (ApiError $e) {
+            return $this->addError('Unexpected Error', 'Unexpected error, trying to import file on queue.');
+        }
     }
 
     private function clearInput()
