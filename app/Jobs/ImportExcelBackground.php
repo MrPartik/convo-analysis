@@ -32,8 +32,8 @@ class ImportExcelBackground implements ShouldQueue
      */
     public function __construct()
     {
-        $this->oFileSystem = Storage::disk('tmp');
-        $this->sStoragePath = $this->oFileSystem->path('/');
+        $this->oFileSystem = Storage::disk('local');
+        $this->sStoragePath = $this->oFileSystem->path('livewire-tmp\\');
     }
 
     /**
@@ -67,6 +67,6 @@ class ImportExcelBackground implements ShouldQueue
 
     private function getFile($sFile)
     {
-        return new UploadedFile(\base_path('tmp/'. $sFile), $sFile);
+        return new UploadedFile($this->sStoragePath . $sFile, $sFile);
     }
 }

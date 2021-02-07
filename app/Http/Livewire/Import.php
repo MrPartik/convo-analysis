@@ -140,7 +140,7 @@ class Import extends Component
             $oQueue->file = $oFile->getFilename();
             $oQueue->type = $sType;
             $oQueue->save();
-            file_put_contents(\base_path('tmp/'. $oFile->getFilename()), $oFile->getFilename());
+//            file_put_contents(\base_path('tmp/'. $oFile->getFilename()), $oFile->getFilename());
             ImportExcelBackground::dispatch()->delay('3');
         } catch (ApiError $e) {
             return $this->addError('Unexpected Error', 'Unexpected error, trying to import file on queue.');
