@@ -34,7 +34,7 @@ class Program extends Migration
             $oTable->string('gp_gr_no')->nullable();
             $oTable->string('created_at')->nullable();
             $oTable->string('issued_by')->nullable();
-            $oTable->string('remarks')->nullable();
+            $oTable->string('remarks', 300)->nullable();
             $oTable->string('status')->nullable();
         });
     }

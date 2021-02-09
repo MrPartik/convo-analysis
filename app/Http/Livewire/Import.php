@@ -1,6 +1,9 @@
 <?php namespace App\Http\Livewire;
 
+use App\Imports\ImportAcademicYear;
 use App\Imports\ImportHei;
+use App\Imports\ImportHeiData;
+use App\Imports\ImportProgram;
 use App\Jobs\ImportExcelBackground;
 use App\Models\HeiModel;
 use App\Models\queueJobModel;
@@ -26,12 +29,15 @@ class Import extends Component
     public $graduateFile = '';
     public $programFile = '';
     public $success = '';
+    private $oFileSystem, $sStoragePath;
 
     public function __construct($id = null)
     {
 //        $o = file_get_contents('https://res.cloudinary.com/hylcjkh8s/raw/upload/v1612552200/fcexc3u6xcxjigyjmznm.xlsx');
 //        $s = file_put_contents(base_path('..\tmp\fcexc3u6xcxjigyjmznm.xlsx'), $o);
 //        dd(new UploadedFile(base_path('..\tmp\fcexc3u6xcxjigyjmznm.xlsx'), 'asd.xls'));
+        $this->oFileSystem = Storage::disk('local');
+        $this->sStoragePath = $this->oFileSystem->path('livewire-tmp\\');
         parent::__construct($id);
     }
 
@@ -47,7 +53,8 @@ class Import extends Component
         ]);
         $this->prepareQueueImport($this->heiFile, 'HEI');
         $this->clearInput();
-        $this->success = 'Hei data was on the queue, please wait util the import is finished.!';
+//        $this->success = 'Hei data was on the queue, please wait util the import is finished.!';
+        $this->success = 'Hei data was successfully inserted!';
         $this->clear();
     }
 
@@ -58,7 +65,8 @@ class Import extends Component
         ]);
         $this->prepareQueueImport($this->heiFile, 'SUC');
         $this->clearInput();
-        $this->success = 'SUC data was on the queue, please wait util the import is finished.!';
+//        $this->success = 'SUC data was on the queue, please wait util the import is finished.!';
+        $this->success = 'SUC data was successfully inserted!';
         $this->clear();
     }
 
@@ -69,7 +77,8 @@ class Import extends Component
         ]);
         $this->prepareQueueImport($this->heiFile, 'LUC');
         $this->clearInput();
-        $this->success = 'LUC data was on the queue, please wait util the import is finished.!';
+//        $this->success = 'LUC data was on the queue, please wait util the import is finished.!';
+        $this->success = 'LUC data was successfully inserted!';
         $this->clear();
     }
 
@@ -80,7 +89,8 @@ class Import extends Component
         ]);
         $this->prepareQueueImport($this->heiFile, 'PHEIS');
         $this->clearInput();
-        $this->success = 'PHEIS data was on the queue, please wait util the import is finished.!';
+//        $this->success = 'PHEIS data was on the queue, please wait util the import is finished.!';
+        $this->success = 'PHEIS data was successfully inserted!';
         $this->clear();
     }
 
@@ -91,7 +101,8 @@ class Import extends Component
         ]);
         $this->prepareQueueImport($this->programFile, 'PROGRAM');
         $this->clearInput();
-        $this->success = 'Program data was on the queue, please wait util the import is finished.!';
+//        $this->success = 'Program data was on the queue, please wait util the import is finished.!';
+        $this->success = 'Program data was successfully inserted!';
         $this->clear();
     }
 
@@ -103,7 +114,8 @@ class Import extends Component
         ]);
         $this->prepareQueueImport($this->academicYearFile, 'YEAR');
         $this->clearInput();
-        $this->success = 'Academic Year data was on the queue, please wait util the import is finished.!';
+//        $this->success = 'Academic Year data was on the queue, please wait util the import is finished.!';
+        $this->success = 'Academic Year data was successfully inserted!';
         $this->clear();
     }
 
@@ -115,7 +127,8 @@ class Import extends Component
         ]);
         $this->prepareQueueImport($this->graduateFile, 'GRADUATE');
         $this->clearInput();
-        $this->success = 'Graduate Student data was on the queue, please wait util the import is finished.!';
+//        $this->success = 'Graduate Student data was on the queue, please wait util the import is finished.!';
+        $this->success = 'Graduate Student data was successfully inserted!';
         $this->clear();
     }
 
@@ -127,7 +140,8 @@ class Import extends Component
         ]);
         $this->prepareQueueImport($this->enrollmentFile, 'ENROLLMENT');
         $this->clearInput();
-        $this->success = 'Enrollment Student data was on the queue, please wait util the import is finished.!';
+//        $this->success = 'Enrollment Student data was on the queue, please wait util the import is finished.!';
+        $this->success = 'Enrollment Student data was successfully inserted!';
         $this->clear();
     }
 
@@ -135,18 +149,30 @@ class Import extends Component
 
         try {
 //            $sPath = $oFile->storeOnCloudinary()->getSecurePath();
-            $oQueue = new queueJobModel();
+//            $oQueue = new queueJobModel();
 //            $oQueue->file = $sPath;
-            $oQueue->file = $oFile->getFilename();
-            $oQueue->type = $sType;
-            $oQueue->save();
+//            $oQueue->file = $oFile->getFilename();
+//            $oQueue->type = $sType;
+//            $oQueue->save();
 //            file_put_contents(\base_path('tmp/'. $oFile->getFilename()), $oFile->getFilename());
-            ImportExcelBackground::dispatch()->delay('3');
+//            ImportExcelBackground::dispatch()->delay('3');
+            if ($sType === 'HEI') Excel::import(new ImportHei(HeiModel::class, $sType), $this->getFile($oFile->getFilename()));
+            else if ($sType === 'SUC') Excel::import(new ImportHei(HeiModel::class, 'SUC'), $this->getFile($oFile->getFilename()));
+            else if ($sType === 'LUC') Excel::import(new ImportHei(HeiModel::class, 'LUC'), $this->getFile($oFile->getFilename()));
+            else if ($sType === 'PHEIS') Excel::import(new ImportHei(HeiModel::class, 'PHEIS'), $this->getFile($oFile->getFilename()));
+            else if ($sType === 'PROGRAM') Excel::import(new ImportProgram, $this->getFile($oFile->getFilename()));
+            else if ($sType === 'YEAR') Excel::import(new ImportAcademicYear, $this->getFile($oFile->getFilename()));
+            else if ($sType === 'GRADUATE') Excel::import(new ImportHeiData('GRADUATE'), $this->getFile($oFile->getFilename()));
+            else if ($sType === 'ENROLLMENT') Excel::import(new ImportHeiData('ENROLLMENT'), $this->getFile($oFile->getFilename()));
         } catch (ApiError $e) {
             return $this->addError('Unexpected Error', 'Unexpected error, trying to import file on queue.');
         }
     }
 
+    private function getFile($sFile)
+    {
+        return new UploadedFile($this->sStoragePath . $sFile, $sFile);
+    }
     private function clearInput()
     {
         $this->heiFile = '';

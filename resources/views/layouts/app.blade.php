@@ -34,7 +34,7 @@
         </div>
     </main>
 </div>
-@if(Auth::user()->role === 'user')
+@if(Auth::user()->role === 'usesr')
     <div id='convo-wrapper' class="w-2/3 max-w-7xl fixed bottom-0 right-0">
         <div class="bg-white overflow-hidden shadow-xl rounded-b-none rounded-lg">
             <div class="h-10 bg-indigo-500 p-2 cursor-pointer" onclick='toggleConvo()'

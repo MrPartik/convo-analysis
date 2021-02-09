@@ -13,10 +13,10 @@ class derivedRepository
      */
     public static function programByCity()
     {
-        return DB::table('R_PROGRAM', 'PROGRAM')
-            ->join('R_HEI AS HEI' ,'PROGRAM.CODE', '=', 'HEI.CODE')
-            ->select('HEI.CITY', DB::raw('COUNT(HEI.CITY) TOTAL'))
-            ->groupBy('HEI.CITY')
+        return DB::table('r_program', 'program')
+            ->join('r_hei as hei' ,'program.code', '=', 'hei.code')
+            ->select('hei.city', DB::raw('count(hei.city) total'))
+            ->groupBy('hei.city')
             ->limit(5)
             ->get();
     }
@@ -28,8 +28,9 @@ class derivedRepository
     public static function getSuc()
     {
         return HeiModel::where(function ($oQuery) {
-            return $oQuery->orWhere('type', 'LIKE', '%suc%')
-                ->orWhere('type', 'LIKE', '%state university%');
+            return $oQuery->orWhere('type', 'like', '%suc%')
+                ->orWhere('type', 'like', '%state university%')
+                ->get();
         });
     }
 
@@ -40,8 +41,9 @@ class derivedRepository
     public static function getLuc()
     {
         return HeiModel::where(function ($oQuery) {
-            return $oQuery->orWhere('type', 'LIKE', '%luc%')
-                ->orWhere('type', 'LIKE', '%local%');
+            return $oQuery->orWhere('type', 'like', '%luc%')
+                ->orWhere('type', 'like', '%local%')
+                ->get();
         });
     }
 
@@ -52,8 +54,9 @@ class derivedRepository
     public static function getPheis()
     {
         return HeiModel::where(function ($oQuery) {
-            return $oQuery->orWhere('type', 'LIKE', '%pheis%')
-                ->orWhere('type', 'LIKE', '%private%');
+            return $oQuery->orWhere('type', 'like', '%pheis%')
+                ->orWhere('type', 'like', '%private%')
+                ->get();
         });
     }
 
@@ -64,6 +67,21 @@ class derivedRepository
     public static function getProgram()
     {
         return ProgramModel::all()->unique('program');
+    }
+
+
+    public static function  getProgramReportData($sType, $bIsEnrollment, $iOffset = 0, $iLimit = 10)
+    {
+        return DB::table('r_hei_data_count as hdc')
+            ->join('r_hei_data as hd', 'hdc.hei_data_id', '=', 'hd.id')
+            ->join('r_program as p', 'hd.program_id', '=',  'p.id')
+            ->join('r_hei as h', 'h.code', '=', 'p.code')
+            ->join('r_program_categories as pc', 'pc.id', '=', 'p.program_category_id')
+            ->where('h.type', '=', $sType)
+            ->where('hd.type', '=', ($bIsEnrollment === true) ? 'enrollment' : 'graduate')
+            ->groupBy('hdc.year', 'h.region', 'p.program')
+            ->select(['hdc.year as year', 'h.region as region', 'h.hei_name as hei', 'pc.title as category', 'p.program as program, count(hdc.year) as total'])
+            ->get();
     }
 
 }

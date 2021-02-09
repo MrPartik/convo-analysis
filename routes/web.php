@@ -37,8 +37,10 @@ Route::get('/sample', function(){
 //    }
 
 //    return array_column(ProgramCategoryModel::all()->toArray(), 'title');
-    $fuzzy = new FuzzySearch\FuzzySearch(ProgramCategoryModel::all()->toArray(), 'title');
-    return $fuzzy->search('Arts', 20);
+//    $fuzzy = new FuzzySearch\FuzzySearch(ProgramCategoryModel::all()->toArray(), 'title');
+//    return $fuzzy->search('Arts', 20);
+
+    // return \App\Repositories\derivedRepository::getProgramReportData('');
 
 });
 
