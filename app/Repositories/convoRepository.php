@@ -32,6 +32,11 @@ class convoRepository
         $oConvo->save();
     }
 
+    private static function categorizeConvo($aContent)
+    {
+
+    }
+
     private static function parseUrl(array $aContent)
     {
         $sIntent = \implode(\array_column(@$aContent['entities']['intent'] ?? [], 'value'));

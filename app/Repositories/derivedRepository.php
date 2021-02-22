@@ -80,7 +80,7 @@ class derivedRepository
             ->where('h.type', '=', $sType)
             ->where('hd.type', '=', ($bIsEnrollment === true) ? 'enrollment' : 'graduate')
             ->groupBy('hdc.year', 'h.region', 'p.program')
-            ->select(['hdc.year as year', 'h.region as region', 'h.hei_name as hei', 'pc.title as category', 'p.program as program, count(hdc.year) as total'])
+            ->select('hdc.year as year', 'h.region as region', 'h.hei_name as hei', 'pc.title as category', 'p.program as program', DB::raw('count(hdc.year) as total'))
             ->get();
     }
 
