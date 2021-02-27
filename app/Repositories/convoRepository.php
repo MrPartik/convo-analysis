@@ -13,7 +13,7 @@ class convoRepository
         return ConvoModel::with(['repliedUser', 'messageUser'])->where('user_id', Auth::id())
             ->orWhere('reply_user_id', Auth::id())
             ->get();
-    }
+    } 
 
     public static function reply(string $aContent)
     {

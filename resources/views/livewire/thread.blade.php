@@ -2,7 +2,7 @@
         <ul class="tab">
             <li ><a wire:click="getProgramReportData('SUC', true)" href="javascript:" class="tablinks active">SUC</a></li>
             <li><a wire:click="getProgramReportData('LUC', true)" href="javascript:" class="tablinks" onclick="openTab(event, 'LUC')">LUC</a></li>
-            <li><a wire:click="getProgramReportData('PHEIS', true)" href="javascript:" class="tablinks" onclick="openTab(event, 'PHEIS')">PHEIS</a></li>
+            <li><a wire:click="getProgramReportData('PRIVATE', true)" href="javascript:" class="tablinks" onclick="openTab(event, 'PHEIS')">PHEIS</a></li>
         </ul>
         <div wire:loading wire:target="getProgramReportData" class="absolute block bg-white opacity-75 z-50" style="width: inherit; height: inherit">
                 <span class="text-green-500 opacity-75 top-1/2 my-0 mx-auto block relative w-0 h-0" style=" top: 50%; ">
@@ -11,7 +11,7 @@
         </div>
         <div style="display: block">
             <h3>SUC</h3>
-            <p>
+            <p> 
                 {{ \json_encode($aProgramReportData, true) }}
             </p>
         </div>

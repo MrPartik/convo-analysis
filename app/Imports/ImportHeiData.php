@@ -32,7 +32,7 @@ class ImportHeiData implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFai
             ->where('major', utils::getNAForNull($aRow['MAJOR']))
             ->where('code', utils::getNAForNull($aRow['HEI_CODE']))
             ->first();
-        if ($mProgramData === null) throw new \ErrorException('Please import the program data first, it seems that you are trying to import ' . \ucfirst($this->sType) . ' data that is not existing to program data!');
+        if ($mProgramData === null) return [];
         $mHeiDataPrev = HeiDataModel::where('program_id', $mProgramData->id)
             ->where('type', $this->sType)
             ->first();
@@ -48,7 +48,7 @@ class ImportHeiData implements WithHeadingRow, ToModel, SkipsOnError, SkipsOnFai
         }
         $aBulkInsert = [];
         foreach (AcademicYearModel::all() ?? [] as $aValue) {
-            if (isset($aRow[$aValue['year'] . '_' . 'M']) === true && isset($aRow[$aValue['year'] . '_' . 'F']) === true) {
+            if (isset($aRow[$aValue['year'] . '_' . 'M']) === true && isset($aRow[$aValue['year'] . '_' . 'F']) === true && $aRow[$aValue['year'] . '_' . 'M'] !== null && $aRow[$aValue['year'] . '_' . 'F'] !== null) {
                 $aBulkInsert[] = [
                     'hei_data_id' => $iHeiDataId,
                     'year'        => $aValue['year'],

@@ -72,16 +72,24 @@ class derivedRepository
 
     public static function  getProgramReportData($sType, $bIsEnrollment, $iOffset = 0, $iLimit = 10)
     {
-        return DB::table('r_hei_data_count as hdc')
-            ->join('r_hei_data as hd', 'hdc.hei_data_id', '=', 'hd.id')
-            ->join('r_program as p', 'hd.program_id', '=',  'p.id')
-            ->join('r_hei as h', 'h.code', '=', 'p.code')
-            ->join('r_program_categories as pc', 'pc.id', '=', 'p.program_category_id')
-            ->where('h.type', '=', $sType)
-            ->where('hd.type', '=', ($bIsEnrollment === true) ? 'enrollment' : 'graduate')
-            ->groupBy('hdc.year', 'h.region', 'p.program')
-            ->select('hdc.year as year', 'h.region as region', 'h.hei_name as hei', 'pc.title as category', 'p.program as program', DB::raw('count(hdc.year) as total'))
-            ->get();
+        $oDbResult = collect(DB::select('select distinct hdc.year year, hd.hei_code  hei_code, count(hdc.id) hei_count
+            from r_hei_data hd
+            inner join r_hei_data_count hdc on hdc.hei_data_id = hd.id
+            inner join r_hei h on h.code = hd.hei_code
+            where h.type = ? and hd.type = ?
+            group by hdc.year, hd.hei_code, hd.type, hdc.semester', [$sType, ($bIsEnrollment === true) ? 'enrollment' : 'graduate']));
+        $aResult = [];
+        foreach ($oDbResult as $mKey => $mVal) {
+            if (isset($aResult[$mVal->year]) === false) {
+                $aResult[$mVal->year] = [
+                    'year' => $mVal->year,
+                    'total_hei' => $mVal->hei_count
+                ];
+            } else {
+                $aResult[$mVal->year]['total_hei'] += $mVal->hei_count;
+            }
+        }
+        return $aResult;
     }
 
 }
