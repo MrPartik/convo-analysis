@@ -11,7 +11,7 @@
         </div>
         <div style="display: block">
             <h3>SUC</h3>
-            <p> 
+            <p>
                 {{ \json_encode($aProgramReportData, true) }}
             </p>
         </div>
