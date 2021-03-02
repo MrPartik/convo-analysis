@@ -1,6 +1,5 @@
 <div id="convo-container" class="flex-1 px-6 py-2 justify-between flex flex-col" style='height: 80vh'>
-    <div id='messages'
-         class="flex flex-col space-y-2 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
+    <div id='messages' class="flex flex-col space-y-2 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
         @foreach($convos as $convo)
             <div class="chat-message">
                 <div class="flex items-end {{ (Auth::id() === $convo->user_id)? 'justify-end' : '' }}">
@@ -10,6 +9,7 @@
                                 @if($convo->url !== null)
                                      <p><a class="text-blue-800" target='_blank' href='{{\env('RSHINY_SERVER', 'https://127.0.0.1:5718') . $convo->url . '&static=false' }} '> Show Report <img src='/img/report.jpg'/></a></p>
                                 @endif
+                                <p class="mt-3" style="font-size: 10px" >{{ $convo->created_at }}</p>
                             </span>
                         </div>
                     </div>
