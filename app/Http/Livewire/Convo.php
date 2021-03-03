@@ -34,15 +34,14 @@ class Convo extends Component
         $oConvo->user_id = Auth::id();
         $oConvo->message = $this->sContent;
         $oConvo->reply_user_id = 1;
-        $oConvo->save();
         $this->oConvos = convoRepository::getConvoPerLogin();
-        $this->reply($this->sContent);
+        $mReply = convoRepository::reply($this->sContent);
+        if($mReply === false) {
+            return $this->emit('errorOccurMessage');
+        }
+        $oConvo->save();
+        ConvoModel::insert($mReply);
         $this->sContent = '';
-    }
-
-    private function reply(string $sContent)
-    {
-        convoRepository::reply($sContent);
         $this->emit('scrollToLatest');
     }
 }

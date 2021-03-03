@@ -20,6 +20,12 @@
 </head>
 <body class="font-sans antialiased">
 <div class="min-h-screen bg-gray-100">
+    <div style="position: absolute; right: 25px; top: 25px; z-index: 999"class="alert-message hidden flex items-center bg-green-500 border-l-4 border-black py-2 px-3 shadow-md mb-2">
+        <!-- message -->
+        <div class="text-white max-w-xs ">
+
+        </div>
+    </div>
     @livewire('navigation-dropdown')
     <!--
     <header class="bg-white shadow">
@@ -35,7 +41,7 @@
     </main>
 </div>
 @if(Auth::user()->role === 'user')
-    <div id='convo-wrapper' class="w-2/3 max-w-7xl fixed bottom-0 right-0">
+    <div id='convo-wrapper' class="w-2/3 max-w-7xl fixed bottom-0 right-0 z-50">
         <div class="bg-white overflow-hidden shadow-xl rounded-b-none rounded-lg">
             <div class="h-10 bg-indigo-500 p-2 cursor-pointer" onclick='toggleConvo()'
                  style="box-shadow: 1px 1px 10px black;">
@@ -82,7 +88,8 @@
     <script>
         function scrollToLatest() {
             var el = document.getElementById('messages')
-            el.scrollTop = el.scrollHeight
+            el.scrollTop = el.scrollHeight;
+            $('#convo-container  input').removeClass('border-solid border-2 border-red-500 text-red-700 bg-red-100').attr('title', ' ');
         }
 
         scrollToLatest();
@@ -91,6 +98,18 @@
         function toggleConvo() {
             $('#convo-container').slideToggle();
         }
+        window.livewire.on('errorOccurMessage', function() {
+            $('#convo-container  input')
+                .addClass('border-solid border-2 border-red-500 text-red-700 bg-red-100')
+                .attr('title', 'Something happened with your internet connection or with your command. Please try again!');
+            $('.alert-message > div').text('Something happened with your internet connection or with your command. Please try again!');
+            $('.alert-message').css('background-color', 'crimson').show();
+            setTimeout(function () {
+                $('.alert-message').fadeOut('fast', function () {
+                    $('.alert-message').css('background-color', '');
+                });
+            }, 2000);
+        });
 
         @if(request()->is('user') === false)toggleConvo()@endif
     </script>

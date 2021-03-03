@@ -14,11 +14,20 @@ class derivedRepository
     public static function programByCity()
     {
         return DB::table('r_program', 'program')
-            ->join('r_hei as hei' ,'program.code', '=', 'hei.code')
+            ->join('r_hei as hei', 'program.code', '=', 'hei.code')
             ->select('hei.city', DB::raw('count(hei.city) total'))
             ->groupBy('hei.city')
             ->limit(5)
             ->get();
+    }
+
+    /**
+     * Get Hei
+     * @return mixed
+     */
+    public static function getHei()
+    {
+        return HeiModel::all();
     }
 
     /**
@@ -70,7 +79,7 @@ class derivedRepository
     }
 
 
-    public static function  getProgramReportData($sType, $bIsEnrollment, $iOffset = 0, $iLimit = 10)
+    public static function getProgramReportData($sType, $bIsEnrollment, $iOffset = 0, $iLimit = 10)
     {
         $oDbResult = collect(DB::select('select distinct hdc.year year, hd.hei_code  hei_code, count(hdc.id) hei_count
             from r_hei_data hd
@@ -90,6 +99,38 @@ class derivedRepository
             }
         }
         return $aResult;
+    }
+
+    public static function getCountHei()
+    {
+        return [
+            'type' => 'HEI',
+            'count' => self::getHei()->count()
+        ];
+    }
+
+    public static function getCountSuc()
+    {
+        return [
+            'type' => 'SUC',
+            'count' => self::getSuc()->count()
+        ];
+    }
+
+    public static function getCountLuc()
+    {
+        return [
+            'type' => 'LUC',
+            'count' => self::getLuc()->count()
+        ];
+    }
+
+    public static function getCountPheis()
+    {
+        return [
+            'type' => 'PHEIS',
+            'count' => self::getPheis()->count()
+        ];
     }
 
 }

@@ -14,11 +14,10 @@ class WitApp extends BaseWit
     const DEFAULT_TIMEOUT = '1000';
     const ACCESS_TOKEN = 'JKPY6E2VOPCI52RP4CBEXLFEEMKH5I7Y';
     const ASYNC_REQUEST = false;
-    const HTTP_CLIENT = null;
 
     public function __construct()
     {
-        parent::__construct(self::ACCESS_TOKEN, self::ASYNC_REQUEST, self::HTTP_CLIENT);
+        parent::__construct(self::ACCESS_TOKEN, self::ASYNC_REQUEST);
     }
 
     public function getIntentByText($sQuery, $aParams = [])
@@ -26,7 +25,10 @@ class WitApp extends BaseWit
         try {
             return parent::getIntentByText($sQuery, $aParams);
         } catch (GuzzleException $oException) {
-            return [];
+            return [
+                'error' => true,
+                'message' => $oException->getMessage()
+            ];
         }
     }
 }
