@@ -156,14 +156,15 @@ class Import extends Component
 //            $oQueue->save();
 //            file_put_contents(\base_path('tmp/'. $oFile->getFilename()), $oFile->getFilename());
 //            ImportExcelBackground::dispatch()->delay('3');
-            if ($sType === 'HEI') Excel::import(new ImportHei(HeiModel::class, $sType), $this->getFile($oFile->getFilename()));
-            else if ($sType === 'SUC') Excel::import(new ImportHei(HeiModel::class, 'SUC'), $this->getFile($oFile->getFilename()));
-            else if ($sType === 'LUC') Excel::import(new ImportHei(HeiModel::class, 'LUC'), $this->getFile($oFile->getFilename()));
-            else if ($sType === 'PHEIS') Excel::import(new ImportHei(HeiModel::class, 'PHEIS'), $this->getFile($oFile->getFilename()));
-            else if ($sType === 'PROGRAM') Excel::import(new ImportProgram, $this->getFile($oFile->getFilename()));
-            else if ($sType === 'YEAR') Excel::import(new ImportAcademicYear, $this->getFile($oFile->getFilename()));
-            else if ($sType === 'GRADUATE') Excel::import(new ImportHeiData('GRADUATE'), $this->getFile($oFile->getFilename()));
-            else if ($sType === 'ENROLLMENT') Excel::import(new ImportHeiData('ENROLLMENT'), $this->getFile($oFile->getFilename()));
+//            $this->getFile($oFile->getFilename()
+            if ($sType === 'HEI') Excel::import(new ImportHei(HeiModel::class, $sType), $oFile);
+            else if ($sType === 'SUC') Excel::import(new ImportHei(HeiModel::class, 'SUC'), $oFile);
+            else if ($sType === 'LUC') Excel::import(new ImportHei(HeiModel::class, 'LUC'), $oFile);
+            else if ($sType === 'PHEIS') Excel::import(new ImportHei(HeiModel::class, 'PHEIS'), $oFile);
+            else if ($sType === 'PROGRAM') Excel::import(new ImportProgram, $oFile);
+            else if ($sType === 'YEAR') Excel::import(new ImportAcademicYear, $oFile);
+            else if ($sType === 'GRADUATE') Excel::import(new ImportHeiData('GRADUATE'), $oFile);
+            else if ($sType === 'ENROLLMENT') Excel::import(new ImportHeiData('ENROLLMENT'), $oFile);
         } catch (ApiError $e) {
             return $this->addError('Unexpected Error', 'Unexpected error, trying to import file on queue.');
         }
