@@ -1,5 +1,5 @@
     <div class="bg-white overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch p-2 rounded-lg" style="height: 80vh; width: 90vw">
-        <ul class="tab">
+        <ul class="tab" style="text-align: start">
             <li class=" {{ $sType === 'SUC' ? 'text-white bg-blue-500' : 'text-blue-700 bg-transparent'}}  inline-block  hover:bg-blue-500 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"><a wire:click="getProgramReportData('SUC', true)" href="javascript:" class=" active">SUC</a></li>
             <li class=" {{ $sType === 'LUC' ? 'text-white bg-blue-500' : 'text-blue-700 bg-transparent'}}  inline-block hover:bg-blue-500 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"><a wire:click="getProgramReportData('LUC', true)" href="javascript:" class="">LUC</a></li>
             <li class=" {{ $sType === 'PRIVATE' ? 'text-white bg-blue-500' : 'text-blue-700 bg-transparent'}} inline-block hover:bg-blue-500 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"><a wire:click="getProgramReportData('PRIVATE', true)" href="javascript:" class="">Private / PHEIS</a></li>
