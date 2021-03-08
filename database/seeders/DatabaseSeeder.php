@@ -18,8 +18,11 @@ class DatabaseSeeder extends Seeder
             usersSeeder::class,
             academicYearSeeder::class,
             convoSeeder::class,
-            programCategoriesSeeder::class
+            programCategoriesSeeder::class,
+            RHeiTableSeeder::class,
+            RProgramTableSeeder::class,
+            RHeiDataTableSeeder::class,
+            RHeiDataCountTableSeeder::class
         ]);
-
     }
 }

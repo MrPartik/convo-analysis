@@ -16,16 +16,16 @@ class usersSeeder extends Seeder
     {
         $oUser = new UserModel();
         $oUser->id = 1;
-        $oUser->name = 'Ma. Michaela Alejandria';
-        $oUser->email = 'mikaalej@gmail.com';
+        $oUser->name = 'Administrator';
+        $oUser->email = 'administrator@gmail.com';
         $oUser->role = 'admin';
         $oUser->password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi';
         $oUser->save();
 
         $oUser = new UserModel();
         $oUser->id = 2;
-        $oUser->name = 'John Patrick Loyola';
-        $oUser->email = 'loyolapat04@gmail.com';
+        $oUser->name = 'Top Management';
+        $oUser->email = 'top.management@gmail.com';
         $oUser->role = 'user';
         $oUser->password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi';
         $oUser->save();

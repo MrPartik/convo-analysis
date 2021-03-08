@@ -133,6 +133,7 @@
       <path value="$PROJECT_DIR$/vendor/cloudinary-labs/cloudinary-laravel" />
       <path value="$PROJECT_DIR$/vendor/cloudinary/cloudinary_php" />
       <path value="$PROJECT_DIR$/vendor/symfony/translation" />
+      <path value="$PROJECT_DIR$/vendor/orangehill/iseed" />
     </include_path>
   </component>
   <component name="PhpUnit">
