@@ -4,7 +4,7 @@
             <li class=" {{ $sType === 'LUC' ? 'text-white bg-blue-500' : 'text-blue-700 bg-transparent'}}  inline-block hover:bg-blue-500 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"><a wire:click="getProgramReportData('LUC', true)" href="javascript:" class="">LUC</a></li>
             <li class=" {{ $sType === 'PRIVATE' ? 'text-white bg-blue-500' : 'text-blue-700 bg-transparent'}} inline-block hover:bg-blue-500 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"><a wire:click="getProgramReportData('PRIVATE', true)" href="javascript:" class="">Private / PHEIS</a></li>
         </ul>
-        <div wire:loading wire:target="getProgramReportData" class="absolute block bg-white opacity-75 z-50" style="width: inherit; height: inherit">
+        <div wire:loading.block wire:target="getProgramReportData" class="absolute block bg-white opacity-75 z-50" style="width: inherit; height: inherit">
                 <span class="text-green-500 opacity-75 top-1/2 my-0 mx-auto block relative w-0 h-0" style=" top: 50%; ">
                     <i class="fas fa-circle-notch fa-spin fa-5x"></i>
                 </span>
