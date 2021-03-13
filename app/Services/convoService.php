@@ -82,8 +82,9 @@ class convoService
             'getHei' => '1',
             'getSuc' => 'hei.type like "%suc%"',
             'getLuc' => 'hei.type like "%local%" or hei.type like "%luc%"',
-            'getPheis' => 'hei.type like "%pheis% or hei.type like "%private%""'
+            'getPheis' => 'hei.type like "%pheis%" or hei.type like "%private%"'
         ];
-        return $this->oConvoRepository->getDataByInstitution($aIntent[$sIntent], $mBy, (strlen($mBy) <= 0 || (strlen($mBy) > 0 && \preg_match('enroll', $mBy))));
+        $getStudentDataType = (strlen($mBy) <= 0 || $mBy === null || (\preg_match('/enroll/i', $mBy) === 0 && \preg_match('/graduate/i', $mBy) === 0)) ? null : ((strlen($mBy) > 0 && \preg_match('/enroll/i', $mBy)) ? 'ENROLLMENT' : 'GRADUATE');
+        return $this->oConvoRepository->getDataByInstitution($aIntent[$sIntent], $mBy, $getStudentDataType);
     }
 }

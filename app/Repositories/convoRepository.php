@@ -22,7 +22,7 @@ class convoRepository
     }
 
 
-    public function getDataByInstitution(string $sType, $mBy, bool $bIsEnrollmentData = true) {
+    public function getDataByInstitution(string $sType, $mBy, $mStudentDataType) {
         return DB::select(
             'select hdc.year year, hei.region region, hei.hei_name hei, progc.title category, prog.program program, count(hdc.year) total
                     from r_hei_data_count hdc
@@ -30,8 +30,8 @@ class convoRepository
                     join r_program prog on hd.program_id = prog.id
                     join r_hei hei on prog.code = hei.code
                     join r_program_categories progc on progc.id = prog.program_category_id
-                    where  hd.type = ? and (?) group by hdc.year, hei.region, prog.program',
-            [(($bIsEnrollmentData === true) ? 'ENROLLMENT' : 'GRADUATE'), $sType]);
+                    where ? and ' .  $sType . ' group by hdc.year, hei.region, prog.program',
+            [($mStudentDataType === null) ? 1 : 'hd.type=' . $mStudentDataType]);
     }
 
 
