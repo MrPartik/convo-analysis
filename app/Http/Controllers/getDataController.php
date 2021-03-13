@@ -2,10 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\convoService;
 use Illuminate\Support\Facades\DB;
 
 class getDataController extends Controller
 {
+
+    public $oConvoService;
+
+    public function __construct(convoService $oConvoService)
+    {
+        $this->oConvoService = $oConvoService;
+    }
+
     public function debug()
     {
         return DB::select(\request()->get('sql'));
@@ -13,14 +22,18 @@ class getDataController extends Controller
 
     public function get()
     {
-        return [
-            'data_source' =>  $this->generateDataSource(\request()->get('intent'), \request()->get('by')),
-            'chart'       => \request()->get('chart') ?? 'bar'
+        $sIntent = \request()->get('intent') ?? 'getHei';
+        $sBy = \request()->get('by');
+        $aByTitle = [
+            'getHei'   => 'Summary of Higher Education Institution (HEI)',
+            'getSuc'   => 'Summary of State University and College (SUC)',
+            'getLuc'   => 'Summary of Local University and College (LUC) ',
+            'getPheis' => 'Summary of Private Higher Education Institution (PHEI)'
         ];
-    }
-
-    private function generateDataSource($sIntent, $sBy)
-    {
-       return DB::select('select hdc.year year, hei.region region, hei.hei_name hei, progc.title category, prog.program program, count(hdc.year) total from r_hei_data_count hdc join r_hei_data hd on hdc.hei_data_id = hd.id join r_program prog on hd.program_id = prog.id join r_hei hei on prog.code = hei.code join r_program_categories progc on progc.id = prog.program_category_id group by hdc.year, hei.region, prog.program');
+        return [
+            'data_source' =>  $this->oConvoService->analyzeReportData($sIntent, $sBy),
+            'chart'       => \request()->get('chart') ?? 'bar',
+            'title'       => $aByTitle[$sIntent]
+        ];
     }
 }

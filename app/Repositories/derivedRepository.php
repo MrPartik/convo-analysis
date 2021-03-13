@@ -79,6 +79,14 @@ class derivedRepository
     }
 
 
+    /**
+     * Getting program report by data
+     * @param $sType
+     * @param $bIsEnrollment
+     * @param int $iOffset
+     * @param int $iLimit
+     * @return array
+     */
     public static function getProgramReportData($sType, $bIsEnrollment, $iOffset = 0, $iLimit = 10)
     {
         $oDbResult = collect(DB::select('select distinct hdc.year year, hd.hei_code  hei_code, count(hdc.id) hei_count
@@ -101,6 +109,10 @@ class derivedRepository
         return $aResult;
     }
 
+    /**
+     * getting cunt by hei
+     * @return array
+     */
     public static function getCountHei()
     {
         return [
@@ -109,6 +121,10 @@ class derivedRepository
         ];
     }
 
+    /**
+     * getting count by suc
+     * @return array
+     */
     public static function getCountSuc()
     {
         return [
@@ -117,6 +133,10 @@ class derivedRepository
         ];
     }
 
+    /**
+     * getting count by luc
+     * @return array
+     */
     public static function getCountLuc()
     {
         return [
@@ -125,6 +145,10 @@ class derivedRepository
         ];
     }
 
+    /**
+     * getting count by pheis
+     * @return array
+     */
     public static function getCountPheis()
     {
         return [

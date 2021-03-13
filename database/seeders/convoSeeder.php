@@ -17,26 +17,11 @@ class convoSeeder extends Seeder
         $oConvo = new ConvoModel();
         $oConvo->user_id = 1;
         $oConvo->message = 'Hello there!';
-        $oConvo->reply_user_id = 2;
         $oConvo->save();
 
         $oConvo = new ConvoModel();
         $oConvo->user_id = 1;
         $oConvo->message = 'How may I help you?';
-        $oConvo->reply_user_id = 2;
-        $oConvo->save();
-
-        $oConvo = new ConvoModel();
-        $oConvo->user_id = 2;
-        $oConvo->message = 'Give me the sum of enrolled students, please!';
-        $oConvo->reply_user_id = 1;
-        $oConvo->save();
-
-        $oConvo = new ConvoModel();
-        $oConvo->user_id = 1;
-        $oConvo->message = 'Here is the list of enrolled students';
-        $oConvo->url = '?';
-        $oConvo->reply_user_id = 2;
         $oConvo->save();
 
     }

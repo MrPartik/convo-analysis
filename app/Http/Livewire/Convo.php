@@ -4,12 +4,17 @@ namespace App\Http\Livewire;
 
 use App\Models\ConvoModel;
 use App\Repositories\convoRepository;
+use App\Services\convoService;
 use App\WitApp;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Convo extends Component
 {
+    private $oConvoService;
+
+    private $oConvoRepository;
+
     public $oConvos;
 
     public $sContent;
@@ -18,9 +23,16 @@ class Convo extends Component
         'sContent' => 'required'
     ];
 
+    public function __construct($id = null)
+    {
+        $this->oConvoService = new convoService();
+        $this->oConvoRepository = new convoRepository();
+        parent::__construct($id);
+    }
+
     public function render()
     {
-        $this->oConvos = convoRepository::getConvoPerLogin();
+        $this->oConvos = $this->oConvoRepository->getConvoPerLogin();
 
         return view('livewire.convo', [
             'convos' => $this->oConvos
@@ -34,8 +46,8 @@ class Convo extends Component
         $oConvo->user_id = Auth::id();
         $oConvo->message = $this->sContent;
         $oConvo->reply_user_id = 1;
-        $this->oConvos = convoRepository::getConvoPerLogin();
-        $mReply = convoRepository::reply($this->sContent);
+        $this->oConvos = $this->oConvoRepository->getConvoPerLogin();
+        $mReply = $this->oConvoService->reply($this->sContent);
         if($mReply === false) {
             return $this->emit('errorOccurMessage');
         }
