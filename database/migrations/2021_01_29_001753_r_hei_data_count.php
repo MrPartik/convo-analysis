@@ -22,6 +22,7 @@ class RHeiDataCount extends Migration
             $oTable->string('f', 20);
 
             $oTable->foreign('hei_data_id')->on('r_hei_data')->references('id');
+            $oTable->index(['hei_data_id', 'year']);
         });
     }
 

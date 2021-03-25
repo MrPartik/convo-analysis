@@ -28,6 +28,8 @@ class Convo extends Migration
             $oTable->text('message');
             $oTable->string('url')->nullable();
             $oTable->timestamps();
+
+            $oTable->index(['user_id', 'reply_user_id']);
         });
     }
 

@@ -36,6 +36,7 @@ class Program extends Migration
             $oTable->string('issued_by')->nullable();
             $oTable->string('remarks', 300)->nullable();
             $oTable->string('status')->nullable();
+            $oTable->index(['code', 'program_category_id']);
         });
     }
 

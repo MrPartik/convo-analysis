@@ -26,6 +26,7 @@ class RHeiData extends Migration
             ]);
 
             $oTable->foreign('program_id')->on('r_program')->references('id');
+            $oTable->index(['hei_code', 'program_id']);
         });
     }
 
