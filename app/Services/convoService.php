@@ -5,6 +5,7 @@ use App\Repositories\derivedRepository;
 use App\WitApp;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use function PHPUnit\Framework\matches;
 
 class convoService
 {
@@ -18,23 +19,23 @@ class convoService
 
     /**
      * Replying in convo
-     * @param string $aContent
+     * @param string $sContent
      * @return array|bool
      */
-    public function reply(string $aContent)
+    public function reply(string $sContent)
     {
         $oWit = new WitApp();
         $aConvo = [];
-        $aContent = $oWit->getIntentByText($aContent);
+        $aContent = $oWit->getIntentByText($sContent);
+        if (@$aContent['entities'] === null || @$aContent['entities'] === [] || (isset($aContent['error']) === true && $aContent['error'] === true)) {
+            return false;
+        }
         $aConvo['user_id'] = 1;
         $aConvo['message'] = self::analyzeConvo($aContent);
         $aConvo['reply_user_id'] = Auth::id();
         $aConvo['created_at'] = Carbon::now();
         if (\array_search(self::getIntent($aContent), ['getCountHei', 'getCountSuc', 'getCountLuc', 'getCountPheis']) === false) {
             $aConvo['url'] = self::parseUrl($aContent);
-        }
-        if (@$aContent['entities'] === null || @$aContent['entities'] === [] || (isset($aContent['error']) === true && $aContent['error'] === true)) {
-            return false;
         }
         return $aConvo;
     }
@@ -47,9 +48,9 @@ class convoService
     private static function analyzeConvo($aContent)
     {
         if (\array_search(self::getIntent($aContent), ['getCountHei', 'getCountSuc', 'getCountLuc', 'getCountPheis']) !== false) {
-            $mCoutHei = call_user_func(derivedRepository::class . '::' . self::getIntent($aContent));
+            $mCountHei = call_user_func(derivedRepository::class . '::' . self::getIntent($aContent));
             return 'Hello! ' . Auth::user()->name . ', as of ' . Carbon::now()->format('l M d, Y') . ' there are <span class="font-extrabold text-gray-900 text-lg">' .
-                $mCoutHei['count'] . ' of ' . $mCoutHei['type'] . '</span> in our record!';
+                $mCountHei['count'] . ' of ' . $mCountHei['type'] . '</span> in our record!';
         }
         return 'Hello! ' . Auth::user()->name . ', this is the report for you, you can click this to view full report';
     }
@@ -62,7 +63,8 @@ class convoService
     private static function parseUrl(array $aContent)
     {
         $sGroupby = preg_replace('/by |and /', ',', \implode(\array_column(@$aContent['entities']['groupBy'] ?? [], 'value')));
-        return '?intent=' . self::getIntent($aContent) . '&by=' . $sGroupby;
+        \preg_match('/2017|2018|2019|2020/', $aContent['_text'], $mYear);
+        return '?intent=' . self::getIntent($aContent) . '&by=' . $sGroupby . '&year=' . \collect($mYear)->first() . '&type=' . @$aContent['entities']['getType'][0]['value'];
     }
 
     /**
@@ -76,15 +78,14 @@ class convoService
     }
 
 
-    public function analyzeReportData(string $sIntent, $mBy)
+    public function analyzeReportData(string $sIntent, $mBy, $mType, $mYear)
     {
         $aIntent = [
             'getHei' => '1',
             'getSuc' => 'hei.type like "%suc%"',
             'getLuc' => 'hei.type like "%local%" or hei.type like "%luc%"',
-            'getPheis' => 'hei.type like "%pheis%" or hei.type like "%private%"'
+            'getPheis' => 'hei.type like "%pheis%" or heidd.type like "%private%"'
         ];
-        $getStudentDataType = (strlen($mBy) <= 0 || $mBy === null || (\preg_match('/enroll/i', $mBy) === 0 && \preg_match('/graduate/i', $mBy) === 0)) ? null : ((strlen($mBy) > 0 && \preg_match('/enroll/i', $mBy)) ? 'ENROLLMENT' : 'GRADUATE');
-        return $this->oConvoRepository->getDataByInstitution($aIntent[$sIntent], $mBy, $getStudentDataType);
+        return $this->oConvoRepository->getDataByInstitution(($sIntent === 'getType') ? true : $aIntent[$sIntent], \ucwords($mType), $mYear);
     }
 }

@@ -7,7 +7,7 @@
                         <div>
                             <span class="break-words px-4 py-2 rounded-lg inline-block text-sm {{ (Auth::id() === $convo->user_id)? 'rounded-br-none bg-blue-600 text-white' : 'rounded-bl-none bg-gray-300 text-gray-600' }}">{!! $convo->message  !!}
                                 @if($convo->url !== null)
-                                     <p><a class="text-blue-800" target='_blank' href='{{\env('RSHINY_SERVER', 'https://127.0.0.1:5718') . $convo->url . '&static=false' }} '> Show Report <img style="width: 100px; margin: 0 auto; filter: drop-shadow(0px 5px 5px black);" src='/img/bar-chart.svg'/></a></p>
+                                     <p><a class="text-blue-800" target='_blank' href='{{\env('RSHINY_SERVER', 'https://127.0.0.1:5718') . $convo->url . '&static=false' }} '> Show Report <img style="width: 100px; margin: 0 auto; filter: drop-shadow(0px 5px 5px black);" src='/img/bar-line.jpg'/></a></p>
                                 @endif
                                 <p class="mt-3" style="font-size: 10px" >{{ $convo->created_at }}</p>
                             </span>
