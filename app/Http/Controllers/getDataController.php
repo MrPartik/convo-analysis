@@ -22,7 +22,7 @@ class getDataController extends Controller
 
     public function get()
     {
-        $sIntent = \request()->get('intent') ?? 'getSuc';
+        $sIntent = \request()->get('intent') ?? 'getHei';
         $mBy = \request()->get('by');
         $mType = \request()->get('type');
         $mYear = \request()->get('year');

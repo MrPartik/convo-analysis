@@ -84,7 +84,7 @@ class convoService
             'getHei' => '1',
             'getSuc' => 'hei.type like "%suc%"',
             'getLuc' => 'hei.type like "%local%" or hei.type like "%luc%"',
-            'getPheis' => 'hei.type like "%pheis%" or heidd.type like "%private%"'
+            'getPheis' => 'hei.type not like "%suc%" and  hei.type not like "%local%" and hei.type not like "%luc%"'
         ];
         return $this->oConvoRepository->getDataByInstitution(($sIntent === 'getType') ? true : $aIntent[$sIntent], \ucwords($mType), $mYear);
     }
