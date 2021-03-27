@@ -3,9 +3,9 @@
         @foreach($convos ?? [] as $convo)
             <div class="chat-message">
                 <div class="flex items-end {{ (Auth::id() === $convo->user_id)? 'justify-end' : '' }}">
-                    <div class="flex shadow-md flex-col space-y-2 text-xs max-w-xs mx-2 order-2 ">
+                    <div class=" flex shadow-md flex-col space-y-2 text-xs max-w-xs mx-2 order-2 ">
                         <div>
-                            <span class="break-words px-4 py-2 rounded-lg inline-block text-sm {{ (Auth::id() === $convo->user_id)? 'rounded-br-none bg-blue-600 text-white' : 'rounded-bl-none bg-gray-300 text-gray-600' }}">{!! $convo->message  !!}
+                            <span class="break-words px-4 py-2 rounded-lg inline-block text-sm {{ (Auth::id() === $convo->user_id)? 'rounded-br-none bg-blue-600 text-white' : 'rounded-bl-none bg-gray-200 text-gray-600 hover:bg-gray-300' }}">{!! $convo->message  !!}
                                 @if($convo->url !== null)
                                      <p><a class="text-blue-800" target='_blank' href='{{\env('RSHINY_SERVER', 'https://127.0.0.1:5718') . $convo->url . '&static=false' }} '> Show Report <img style="width: 100px; margin: 0 auto; filter: drop-shadow(0px 5px 5px black);" src='/img/bar-line.jpg'/></a></p>
                                 @endif

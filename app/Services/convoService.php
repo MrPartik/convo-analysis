@@ -86,7 +86,8 @@ class convoService
             return 'Hello! ' . Auth::user()->name . ', as of ' . Carbon::now()->format('l M d, Y') . ' there are <span class="font-extrabold text-gray-900 text-lg">' .
                 $mCountHei['count'] . ' of ' . $mCountHei['type'] . '</span> in our record!';
         }
-        return 'Hello! ' . Auth::user()->name . ', this is the report for you, you can click this to view full report';
+        $aExtract = self::extractEntities($aContent);
+        return 'Hello! ' . Auth::user()->name . ', this is the report for you, you can click this to view full report<br/><strong>' . $this->generateTitle($aExtract['year'], $aExtract['type'], $aExtract['course'])[self::getIntent($aContent)] . '</strong>';
     }
 
     /**
@@ -96,10 +97,24 @@ class convoService
      */
     private static function parseUrl(array $aContent)
     {
-        $sGroupby = preg_replace('/by |and /', ',', \implode(\array_column(@$aContent['entities']['groupBy'] ?? [], 'value')));
+        $aExtract = self::extractEntities($aContent);
+        return '?intent=' . self::getIntent($aContent) . '&by=' . $aExtract['group'] . '&year=' . $aExtract['year'] . '&type=' . $aExtract['type'] . '&courses=' . $aExtract['course'];
+    }
+
+    private static function extractEntities($aContent) {
         \preg_match('/2017|2018|2019|2020/', $aContent['_text'], $mYear);
         \preg_match_all('/{{[a-z0-9\s]+}}/i', $aContent['_text'], $mPrograms);
-        return '?intent=' . self::getIntent($aContent) . '&by=' . $sGroupby . '&year=' . \collect($mYear)->first() . '&type=' . @$aContent['entities']['getType'][0]['value'] . '&courses=' . \implode(', ', \preg_replace('/{{||}}/', '', $mPrograms[0]));
+        $sGroupby = preg_replace('/by |and /', ',', \implode(\array_column(@$aContent['entities']['groupBy'] ?? [], 'value')));
+        $sType = @$aContent['entities']['getType'][0]['value'];
+        $sCourse = \implode(', ', \preg_replace('/{{||}}/', '', $mPrograms[0]));
+        $mYear = @$mYear[0];
+
+        return [
+            'year'   => $mYear,
+            'type'   => $sType,
+            'course' => $sCourse,
+            'group'  => $sGroupby
+        ];
     }
 
     /**
@@ -109,7 +124,8 @@ class convoService
      */
     private static function getIntent(array $aContent)
     {
-        return \implode('', \array_column(@$aContent['entities']['intent'] ?? [], 'value'));
+        $sIntent = \implode('', \array_column(@$aContent['entities']['intent'] ?? [], 'value'));
+        return  ($sIntent !== '') ? $sIntent : 'getHei';
     }
 
     /**
@@ -117,6 +133,7 @@ class convoService
      * @param $mBy
      * @param $mType
      * @param $mYear
+     * @param $mCourses
      * @return array
      */
     public function analyzeReportData(string $sIntent, $mBy, $mType, $mYear, $mCourses)
@@ -137,5 +154,44 @@ class convoService
      */
     public function searchProgram($sValue) {
         return $this->oSearchRepository->searchProgram($sValue);
+    }
+
+    /**
+     * @return array
+     */
+    public function getReport()
+    {
+        $sIntent = \request()->get('intent') ?? 'getHei';
+        $mBy = \request()->get('by');
+        $mType = \request()->get('type');
+        $mYear = \request()->get('year');
+        $mCourses = \request()->get('courses');
+
+        return [
+            'data_source' => $this->analyzeReportData($sIntent, $mBy, $mType, $mYear, $mCourses),
+            'chart' => \request()->get('chart') ?? 'bar',
+            'title' => $this->generateTitle($mYear, $mType, $mCourses)[$sIntent],
+            'intent' => $sIntent
+        ];
+    }
+
+    /**
+     * @param $mYear
+     * @param $mType
+     * @param $mCourses
+     * @return array
+     */
+    private function generateTitle($mYear, $mType, $mCourses) {
+        $mInCourse = ($mCourses === null || \strlen($mCourses) <= 0) ? '' : ' (' . $mCourses . ' )';
+        $mInYear = ($mYear === null || \strlen($mYear) <= 0) ? '' : ' in ' . $mYear;
+        $mUsingType = (($mType === null || \strlen($mType) <= 0) ? '' : ' using ' . \ucfirst($mType) . ' Data') . $mInYear;
+        return [
+            'getHei' => 'Summary of Higher Education Institution (HEI)' . $mUsingType . $mInCourse,
+            'getSuc' => 'Summary of State University and College (SUC)' . $mUsingType . $mInCourse,
+            'getLuc' => 'Summary of Local University and College (LUC)' . $mUsingType . $mInCourse,
+            'getPheis' => 'Summary of Private Higher Education Institution (PHEI)' . $mUsingType . $mInCourse,
+            'getType' => \ucfirst($mType) . ' Data' . $mInYear . $mInCourse
+        ];
+
     }
 }
