@@ -21,27 +21,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/sample', function(){
-//    $oProgram = ProgramModel::all();
-//    foreach($oProgram as $oVal){
-//        $oProgCat = collect(DB::select('select * from r_program_categories where match(title) against(?) limit 1', [$oVal->program]))->first();
-//        $iPordCatId = $oProgCat->id ?? null;
-//        DB::update('update r_program set program_category_id = ? where id = ?',
-//            [$iPordCatId, $oVal->id]);
-//    }
 
-//    $oHeiData = \App\Models\HeiDataModel::all();
-//    foreach($oHeiData as $oVal) {
-//        $sProgramCode = ProgramModel::where('id', $oVal->program_id)->first();
-//        DB::update('update r_hei_data set hei_code = ? where id = ?',
-//            [$sProgramCode->code, $oVal->id]);
-//    }
-
-//    return array_column(ProgramCategoryModel::all()->toArray(), 'title');
-//    $fuzzy = new FuzzySearch\FuzzySearch(ProgramCategoryModel::all()->toArray(), 'title');
-//    return $fuzzy->search('Arts', 20);
-
-    // return \App\Repositories\derivedRepository::getProgramReportData('');
-
+    $aCourses = \explode(',', 'BACHELOR IN BANKING AND FINANCE , BACHELOR OF SCIENCE IN CRIMINOLOGY');
+    return \App\Library\utils::getStringedArray($aCourses);
 });
 
 Route::get('/get/data-source', [getDataController::class, 'get']);

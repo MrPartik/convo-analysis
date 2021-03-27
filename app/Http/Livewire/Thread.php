@@ -2,6 +2,9 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\ConvoModel;
+use App\Models\HeiModel;
+use App\Models\ProgramModel;
 use App\Repositories\derivedRepository;
 use Livewire\Component;
 
@@ -17,6 +20,6 @@ class Thread extends Component
 
     public function getProgramReportData($sType, $bIsEnrollment) {
         $this->sType = $sType;
-        $this->aProgramReportData = derivedRepository::getProgramReportData($sType, $bIsEnrollment);
+        $this->aProgramReportData = (new derivedRepository(new HeiModel(), new ProgramModel(), new ConvoModel()))->getProgramReportData($sType, $bIsEnrollment);
     }
 }

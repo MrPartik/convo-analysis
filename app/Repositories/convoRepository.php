@@ -1,5 +1,6 @@
 <?php namespace App\Repositories;
 
+use App\Library\utils;
 use App\Models\ConvoModel;
 use App\WitApp;
 use Carbon\Carbon;
@@ -9,20 +10,8 @@ use PhpParser\Node\Expr\Cast\Bool_;
 
 class convoRepository
 {
-    /**
-     * Getting convo per login
-     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
-     */
-    public function getConvoPerLogin()
-    {
-        return ConvoModel::with(['repliedUser', 'messageUser'])->where('user_id', Auth::id())
-            ->orWhere('reply_user_id', '=', Auth::id())
-            ->orWhere('reply_user_id', '=' , 0)
-            ->get();
-    }
 
-
-    public function getDataByInstitution(string $sCondition, $mStudentDataType, $mYear) {
+    public function getDataByInstitution(string $sCondition, $mStudentDataType, $mYear, $mCourses) {
         return DB::select(
             'select hdc.year year, hei.region region, hei.hei_name hei, progc.title category, prog.program program, concat(ucase(substring(hd.type, 1, 1)), lower(substring(hd.type, 2))) type, hdc.m as male, hdc.f female,     sum(hdc.m + hdc.f) total
                     from r_hei_data_count hdc
@@ -32,6 +21,7 @@ class convoRepository
                     join r_program_categories progc on progc.id = prog.program_category_id
                     where ' . (($mStudentDataType === null || $mStudentDataType === '') ? 1 : ' hd.type= "' . $mStudentDataType . '"') .
             ' and ' . (($mYear === null || $mYear === '') ? 1 : ' hdc.year=' . $mYear) .
+            ' and ' . (($mCourses === null || $mCourses === '') ? 1 : ' prog.program in (' . \implode(',', utils::getStringedArray(\explode(',', $mCourses))) . ')') .
             ' and ' . $sCondition . ' group by hdc.year, hei.region, prog.program, hd.type, hdc.m, hdc.f'
         );
     }

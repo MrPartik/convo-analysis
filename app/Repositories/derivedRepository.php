@@ -1,17 +1,51 @@
 <?php namespace App\Repositories;
 
+use App\Models\ConvoModel;
 use App\Models\HeiModel;
 use App\Models\ProgramModel;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use phpDocumentor\Reflection\Types\This;
 
 class derivedRepository
 {
+
+    private $oHeiModel;
+    private $oProgramModel;
+    private $oConvoModel;
+
+
+    /**
+     * derivedRepository constructor.
+     * @param HeiModel $oHeiModel
+     * @param ProgramModel $oProgramModel
+     * @param ConvoModel $oConvoModel
+     */
+    public function __construct(HeiModel $oHeiModel, ProgramModel $oProgramModel, ConvoModel $oConvoModel)
+    {
+        $this->oHeiModel = $oHeiModel;
+        $this->oProgramModel = $oProgramModel;
+        $this->oConvoModel = $oConvoModel;
+    }
+
+    /**
+     * Getting convo per login
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function getConvoPerLogin()
+    {
+        return $this->oConvoModel::with(['repliedUser', 'messageUser'])->where('user_id', Auth::id())
+            ->orWhere('reply_user_id', '=', Auth::id())
+            ->orWhere('reply_user_id', '=' , 0)
+            ->get();
+    }
+
     /**
      * Get program by city
      * @return Collection
      */
-    public static function programByCity()
+    public function programByCity()
     {
         return DB::table('r_program', 'program')
             ->join('r_hei as hei', 'program.code', '=', 'hei.code')
@@ -25,18 +59,18 @@ class derivedRepository
      * Get Hei
      * @return mixed
      */
-    public static function getHei()
+    public function getHei()
     {
-        return HeiModel::all();
+        return $this->oHeiModel::all();
     }
 
     /**
      * Get Suc
      * @return mixed
      */
-    public static function getSuc()
+    public function getSuc()
     {
-        return HeiModel::where(function ($oQuery) {
+        return $this->oHeiModel::where(function ($oQuery) {
             return $oQuery->orWhere('type', 'like', '%suc%')
                 ->orWhere('type', 'like', '%state university%')
                 ->get();
@@ -47,9 +81,9 @@ class derivedRepository
      * Get Luc
      * @return mixed
      */
-    public static function getLuc()
+    public function getLuc()
     {
-        return HeiModel::where(function ($oQuery) {
+        return $this->oHeiModel::where(function ($oQuery) {
             return $oQuery->orWhere('type', 'like', '%luc%')
                 ->orWhere('type', 'like', '%local%')
                 ->get();
@@ -60,9 +94,9 @@ class derivedRepository
      * Get Pheis
      * @return mixed
      */
-    public static function getPheis()
+    public function getPheis()
     {
-        return HeiModel::where(function ($oQuery) {
+        return $this->oHeiModel::where(function ($oQuery) {
             return $oQuery->orWhere('type', 'like', '%pheis%')
                 ->orWhere('type', 'like', '%private%')
                 ->get();
@@ -73,9 +107,9 @@ class derivedRepository
      * Get unique program
      * @return ProgramModel[]|\Illuminate\Database\Eloquent\Collection
      */
-    public static function getProgram()
+    public function getProgram()
     {
-        return ProgramModel::all()->unique('program');
+        return $this->oProgramModel::all()->unique('program');
     }
 
 
@@ -87,7 +121,7 @@ class derivedRepository
      * @param int $iLimit
      * @return array
      */
-    public static function getProgramReportData($sType, $bIsEnrollment, $iOffset = 0, $iLimit = 10)
+    public function getProgramReportData($sType, $bIsEnrollment, $iOffset = 0, $iLimit = 10)
     {
         $oDbResult = collect(DB::select('select distinct hdc.year year, hd.hei_code  hei_code, count(hdc.id) hei_count
             from r_hei_data hd
@@ -113,11 +147,11 @@ class derivedRepository
      * getting cunt by hei
      * @return array
      */
-    public static function getCountHei()
+    public function getCountHei()
     {
         return [
             'type' => 'HEI',
-            'count' => self::getHei()->count()
+            'count' => $this->getHei()->count()
         ];
     }
 
@@ -125,11 +159,11 @@ class derivedRepository
      * getting count by suc
      * @return array
      */
-    public static function getCountSuc()
+    public function getCountSuc()
     {
         return [
             'type' => 'SUC',
-            'count' => self::getSuc()->count()
+            'count' => $this->getSuc()->count()
         ];
     }
 
@@ -137,11 +171,11 @@ class derivedRepository
      * getting count by luc
      * @return array
      */
-    public static function getCountLuc()
+    public function getCountLuc()
     {
         return [
             'type' => 'LUC',
-            'count' => self::getLuc()->count()
+            'count' => $this->getLuc()->count()
         ];
     }
 
@@ -149,11 +183,11 @@ class derivedRepository
      * getting count by pheis
      * @return array
      */
-    public static function getCountPheis()
+    public function getCountPheis()
     {
         return [
             'type' => 'PHEIS',
-            'count' => self::getPheis()->count()
+            'count' => $this->getPheis()->count()
         ];
     }
 
