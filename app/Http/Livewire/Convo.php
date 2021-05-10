@@ -10,6 +10,7 @@ use App\Repositories\derivedRepository;
 use App\Repositories\searchRepository;
 use App\Services\convoService;
 use App\WitApp;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -80,6 +81,7 @@ class Convo extends Component
         $oConvo->user_id = Auth::id();
         $oConvo->message = \preg_replace('/{{||}}/', '', $this->sContent);
         $oConvo->reply_user_id = 1;
+        $oConvo->deleted = null;
         $this->oConvos = $this->oConvoService->getConvoPerLogin();
         $mReply = $this->oConvoService->reply($this->sContent);
         if($mReply === false) {
@@ -89,5 +91,15 @@ class Convo extends Component
         ConvoModel::insert($mReply);
         $this->sContent = '';
         $this->emit('scrollToLatest');
+    }
+
+    public function deleteConvo()
+    {
+        ConvoModel::where('user_id', Auth::id())
+            ->orWhere('reply_user_id', Auth::id())->update([
+                'deleted' => Carbon::now()
+            ]);
+        $this->oConvos = $this->oConvoService->getConvoPerLogin();
+        dd($this->oConvos->toArray());
     }
 }

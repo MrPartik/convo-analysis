@@ -24,9 +24,14 @@
                     <div class="py-2 hover:bg-gray-100" style=" border-bottom: #e6e6e6 solid 1px; cursor:pointer; font-weight: bolder; color: #333333;" wire:click="selectProgram('{{\strtoupper($sProgram)}}')">{{\strtoupper($sProgram)}}</div>
                 @endforeach
             </div>
-         <span class="absolute inset-y-0 flex items-center">
-         </span>
-            <input required wire:keydown.enter='sendConvo' wire:model='sContent' wire:keydown='triggerSearchProgram' type="text" placeholder="Write Something" class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-5 pr-15 bg-gray-200 rounded-full py-3 font-semiboldbold">
+            <div class="absolute left-0 items-center inset-y-0 sm:flex">
+                <button wire:click="$emit('triggerDelete',{{ 1 }})" type="button" class="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-white bg-red-500 hover:bg-red-400 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                </button>
+            </div>
+            <input required wire:keydown.enter='sendConvo' wire:model='sContent' wire:keydown='triggerSearchProgram' type="text" style="padding-left: 60px" placeholder="Write Something" class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-5 pr-15 bg-gray-200 rounded-full py-3 font-semiboldbold">
             <div class="absolute right-0 items-center inset-y-0 sm:flex">
                 <button wire:click='sendConvo' type="button" class="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-6 w-6 transform rotate-90">
@@ -37,3 +42,12 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        @this.on('triggerDelete', function () {
+            if (confirm('Are you sure? You want to delete all of your conversation with Brixbo AI?')) {
+                @this.call('deleteConvo');
+            }
+        });
+    })
+</script>

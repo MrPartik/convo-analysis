@@ -35,10 +35,12 @@ class derivedRepository
      */
     public function getConvoPerLogin()
     {
-        return $this->oConvoModel::with(['repliedUser', 'messageUser'])->where('user_id', Auth::id())
+        return $this->oConvoModel::with(['repliedUser', 'messageUser'])
+            ->where('user_id', Auth::id())
             ->orWhere('reply_user_id', '=', Auth::id())
             ->orWhere('reply_user_id', '=' , 0)
-            ->get();
+            ->get()
+            ->whereNull('deleted');
     }
 
     /**
@@ -127,8 +129,8 @@ class derivedRepository
             from r_hei_data hd
             inner join r_hei_data_count hdc on hdc.hei_data_id = hd.id
             inner join r_hei h on h.code = hd.hei_code
-            where h.type = ? and hd.type = ?
-            group by hdc.year, hd.hei_code, hd.type, hdc.semester', [$sType, ($bIsEnrollment === true) ? 'enrollment' : 'graduate']));
+            where ' . (($sType !== 'ALL') ? 'h.type ="' . $sType . '"' : true ) . ' and hd.type = ?
+            group by hdc.year, hd.hei_code, hd.type, hdc.semester', [($bIsEnrollment === true) ? 'enrollment' : 'graduate']));
         $aResult = [];
         foreach ($oDbResult as $mKey => $mVal) {
             if (isset($aResult[$mVal->year]) === false) {

@@ -27,6 +27,7 @@ class Convo extends Migration
                 ->onDelete('cascade');
             $oTable->text('message');
             $oTable->string('url')->nullable();
+            $oTable->dateTime('deleted')->nullable();
             $oTable->timestamps();
 
             $oTable->index(['user_id', 'reply_user_id']);

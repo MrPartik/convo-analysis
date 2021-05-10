@@ -1,10 +1,15 @@
     <div class="bg-white overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch p-2 rounded-lg" style="height: 80vh; width: 90vw">
-        <ul class="tab" style="text-align: start">
-            <li class=" {{ $sType === 'SUC' ? 'text-white bg-blue-500' : 'text-blue-700 bg-transparent'}}  inline-block  hover:bg-blue-500 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"><a wire:click="getProgramReportData('SUC', true)" href="javascript:" class=" active">SUCs</a></li>
-            <li class=" {{ $sType === 'LUC' ? 'text-white bg-blue-500' : 'text-blue-700 bg-transparent'}}  inline-block hover:bg-blue-500 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"><a wire:click="getProgramReportData('LUC', true)" href="javascript:" class="">LUCs</a></li>
-            <li class=" {{ $sType === 'PRIVATE' ? 'text-white bg-blue-500' : 'text-blue-700 bg-transparent'}} inline-block hover:bg-blue-500 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"><a wire:click="getProgramReportData('PRIVATE', true)" href="javascript:" class="">PHEIs</a></li>
+        <ul class="tab" style="display: inline; float: left;">
+            <li class=" {{ $sType === 'HEIs' ? 'text-white bg-blue-500' : 'text-blue-700 bg-transparent'}}  inline-block  hover:bg-blue-500 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"><a wire:click="getProgramReportData('ALL')" href="javascript:" class=" active">All</a></li>
+            <li class=" {{ $sType === 'SUCs' ? 'text-white bg-blue-500' : 'text-blue-700 bg-transparent'}}  inline-block  hover:bg-blue-500 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"><a wire:click="getProgramReportData('SUC')" href="javascript:" class=" active">SUCs</a></li>
+            <li class=" {{ $sType === 'LUCs' ? 'text-white bg-blue-500' : 'text-blue-700 bg-transparent'}}  inline-block hover:bg-blue-500 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"><a wire:click="getProgramReportData('LUC')" href="javascript:" class="">LUCs</a></li>
+            <li class=" {{ $sType === 'PHEIs' ? 'text-white bg-blue-500' : 'text-blue-700 bg-transparent'}} inline-block hover:bg-blue-500 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"><a wire:click="getProgramReportData('PRIVATE')" href="javascript:" class="">PHEIs</a></li>
         </ul>
-        <div wire:loading.block wire:target="getProgramReportData" class="absolute block bg-white opacity-75 z-50" style="width: inherit; height: inherit">
+        <select id="student_data_type" wire:model="sStudentData" wire:change="updateStudentData" class="form-select block mt-1" style="float: right; display: inline">
+            <option value="enrollment">Enrollment Data</option>
+            <option value="graduate">Graduate Data</option>
+        </select>
+        <div wire:loading.block wire:target="getProgramReportData, sStudentData" class="absolute block bg-white opacity-75 z-50" style="width: inherit; height: inherit">
                 <span class="text-green-500 opacity-75 top-1/2 my-0 mx-auto block relative w-0 h-0" style=" top: 50%; ">
                     <i class="fas fa-circle-notch fa-spin fa-5x"></i>
                 </span>
@@ -14,7 +19,7 @@
                 <script type="text/javascript">
                     Highcharts.chart('hei-charts', {
                         chart: {  type: 'bar' },
-                        title: { text: 'Total {{ $sType }} per year'  },
+                        title: { text: 'Total {{ $sType }} per year using {{ ($sStudentData === "enrollment") ? "Enrollment Data" : "Graduate Data" }}'},
                         xAxis: {
                             type: 'category',
                             title: { text: null },

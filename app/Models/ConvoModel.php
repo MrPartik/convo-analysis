@@ -12,7 +12,7 @@ class ConvoModel extends Model
 
     protected $table = 't_convo';
 
-    protected $fillable = ['user_id', 'message', 'url', 'reply_user_id'];
+    protected $fillable = ['user_id', 'message', 'url', 'reply_user_id', 'deleted'];
 
     public function repliedUser()
     {

@@ -68,6 +68,7 @@ class convoService
         $aConvo['message'] = $this->analyzeConvo($aContent);
         $aConvo['reply_user_id'] = Auth::id();
         $aConvo['created_at'] = Carbon::now();
+        $aConvo['deleted'] = null;
         if (\array_search(self::getIntent($aContent), ['getCountHei', 'getCountSuc', 'getCountLuc', 'getCountPheis']) === false) {
             $aConvo['url'] = self::parseUrl($aContent);
         }
