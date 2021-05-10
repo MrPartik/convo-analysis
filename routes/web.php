@@ -20,14 +20,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/sample', function(){
-
+Route::get('/sample', function() {
     $aCourses = \explode(',', 'BACHELOR IN BANKING AND FINANCE , BACHELOR OF SCIENCE IN CRIMINOLOGY');
     return \App\Library\utils::getStringedArray($aCourses);
 });
 
 Route::get('/get/data-source', [getDataController::class, 'get']);
-Route::get('/get/data', [getDataController::class, 'debug']);
+(\config('app.env') === 'local') && Route::get('/get/data', [getDataController::class, 'debug']);
 
 Route::get('/', function () {
     return view('welcome');
