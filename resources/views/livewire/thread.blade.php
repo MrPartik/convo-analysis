@@ -1,5 +1,5 @@
 <div>
-    <div class="loading-page" wire:loading.block wire:target="getProgramReportData, sStudentData, getCountHEIs">Loading&#8230;</div>
+    <div class="loading-page" wire:loading.block wire:target="setDashboardType, getProgramReportData, sStudentData, getCountHEIs">Loading&#8230;</div>
     <div class="bg-white overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch p-2 rounded-lg" style="border: 1px solid lightgray; margin-bottom: 15px;">
         <ul class="tab" style="display: inline; float: left;">
             <li class=" {{ $iDashboardType === 0 ? 'text-white bg-blue-500' : 'text-blue-700 bg-transparent'}}  inline-block  hover:bg-blue-500 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"><a wire:click="setDashboardType(0);" href="javascript:" class=" active">Dashboard</a></li>
@@ -51,8 +51,8 @@
         <br/>
         <br/>
         <div class="p-2 pt-1 flex-wrap  flex items-center gap-2 justify-center">
-            <div class="flex-auto">
-                <div class="md:p-7 p-4" style="width: 500px" id="student-charts">
+            <div class="flex-auto" style="max-width: 50%" >
+                <div class="md:p-7 p-4" id="student-charts">
                     <script type="text/javascript">
                         Highcharts.chart('student-charts', {
                             chart: {  type: 'bar' },
@@ -101,8 +101,8 @@
                     </script>
                 </div>
             </div>
-            <div class="flex-auto">
-                <div class="md:p-7 p-4" style="width: 500px" id="region-charts">
+            <div class="flex-auto" style="max-width: 50%" >
+                <div class="md:p-7 p-4" id="region-charts">
                     <script type="text/javascript">
                         Highcharts.chart('region-charts', {
                             chart: {  type: 'column' },
@@ -163,7 +163,7 @@
             <option value="graduate">Graduate Data</option>
         </select>
         <div style="display: block">
-            <div id="hei-charts">
+            <div id="hei-charts" style="width: 100%">
                 <script type="text/javascript">
                     Highcharts.chart('hei-charts', {
                         chart: {  type: 'bar' },
