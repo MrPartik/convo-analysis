@@ -51,7 +51,7 @@
         <br/>
         <br/>
         <div class="p-2 pt-1 flex-wrap  flex items-center gap-2 justify-center">
-            <div class="flex-auto" style="max-width: 50%" >
+            <div class="flex-auto w-50">
                 <div class="md:p-7 p-4" id="student-charts">
                     <script type="text/javascript">
                         Highcharts.chart('student-charts', {
@@ -101,7 +101,7 @@
                     </script>
                 </div>
             </div>
-            <div class="flex-auto" style="max-width: 50%" >
+            <div class="flex-auto w-50" >
                 <div class="md:p-7 p-4" id="region-charts">
                     <script type="text/javascript">
                         Highcharts.chart('region-charts', {
@@ -162,52 +162,56 @@
             <option value="enrollment">Enrollment Data</option>
             <option value="graduate">Graduate Data</option>
         </select>
-        <div style="display: block">
-            <div id="hei-charts" style="width: 100%">
-                <script type="text/javascript">
-                    Highcharts.chart('hei-charts', {
-                        chart: {  type: 'bar' },
-                        title: { text: 'Total {{ $sType }} per year using {{ ($sStudentData === "enrollment") ? "Enrollment Data" : "Graduate Data" }}'},
-                        xAxis: {
-                            type: 'category',
-                            title: { text: null },
-                            min: 0,
-                            scrollbar: {  enabled: true },
-                            tickLength: 0
-                        },
-                        yAxis: {
-                            title: { text: null }
-                        },
-                        legend: { enabled: false },
-                        plotOptions: {
-                            series: {
-                                borderWidth: 0,
-                                dataLabels: {
-                                    enabled: true,
-                                    format: '{point.y:.0f}'
+        <br>
+        <br>
+        <div class="p-2 pt-1 flex-wrap  flex items-center gap-2 justify-center">
+            <div class="flex-auto w-100">
+                <div class="md:p-7 p-4" id="hei-charts">
+                    <script type="text/javascript">
+                        Highcharts.chart('hei-charts', {
+                            chart: {type: 'bar'},
+                            title: {text: 'Total {{ $sType }} per year using {{ ($sStudentData === "enrollment") ? "Enrollment Data" : "Graduate Data" }}'},
+                            xAxis: {
+                                type: 'category',
+                                title: {text: null},
+                                min: 0,
+                                scrollbar: {enabled: true},
+                                tickLength: 0
+                            },
+                            yAxis: {
+                                title: {text: null}
+                            },
+                            legend: {enabled: false},
+                            plotOptions: {
+                                series: {
+                                    borderWidth: 0,
+                                    dataLabels: {
+                                        enabled: true,
+                                        format: '{point.y:.0f}'
+                                    }
                                 }
-                            }
-                        },
-                        tooltip: {
-                            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-                            pointFormat: '<b>There are {point.y:.0f} {{ $sType }} in {point.name} </b><br/>'
-                        },
-                        series: [
-                            {
-                                name: "{{ $sType }}",
-                                colorByPoint: true,
-                                data: [
-                                    @foreach($aProgramReportData ?? [] as $mKey => $mVal)
+                            },
+                            tooltip: {
+                                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                                pointFormat: '<b>There are {point.y:.0f} {{ $sType }} in {point.name} </b><br/>'
+                            },
+                            series: [
+                                {
+                                    name: "{{ $sType }}",
+                                    colorByPoint: true,
+                                    data: [
+                                            @foreach($aProgramReportData ?? [] as $mKey => $mVal)
                                         {
-                                            name : {{ $mVal['year'] }},
-                                            y    : {{ $mVal['total_hei'] }}
+                                            name: {{ $mVal['year'] }},
+                                            y: {{ $mVal['total_hei'] }}
                                         },
-                                    @endforeach
-                                ]
-                            }
-                        ]
-                    });
-                </script>
+                                        @endforeach
+                                    ]
+                                }
+                            ]
+                        });
+                    </script>
+                </div>
             </div>
         </div>
     </div>
