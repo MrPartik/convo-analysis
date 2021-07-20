@@ -30,7 +30,7 @@ class Convo extends Component
      */
     public function __construct($id = null)
     {
-        $this->oConvoService = new convoService(new convoRepository(), new derivedRepository(new HeiModel(), new ProgramModel(), new ConvoModel()), new searchRepository(new ProgramModel()));
+        $this->oConvoService = new convoService(new convoRepository(), new derivedRepository(), new searchRepository(new ProgramModel()));
         parent::__construct($id);
     }
 
@@ -100,6 +100,5 @@ class Convo extends Component
                 'deleted' => Carbon::now()
             ]);
         $this->oConvos = $this->oConvoService->getConvoPerLogin();
-        dd($this->oConvos->toArray());
     }
 }

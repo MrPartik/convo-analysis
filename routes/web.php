@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\getDataController;
 use App\Http\Controllers\ImportController;
+use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\UserController;
+use App\Library\utils;
 use App\Models\ProgramCategoryModel;
 use App\Models\ProgramModel;
 use Illuminate\Support\Facades\Auth;
@@ -21,8 +23,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/sample', function() {
+    return \preg_match('/suc/' ,'suc sattelite');
+    return (new \App\WitApp())->getUtterances();
     $aCourses = \explode(',', 'BACHELOR IN BANKING AND FINANCE , BACHELOR OF SCIENCE IN CRIMINOLOGY');
-    return \App\Library\utils::getStringedArray($aCourses);
+    return utils::getStringedArray($aCourses);
 });
 
 Route::get('/get/data-source', [getDataController::class, 'get']);
@@ -39,6 +43,7 @@ Route::get('/logged-in', function () {
 Route::group(['middleware' => ['auth:sanctum', 'verified', 'user.role']], function () {
     Route::group(['prefix' => 'user'], function () {
         Route::get('/', [ThreadController::class, 'front']);
+        Route::get('/library', [LibraryController::class, 'front']);
     });
 });
 

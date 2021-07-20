@@ -11,7 +11,7 @@ class ThreadController extends Controller
     public function front()
     {
         return \view('user.thread', [
-            'programByCity' => (new derivedRepository(new HeiModel(), new ProgramModel(), new ConvoModel()))->programByCity()
+            'programByCity' => (new derivedRepository())->programByCity()
         ]);
     }
 }

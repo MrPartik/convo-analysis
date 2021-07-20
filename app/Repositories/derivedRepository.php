@@ -1,5 +1,6 @@
 <?php namespace App\Repositories;
 
+use App\Models\AcademicYearModel;
 use App\Models\ConvoModel;
 use App\Models\HeiModel;
 use App\Models\ProgramModel;
@@ -18,15 +19,12 @@ class derivedRepository
 
     /**
      * derivedRepository constructor.
-     * @param HeiModel $oHeiModel
-     * @param ProgramModel $oProgramModel
-     * @param ConvoModel $oConvoModel
      */
-    public function __construct(HeiModel $oHeiModel, ProgramModel $oProgramModel, ConvoModel $oConvoModel)
+    public function __construct()
     {
-        $this->oHeiModel = $oHeiModel;
-        $this->oProgramModel = $oProgramModel;
-        $this->oConvoModel = $oConvoModel;
+        $this->oHeiModel = new HeiModel();
+        $this->oProgramModel = new ProgramModel();
+        $this->oConvoModel = new ConvoModel();
     }
 
     /**
@@ -145,6 +143,51 @@ class derivedRepository
         return $aResult;
     }
 
+
+    public function getDataPerAcademicYear($iYear, $bIsEnrollment)
+    {
+        $oDbResult = collect(DB::select('select distinct hdc.year year, h.type  hei_type, h.region region, sum(hdc.m + hdc.f) hei_count
+            from r_hei_data hd
+            inner join r_hei_data_count hdc on hdc.hei_data_id = hd.id
+            inner join r_hei h on h.code = hd.hei_code
+            where  hd.type = ? and hdc.year = ?
+            group by hdc.year, h.type', [($bIsEnrollment === true) ? 'enrollment' : 'graduate', $iYear]));
+        $aHEIsResult = [];
+        $aHEIsKeys = [
+            'All',
+            'SUC',
+            'LUC',
+            'Private'
+        ];
+        foreach($aHEIsKeys as $mKey) {
+            foreach ($oDbResult as $mValue) {
+                if($mKey !== 'All')
+                {
+                    if($mKey === 'SUC' && \preg_match('/SUC/', $mValue->hei_type) !== -1) {
+                        @$aHEIsResult[$mKey] += $mValue->hei_count;
+                        continue;
+                    } else if(($mKey === 'LUC' && \preg_match('/LUC/', $mValue->hei_type)) || 'LGU' === strtoupper($mValue->hei_type)) {
+                        @$aHEIsResult[$mKey] += $mValue->hei_count;
+                        continue;
+                    } else if($mKey === 'Private' && \preg_match('/Private/', $mValue->hei_type)) {
+                        @$aHEIsResult[$mKey] += $mValue->hei_count;
+                    }
+                }
+            }
+            ($mKey !== 'All') && @$aHEIsResult['All'] += $aHEIsResult[$mKey];
+        }
+        $aRegionResult = [];
+        foreach ($oDbResult->unique('region') as $mKey) {
+            foreach ($oDbResult as $mValue) {
+                ($mKey->region === $mValue->region) && @$aRegionResult[$mKey->region] += $mValue->hei_count;
+            }
+        }
+        return [
+            'hei'    => $aHEIsResult,
+            'region' => $aRegionResult
+        ];
+    }
+
     /**
      * getting cunt by hei
      * @return array
@@ -193,4 +236,13 @@ class derivedRepository
         ];
     }
 
+    public function getAcademicYear()
+    {
+        $aResult = [];
+        $aYears = AcademicYearModel::all()->toArray();
+        for($i = 0; $i < \count($aYears); $i++) {
+            $aResult[$aYears[$i]['year']] = $aYears[$i]['year'] . '-' . (($i === \count($aYears) - 1) ? (($aYears[$i]['year']) + 1) :  $aYears[$i + 1]['year']);
+        }
+        return $aResult;
+    }
 }
