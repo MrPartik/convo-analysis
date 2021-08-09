@@ -1,4 +1,4 @@
-<div id="convo-container" class="flex-1 px-6 py-2 justify-between flex flex-col" style='height: 80vh'>
+<div id="convo-container" class="bg-white container mx-auto px-4 sm:px-8 flex-1 px-6 py-2 justify-between flex flex-col fixed bottom-0 right-0 left-0" style='height: 90vh'>
     <div id='messages' class="flex flex-col space-y-2 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
         @foreach($convos ?? [] as $convo)
             <div class="chat-message">
@@ -32,11 +32,16 @@
                 </button>
             </div>
             <input required wire:keydown.enter='sendConvo' wire:model='sContent' wire:keydown='triggerSearchProgram' type="text" style="padding-left: 60px" placeholder="Write Something" class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-5 pr-15 bg-gray-200 rounded-full py-3 font-semiboldbold">
-            <div class="absolute right-0 items-center inset-y-0 sm:flex">
+            <div class="absolute right-0 items-center inset-y-0 sm:flex" style="margin-right: 50px">
                 <button wire:click='sendConvo' type="button" class="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-6 w-6 transform rotate-90">
                         <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
                     </svg>
+                </button>
+            </div>
+            <div class="absolute right-0 items-center inset-y-0 sm:flex">
+                <button type="button" class="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="64" height="64" viewBox="0 0 172 172" style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g><path d="M169.34609,86c0,-46.02344 -37.32266,-83.34609 -83.34609,-83.34609c-46.02344,0 -83.34609,37.32266 -83.34609,83.34609c0,46.02344 37.32266,83.34609 83.34609,83.34609c46.02344,0 83.34609,-37.32266 83.34609,-83.34609z" fill="#f16152"></path><path d="M104.54375,83.01016c0,10.24609 -8.29766,18.54375 -18.54375,18.54375v0c-10.24609,0 -18.54375,-8.29766 -18.54375,-18.54375v-27.81563c0,-10.24609 8.29766,-18.54375 18.54375,-18.54375v0c10.24609,0 18.54375,8.29766 18.54375,18.54375z" fill="#ffffff"></path><path d="M98.49688,66.51563h-24.96016v-10.64922c0,-6.88672 5.57656,-12.46328 12.46328,-12.46328v0c6.88672,0 12.49688,5.57656 12.49688,12.46328z" fill="#f16152"></path><path d="M115.89844,69.27031c-2.18359,0 -3.93047,1.74687 -3.93047,3.93047v10.48125c0,14.31094 -11.65703,25.96797 -25.96797,25.96797c-14.31094,0 -25.96797,-11.65703 -25.96797,-25.96797v-10.48125c0,-2.18359 -1.74687,-3.93047 -3.93047,-3.93047c-2.18359,0 -3.93047,1.74687 -3.93047,3.93047v10.48125c0,17.30078 13.06797,31.61172 29.89844,33.56016v10.27969h-9.10391c-2.18359,0 -3.93047,1.74688 -3.93047,3.93047c0,2.18359 1.74687,3.93047 3.93047,3.93047h26.06875c2.18359,0 3.93047,-1.74687 3.93047,-3.93047c0,-2.18359 -1.74688,-3.93047 -3.93047,-3.93047h-9.10391v-10.27969c16.79688,-1.94844 29.89844,-16.25937 29.89844,-33.56016v-10.48125c-0.03359,-2.15 -1.78047,-3.93047 -3.93047,-3.93047z" fill="#ffffff"></path></g></g></svg>
                 </button>
             </div>
         </div>

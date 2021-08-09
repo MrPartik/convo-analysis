@@ -14,4 +14,9 @@ class ThreadController extends Controller
             'programByCity' => (new derivedRepository())->programByCity()
         ]);
     }
+
+    public function bot_front()
+    {
+        return \view('user.convo');
+    }
 }

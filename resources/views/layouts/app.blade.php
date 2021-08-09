@@ -41,16 +41,16 @@
     </main>
 </div>
 @if(Auth::user()->role === 'user')
-    <div id='convo-wrapper' class="w-2/3 max-w-7xl fixed bottom-0 right-0 z-50">
-        <div class="bg-white overflow-hidden shadow-xl rounded-b-none rounded-lg">
-            <div class="h-10 bg-indigo-500 p-2 cursor-pointer" onclick='toggleConvo()'
-                 style="box-shadow: 1px 1px 10px black;">
-                <span class='font-bold text-white mr-1'>{{ \env('APP_NAME', 'BrixBo') . ' AI' }}</span>
+{{--    <div id='convo-wrapper' class="w-2/3 max-w-7xl fixed bottom-0 right-0 z-50">--}}
+{{--        <div class="bg-white overflow-hidden shadow-xl rounded-b-none rounded-lg">--}}
+{{--            <div class="h-10 bg-indigo-500 p-2 cursor-pointer" onclick='toggleConvo()'--}}
+{{--                 style="box-shadow: 1px 1px 10px black;">--}}
+{{--                <span class='font-bold text-white mr-1'>{{ \env('APP_NAME', 'BrixBo') . ' AI' }}</span>--}}
 
-            </div>
-            @livewire('convo')
-        </div>
-    </div>
+{{--            </div>--}}
+{{--            @livewire('convo')--}}
+{{--        </div>--}}
+{{--    </div>--}}
     <style>
         @media screen and (max-width: 640px) and (min-width: 0px) {
             #convo-wrapper {
