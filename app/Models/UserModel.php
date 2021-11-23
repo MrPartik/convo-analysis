@@ -30,6 +30,7 @@ class UserModel extends Authenticatable
         'email',
         'password',
         'role',
+        'region',
     ];
 
     /**

@@ -13,6 +13,7 @@
         "cloudinary-labs/cloudinary-laravel": "^1.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
+        "google/cloud-speech": "^1.4",
         "guzzlehttp/guzzle": "~6.2",
         "jeylabs/wit": "^1.0",
         "laravel/framework": "^8.12",

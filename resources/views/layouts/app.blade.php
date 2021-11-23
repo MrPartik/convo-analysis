@@ -212,11 +212,11 @@
         function toggleConvo() {
             $('#convo-container').slideToggle();
         }
-        window.livewire.on('errorOccurMessage', function() {
+        window.livewire.on('errorOccurMessage', function(oData) {
             $('#convo-container  input')
                 .addClass('border-solid border-2 border-red-500 text-red-700 bg-red-100')
-                .attr('title', 'Something happened with your internet connection or with your command. Please try again!');
-            $('.alert-message > div').text('Something happened with your internet connection or with your command. Please try again!');
+                .attr('title', oData.error);
+            $('.alert-message > div').html(unescape(oData.error));
             $('.alert-message').css('background-color', 'crimson').show();
             setTimeout(function () {
                 $('.alert-message').fadeOut('fast', function () {

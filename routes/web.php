@@ -11,6 +11,10 @@ use App\Models\ProgramModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Google\Cloud\Speech\V1\SpeechClient;
+use Google\Cloud\Speech\V1\RecognitionAudio;
+use Google\Cloud\Speech\V1\RecognitionConfig;
+use Google\Cloud\Speech\V1\RecognitionConfig\AudioEncoding;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,8 +26,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/sample', function() {
-    return \preg_match('/suc/' ,'suc sattelite');
+Route::get('/sample', function () {
+    return \preg_match('/suc/', 'suc sattelite');
     return (new \App\WitApp())->getUtterances();
     $aCourses = \explode(',', 'BACHELOR IN BANKING AND FINANCE , BACHELOR OF SCIENCE IN CRIMINOLOGY');
     return utils::getStringedArray($aCourses);

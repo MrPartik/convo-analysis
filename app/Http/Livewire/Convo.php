@@ -84,8 +84,8 @@ class Convo extends Component
         $oConvo->deleted = null;
         $this->oConvos = $this->oConvoService->getConvoPerLogin();
         $mReply = $this->oConvoService->reply($this->sContent);
-        if($mReply === false) {
-            return $this->emit('errorOccurMessage');
+        if(array_key_exists('error', $mReply) === true) {
+            return $this->emit('errorOccurMessage', $mReply);
         }
         $oConvo->save();
         ConvoModel::insert($mReply);

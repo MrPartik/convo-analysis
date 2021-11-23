@@ -60,9 +60,24 @@ class convoService
         \preg_match_all('/{{[a-z0-9\s]+}}/i', $sContent, $mPrograms);
         $oWit = new WitApp();
         $aConvo = [];
+        if (strlen($sContent) <= 5) {
+            return [
+                'code' => 502,
+                'error' => 'Minimum text command written. Please try again.'
+            ];
+        }
         $aContent = $oWit->getIntentByText($sContent);
-        if (@$aContent['_text'] === null || (\count($mPrograms[0]) <= 0 && (@$aContent['entities'] === null || @$aContent['entities'] === [] || (isset($aContent['error']) === true && $aContent['error'] === true)))) {
-            return false;
+        if(isset($aContent['error']) === true && $aContent['error'] === true) {
+            return [
+                'code' => 500,
+                'error' => 'Something went wrong. Please try again.'
+            ];
+        }
+        if (@$aContent['_text'] === null || @$aContent['entities']['intent'] === null || (\count($mPrograms[0]) <= 0 && (@$aContent['entities'] === null || @$aContent['entities'] === []))) {
+            return [
+                'code' => 501,
+                'error' => 'Please check your command. Please try again.'
+            ];
         }
         $aConvo['user_id'] = 1;
         $aConvo['message'] = $this->analyzeConvo($aContent);

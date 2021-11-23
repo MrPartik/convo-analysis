@@ -46,12 +46,40 @@
                     <label class="block font-medium text-sm text-gray-700" for="role">
                         User Role
                     </label>
-                    <select wire:model.lazy="role"  id="role" class="form-select rounded-md shadow-sm mt-1 block w-3/4">
+                    <select wire:model="role"  id="role" class="form-select rounded-md shadow-sm mt-1 block w-3/4">
+                        <option value="">Select Role</option>
                         <option value="user">Top Management</option>
                         <option value="admin">Admin</option>
                     </select>
                     <x-jet-input-error for="role" class="mt-2"/>
                 </div>
+                @if($role == 'user')
+                <div class="col-span-6 sm:col-span-4 mt-5">
+                    <label class="block font-medium text-sm text-gray-700" for="role">
+                        Regional Office
+                    </label>
+                    <select wire:model="region"  id="region" class="form-select rounded-md shadow-sm mt-1 block w-3/4">
+                        <option value="" selected>Select Region</option>
+                        <option value="NCR">Region NCR: National Captital Region</option>
+                        <option value="CAR">Region CAR: Cordillera Administrative Region</option>
+                        <option value="I">Region I: Ilocos Region</option>
+                        <option value="II">Region II: Cagayan Valley</option>
+                        <option value="IV-A">Region IV-A: Calabarzon</option>
+                        <option value="IV-B">Region IV-B: Mimaropa</option>
+                        <option value="V">Region V: Bicol Region</option>
+                        <option value="VI">Region VI: Western Visayas</option>
+                        <option value="VII">Region VII: Central Visayas</option>
+                        <option value="VIII">Region VIII: Eastern Visayas</option>
+                        <option value="IX">Region IX: Zamboanga Peninsula</option>
+                        <option value="X">Region X: Northern Mindanao</option>
+                        <option value="XI">Region XI: Davao Region</option>
+                        <option value="XII">Region XII: Soccsksargen</option>
+                        <option value="XIII">Region XIII: Caraga</option>
+                        <option value="BARMM">Region BARMM: Bangsamoro</option>
+                    </select>
+                    <x-jet-input-error for="role" class="mt-2"/>
+                </div>
+                @endif
             </div>
         </x-slot>
         <x-slot name="footer">
