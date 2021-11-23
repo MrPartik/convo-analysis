@@ -50,11 +50,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified', 'user.role']], functi
         Route::get('/dashboard', [ThreadController::class, 'front']);
         Route::get('/library', [LibraryController::class, 'front']);
     });
-});
-
-Route::group(['middleware' => ['auth:sanctum', 'verified', 'user.role']], function () {
     Route::group(['prefix' => 'admin'], function () {
         Route::get('/', [UserController::class, 'front']);
-        Route::get('/import', [ImportController::class, 'front']);
     });
+    Route::get('/import', [ImportController::class, 'front']);
 });

@@ -25,9 +25,15 @@
         <i class="fas fa-circle-notch fa-spin fa-5x"></i>
       </span>
     </div>
-    <p class="text-center font-bold text-xl mb-10">Import/ Restore from Excel File</p>
+    <p class="text-center font-bold text-xl">Import/ Restore from Excel File</p>
+    @if(Auth::user()->role === 'user')
+        <p class="text-center font-semibold text-xl mb-10">All uploads are subject for uploading in your current region: {{ \App\Constants\RegionConstants::$aRegions[Auth::user()->region] ?? '' }}</p>
+    @else
+        <p class="text-center font-semibold text-xl mb-10">You can upload in any region, just fill the region column.</p>
+    @endif
     <div class="container  mx-auto grid">
         <!-- Cards -->
+        @if(Auth::user()->role !== 'user')
         <div class="grid gap-6 mb-8 md:grid-cols-2">
             <label class="cursor-pointer flex items-center p-4 bg-white hover:bg-gray-100 rounded-lg shadow-xs dark:bg-gray-800 shadow-lg">
                 <div class="p-3 mr-4 text-blue-500 bg-blue-100 rounded-full dark:text-orange-100 dark:bg-orange-500">
@@ -155,7 +161,7 @@
                 @endif
             </label>
         </div>
-
+        @endif
         <div class="grid gap-6 mb-8 md:grid-cols-3">
             <label class="cursor-pointer flex items-center p-4 bg-white hover:bg-gray-100 rounded-lg shadow-xs dark:bg-gray-800 shadow-lg">
                 <div class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500">

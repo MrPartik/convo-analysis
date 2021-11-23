@@ -17,7 +17,8 @@ class userRoleHandler
      */
     public function handle(Request $request, Closure $next)
     {
-        if ('/' . Auth::user()->role !== $request->route()->getPrefix()) {
+        $sUserRole = '/' . Auth::user()->role;
+        if ($sUserRole !== $request->route()->getPrefix() && $request->route()->uri !== 'import') {
             abort(403);
         }
         return $next($request);

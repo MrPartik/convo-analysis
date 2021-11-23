@@ -20,11 +20,13 @@ class UsersDatatable extends LivewireDatatable
     public $email = '';
     public $role = '';
     public $iId = '';
+    public $region = '';
 
     public $rules = [
-        'name'  => 'required | min:10',
-        'email' => 'required | email',
-        'role'  => 'required | in:admin,user'
+        'name'   => 'required | min:6',
+        'email'  => 'required | email',
+        'role'   => 'required | in:admin,user',
+        'region' => 'required_if:role,user'
     ];
 
     public function columns()
@@ -43,6 +45,9 @@ class UsersDatatable extends LivewireDatatable
             Column::callback(['role'], function ($sRole) {
                 return (\strtolower($sRole) === 'admin') ? 'Admin' : 'Top Management';
             })->label('Role'),
+            Column::callback('region', function($sRegion) {
+                return (strlen($sRegion) <= 0) ? 'None' : $sRegion;
+            })->label('Region'),
             DateColumn::name('updated_at')->label('Updated at'),
             Column::callback(['id'], function ($iId) {
                 return view('livewire.users-datatable', [
@@ -60,6 +65,7 @@ class UsersDatatable extends LivewireDatatable
         $this->email = $oUser->email;
         $this->role = $oUser->role;
         $this->iId = $oUser->id;
+        $this->region = $oUser->region;
     }
 
     public function showConfirmEdit(int $iId)
@@ -82,6 +88,7 @@ class UsersDatatable extends LivewireDatatable
         $oUser->name = $this->name;
         $oUser->email = $this->email;
         $oUser->role = $this->role;
+        $oUser->region = $this->region;
         $oUser->password = \bcrypt((\env('APP_ENV', 'local') === 'local') ? 'password' : 'password' . rand(20));
         if ($oUser->save()) {
             $this->confirmAdd = false;
@@ -97,6 +104,7 @@ class UsersDatatable extends LivewireDatatable
         $oUser->name = $this->name;
         $oUser->email = $this->email;
         $oUser->role = $this->role;
+        $oUser->region = $this->region;
         if ($oUser->save()) {
             $this->confirmEdit = false;
             $this->clear();
@@ -109,6 +117,7 @@ class UsersDatatable extends LivewireDatatable
         $this->email = '';
         $this->role = '';
         $this->iId = 0;
+        $this->region = '';
         $this->clearValidation();
     }
 }

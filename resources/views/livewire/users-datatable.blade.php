@@ -32,21 +32,21 @@
                     <label class="block font-medium text-sm text-gray-700" for="name">
                         Name
                     </label>
-                    <x-jet-input wire:model.lazy="name" type="text" class="mt-1 block w-3/4" placeholder="{{ __('Name') }}"/>
+                    <x-jet-input wire:model.lazy="name" type="text" class="mt-1 block w-full" placeholder="{{ __('Name') }}"/>
                     <x-jet-input-error for="name" class="mt-2"/>
                 </div>
                 <div class="col-span-6 sm:col-span-4 mt-5">
                     <label class="block font-medium text-sm text-gray-700" for="name">
                         Email
                     </label>
-                    <x-jet-input wire:model.lazy="email" type="email" class="mt-1 block w-3/4" placeholder="{{ __('Email') }}"/>
+                    <x-jet-input wire:model.lazy="email" type="email" class="mt-1 block w-full" placeholder="{{ __('Email') }}"/>
                     <x-jet-input-error for="email" class="mt-2"/>
                 </div>
                 <div class="col-span-6 sm:col-span-4 mt-5">
                     <label class="block font-medium text-sm text-gray-700" for="role">
                         User Role
                     </label>
-                    <select wire:model="role"  id="role" class="form-select rounded-md shadow-sm mt-1 block w-3/4">
+                    <select wire:model="role"  id="role" class="form-select rounded-md shadow-sm mt-1 block w-full">
                         <option value="">Select Role</option>
                         <option value="user">Top Management</option>
                         <option value="admin">Admin</option>
@@ -55,12 +55,12 @@
                 </div>
                 @if($role == 'user')
                 <div class="col-span-6 sm:col-span-4 mt-5">
-                    <label class="block font-medium text-sm text-gray-700" for="role">
+                    <label class="block font-medium text-sm text-gray-700" for="region">
                         Regional Office
                     </label>
-                    <select wire:model="region"  id="region" class="form-select rounded-md shadow-sm mt-1 block w-3/4">
+                    <select wire:model="region"  id="region" class="form-select rounded-md shadow-sm mt-1 block w-full">
                         <option value="" selected>Select Region</option>
-                        <option value="NCR">Region NCR: National Captital Region</option>
+                        <option value="NCR">Region NCR: National Capital Region</option>
                         <option value="CAR">Region CAR: Cordillera Administrative Region</option>
                         <option value="I">Region I: Ilocos Region</option>
                         <option value="II">Region II: Cagayan Valley</option>
@@ -77,7 +77,7 @@
                         <option value="XIII">Region XIII: Caraga</option>
                         <option value="BARMM">Region BARMM: Bangsamoro</option>
                     </select>
-                    <x-jet-input-error for="role" class="mt-2"/>
+                    <x-jet-input-error for="region" class="mt-2"/>
                 </div>
                 @endif
             </div>
@@ -105,25 +105,52 @@
                     <label class="block font-medium text-sm text-gray-700" for="name">
                         Name
                     </label>
-                    <x-jet-input  wire:model.lazy="name"  type="text" class="mt-1 block w-3/4" placeholder="{{ __('Name') }}"/>
+                    <x-jet-input  wire:model.lazy="name"  type="text" class="mt-1 block w-full" placeholder="{{ __('Name') }}"/>
                     <x-jet-input-error for="name" class="mt-2"/>
                 </div>
                 <div class="col-span-6 sm:col-span-4 mt-5">
                     <label class="block font-medium text-sm text-gray-700" for="name">
                         Email
                     </label>
-                    <x-jet-input  wire:model.lazy="email"  type="email" class="mt-1 block w-3/4" placeholder="{{ __('Email') }}"/>
+                    <x-jet-input  wire:model.lazy="email"  type="email" class="mt-1 block w-full" placeholder="{{ __('Email') }}"/>
                     <x-jet-input-error for="email" class="mt-2"/>
                 </div>
                 <div class="col-span-6 sm:col-span-4 mt-5">
                     <label class="block font-medium text-sm text-gray-700" for="role">
                         User Role
                     </label>
-                    <select wire:model.lazy="role"  id="role" class="form-select rounded-md shadow-sm mt-1 block w-3/4">
+                    <select wire:model.lazy="role"  id="role" class="form-select rounded-md shadow-sm mt-1 block w-full">
                         <option value="user">Top Management</option>
                         <option value="admin">Admin</option>
                     </select>
                     <x-jet-input-error for="role" class="mt-2"/>
+                    @if($role == 'user')
+                        <div class="col-span-6 sm:col-span-4 mt-5">
+                            <label class="block font-medium text-sm text-gray-700" for="region">
+                                Regional Office
+                            </label>
+                            <select wire:model="region"  id="region" class="form-select rounded-md shadow-sm mt-1 block w-full">
+                                <option value="" selected>Select Region</option>
+                                <option value="NCR">Region NCR: National Capital Region</option>
+                                <option value="CAR">Region CAR: Cordillera Administrative Region</option>
+                                <option value="I">Region I: Ilocos Region</option>
+                                <option value="II">Region II: Cagayan Valley</option>
+                                <option value="IV-A">Region IV-A: Calabarzon</option>
+                                <option value="IV-B">Region IV-B: Mimaropa</option>
+                                <option value="V">Region V: Bicol Region</option>
+                                <option value="VI">Region VI: Western Visayas</option>
+                                <option value="VII">Region VII: Central Visayas</option>
+                                <option value="VIII">Region VIII: Eastern Visayas</option>
+                                <option value="IX">Region IX: Zamboanga Peninsula</option>
+                                <option value="X">Region X: Northern Mindanao</option>
+                                <option value="XI">Region XI: Davao Region</option>
+                                <option value="XII">Region XII: Soccsksargen</option>
+                                <option value="XIII">Region XIII: Caraga</option>
+                                <option value="BARMM">Region BARMM: Bangsamoro</option>
+                            </select>
+                            <x-jet-input-error for="region" class="mt-2"/>
+                        </div>
+                    @endif
                 </div>
             </div>
         </x-slot>

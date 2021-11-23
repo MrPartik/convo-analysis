@@ -11,6 +11,6 @@ class ImportController extends Controller
 {
     public function front()
     {
-        return \view('user.import');
+        return \view('import');
     }
 }
