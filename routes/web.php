@@ -27,10 +27,28 @@ use Google\Cloud\Speech\V1\RecognitionConfig\AudioEncoding;
 |
 */
 Route::get('/sample', function () {
-    return \preg_match('/suc/', 'suc sattelite');
-    return (new \App\WitApp())->getUtterances();
-    $aCourses = \explode(',', 'BACHELOR IN BANKING AND FINANCE , BACHELOR OF SCIENCE IN CRIMINOLOGY');
-    return utils::getStringedArray($aCourses);
+    $sText = 'get the suc of bachelor of science in information technology sample kudasai';
+    $sFind = 'bachelor of science in information technology';
+    $iIndex = strrpos($sText, $sFind);
+    $sSubstring = substr($sText, $iIndex, strlen($sFind));
+    dd($sSubstring);
+    $aData = [
+        [
+            'text' => 'get the suc of bachelor of science in information technology',
+            'intent' => 'getSuc',
+            'entities' => [
+                [
+                    'entity' => '_BACHELOR_OF_SCIENCE_IN_INFORMATION_TECHNOLOGY_:_BACHELOR_OF_SCIENCE_IN_INFORMATION_TECHNOLOGY_',
+                    'start' => 15,
+                    'end' => 62,
+                    'body' => 'bachelor of science in information technology',
+                    'entities' => []
+                ]
+            ],
+            'traits' => []
+        ]
+    ];
+    return (new \App\WitApp())->trainApp($aData);
 });
 
 Route::get('/get/data-source', [getDataController::class, 'get']);

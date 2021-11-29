@@ -120,11 +120,15 @@ class convoService
     private static function extractEntities($aContent) {
         \preg_match('/2017|2018|2019|2020/', $aContent['_text'], $mYear);
         \preg_match_all('/{{[a-z0-9\s]+}}/i', $aContent['_text'], $mPrograms);
+        $mFromEntityPrograms = \array_filter(array_keys($aContent['entities']), function($sEntity) {
+            return preg_match('/^_\w+/', $sEntity);
+        });
+        $mFromEntityPrograms = array_values($mFromEntityPrograms);
+        $mPrograms = array_merge($mFromEntityPrograms, $mPrograms[0]);
         $sGroupby = preg_replace('/by |and /', ',', \implode(\array_column(@$aContent['entities']['groupBy'] ?? [], 'value')));
         $sType = @$aContent['entities']['getType'][0]['value'];
-        $sCourse = \implode(', ', \preg_replace('/{{||}}/', '', $mPrograms[0]));
+        $sCourse = \preg_replace('/{{|}}|_|-/', ' ', \implode(', ', $mPrograms));
         $mYear = @$mYear[0];
-
         return [
             'year'   => $mYear,
             'type'   => $sType,

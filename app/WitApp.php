@@ -3,16 +3,15 @@
 namespace App;
 
 use Carbon\Carbon;
-use GuzzleHttp\Exception\GuzzleException;
 use Jeylabs\Wit\Wit as BaseWit;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Arr;
 
 class WitApp extends BaseWit
 {
-    const WIT_API_VERSION = '20190715';
+    const WIT_API_VERSION = '20211127';
     const DEFAULT_TIMEOUT = '10000';
-    const ACCESS_TOKEN = 'JKPY6E2VOPCI52RP4CBEXLFEEMKH5I7Y';
+    const ACCESS_TOKEN = 'CBNSVLGCAIF2HPBKJ46FMRFD4JBREKV2';
     const ASYNC_REQUEST = false;
 
     public function __construct()
@@ -42,6 +41,30 @@ class WitApp extends BaseWit
     {
         try {
             return parent::getIntentByText($sQuery, $aParams);
+        } catch (\Exception $oException) {
+            return [
+                'error' => true,
+                'message' => $oException->getMessage()
+            ];
+        }
+    }
+
+    public function getEntities()
+    {
+        try {
+            return parent::getEntities();
+        } catch (\Exception $oException) {
+            return [
+                'error' => true,
+                'message' => $oException->getMessage()
+            ];
+        }
+    }
+
+    public function trainApp(array $aData)
+    {
+        try {
+            return $this->makeRequest('POST', 'utterances', [], $aData);
         } catch (\Exception $oException) {
             return [
                 'error' => true,

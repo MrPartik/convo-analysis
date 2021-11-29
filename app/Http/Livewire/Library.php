@@ -14,6 +14,8 @@ class Library extends Component
     public $iLimit = 10;
     public $iOffset = 0;
     public $iPage = 1;
+    public $bIsTrainModalShown = false;
+    public $aEntities = [];
 
     public function __construct($id = null)
     {
@@ -24,6 +26,7 @@ class Library extends Component
     public function render()
     {
         $this->getIntents();
+        $this->getEntities();
         $this->updateUtterance();
         return \view('livewire.library');
     }
@@ -55,6 +58,16 @@ class Library extends Component
         $this->emitUp('refresh');
     }
 
+    public function getEntities()
+    {
+        $aEntities = $this->oWitApp->getEntities();
+        $aEntities = array_filter($aEntities, function($sEntity) {
+            return !preg_match('/wit\$/', $sEntity);
+        });
+        $this->aEntities = $aEntities;
+        $this->emitUp('refresh');
+    }
+
     public function updateUtterance()
     {
         $this->getUtterance($this->iOffset, $this->iLimit, $this->sIntent);
@@ -63,9 +76,20 @@ class Library extends Component
 
     public function reload()
     {
+        $this->iOffset = (($this->iPage - 1) * $this->iLimit);
         $this->getIntents();
         $this->updateUtterance();
         $this->emitUp('refresh');
+    }
+
+    public function showTrainModal()
+    {
+        $this->bIsTrainModalShown = true;
+    }
+
+    public function hideTrainModal()
+    {
+        $this->bIsTrainModalShown = false;
     }
 
 }
