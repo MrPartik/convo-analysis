@@ -131,7 +131,7 @@
                 {{ __('Train Brixbo') }}
             </x-slot>
             <x-slot name="content">
-                {{ __('Please provide the necessary fields to train the accuracy of brixbo. This is created for relevant programs/ courses in the app') }}
+                {{ __('Please provide the necessary data for each fields to train the accuracy of brixbo. This is created for relevant programs/ courses in the app') }}
                 <div class="mt-4" x-data="{}">
                     @if(array_key_exists('status', $trainResponse) === true)
                         <label class="block font-medium text-sm {{ ($trainResponse['status'] === true ? 'text-green-700' : 'text-red-700') }}">
@@ -141,7 +141,7 @@
                     @endif
                     <div class="col-span-6 sm:col-span-4">
                         <label class="block font-medium text-sm text-gray-700" for="utterance">
-                            Utterance/ Conversation (ex. Get the summary of HEI for BSIT)
+                            Utterance/ Conversation* (ex. Get the summary of HEI for BSIT)
                         </label>
                         <x-jet-input id="utterance" wire:model.lazy="utteranceText" type="text" class="mt-1 block w-full" placeholder="{{ __('Utterance/ Conversation') }}"/>
                         <x-jet-input-error for="utteranceText" class="mt-2"/>
@@ -155,7 +155,7 @@
                     </div>
                     <div class="col-span-6 sm:col-span-4 mt-5">
                         <label class="block font-medium text-sm text-gray-700" for="role">
-                            Intent of the Conversation above (ex. getHei)
+                            Intent of the Conversation above* (ex. getHei)
                         </label>
                         <select id="intent" wire:model="intentValue" class="form-select rounded-md shadow-sm mt-1 block w-full">
                             <option value="" selected>Select Intent</option>
