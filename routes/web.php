@@ -41,8 +41,10 @@ Route::get('/entities', function () {
     // -__-_ = )
     // --_-_-- = &
     $mValue = [];
+//    return  (new \App\WitApp())->getIntentByText('get the summary of SUC in Bachelor of library & information science');
+    return  (new \App\WitApp())->getUtterances();
     $aPrograms = (new \App\Services\libraryService(new \App\Repositories\libraryRepository()))->getAllPrograms();
-    $aEntities = (new \App\WitApp())->getEntities();
+    return $aEntities = (new \App\WitApp())->getEntities();
 
     foreach ($aPrograms as $sProgram) {
         $sProgram = utils::convertEntityName($sProgram);

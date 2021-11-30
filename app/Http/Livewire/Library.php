@@ -96,7 +96,7 @@ class Library extends Component
     public function getEntities()
     {
         $aEntities = $this->oWitApp->getEntities();
-        $aEntities = array_filter($aEntities, function ($sEntity) {
+        $aEntities = array_filter(array_column($aEntities, 'name'), function ($sEntity) {
             return !preg_match('/wit\$/', $sEntity) && preg_match('/_([A-Za-z_]+)_/', $sEntity);
         });
         $this->aEntities = $aEntities;

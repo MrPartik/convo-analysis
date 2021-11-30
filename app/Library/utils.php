@@ -28,6 +28,7 @@ class utils
 
     public static function convertEntityName(string $sValue, bool $bIsFromFormatted = false)
     {
+        $sValue = explode(':', $sValue)[0];
         $aStringReplace = [
             '.' => '--_--',
             '/' => '_-__-_',

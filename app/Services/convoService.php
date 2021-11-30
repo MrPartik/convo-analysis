@@ -1,5 +1,6 @@
 <?php namespace App\Services;
 
+use App\Library\utils;
 use App\Models\ConvoModel;
 use App\Models\HeiModel;
 use App\Models\ProgramModel;
@@ -73,7 +74,7 @@ class convoService
                 'error' => 'Something went wrong. Please try again.'
             ];
         }
-        if (@$aContent['_text'] === null || @$aContent['entities']['intent'] === null || (\count($mPrograms[0]) <= 0 && (@$aContent['entities'] === null || @$aContent['entities'] === []))) {
+        if ($aContent['text'] === null || $aContent['intents'] === [] || (\count($mPrograms[0]) <= 0 && ($aContent['entities'] === null || @$aContent['entities'] === []))) {
             return [
                 'code' => 501,
                 'error' => 'Please check your command. Please try again.'
@@ -118,16 +119,16 @@ class convoService
     }
 
     private static function extractEntities($aContent) {
-        \preg_match('/2017|2018|2019|2020/', $aContent['_text'], $mYear);
-        \preg_match_all('/{{[a-z0-9\s]+}}/i', $aContent['_text'], $mPrograms);
+        \preg_match('/2017|2018|2019|2020/', $aContent['text'], $mYear);
+        \preg_match_all('/{{[a-z0-9\s]+}}/i', $aContent['text'], $mPrograms);
         $mFromEntityPrograms = \array_filter(array_keys($aContent['entities']), function($sEntity) {
-            return preg_match('/^_\w+/', $sEntity);
+            return preg_match('/^_\w+/', explode(':', $sEntity)[0]);
         });
-        $mFromEntityPrograms = array_values($mFromEntityPrograms);
         $mPrograms = array_merge($mFromEntityPrograms, $mPrograms[0]);
         $sGroupby = preg_replace('/by |and /', ',', \implode(\array_column(@$aContent['entities']['groupBy'] ?? [], 'value')));
         $sType = @$aContent['entities']['getType'][0]['value'];
-        $sCourse = \preg_replace('/{{|}}|_|-/', ' ', \implode(', ', $mPrograms));
+        $sCourse = \preg_replace('/{{|}}/', ' ', \implode(', ', $mPrograms));
+        $sCourse = utils::convertEntityName($sCourse, true);
         $mYear = @$mYear[0];
         return [
             'year'   => $mYear,
@@ -144,7 +145,7 @@ class convoService
      */
     private static function getIntent(array $aContent)
     {
-        $sIntent = \implode('', \array_column(@$aContent['entities']['intent'] ?? [], 'value'));
+        $sIntent = \implode('', \array_column(@$aContent['intents'] ?? [], 'name'));
         return  ($sIntent !== '') ? $sIntent : 'getHei';
     }
 

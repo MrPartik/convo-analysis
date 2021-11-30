@@ -9,7 +9,7 @@ use Illuminate\Support\Arr;
 
 class WitApp extends BaseWit
 {
-    const WIT_API_VERSION = '20211127';
+    const WIT_API_VERSION = '20211130';
     const DEFAULT_TIMEOUT = '10000';
     const ACCESS_TOKEN = 'CBNSVLGCAIF2HPBKJ46FMRFD4JBREKV2';
     const ASYNC_REQUEST = false;
@@ -19,7 +19,14 @@ class WitApp extends BaseWit
         parent::__construct(self::ACCESS_TOKEN, self::ASYNC_REQUEST);
     }
 
-    public function getUtterances(int $iOffset = 100, int $iLimit = 500, string $sIntent = 'all')
+    protected function getDefaultHeaders()
+    {
+        $aDefaultHeaders = parent::getDefaultHeaders();
+        $aDefaultHeaders['Accept'] = 'application/json';
+        return $aDefaultHeaders;
+    }
+
+    public function getUtterances(int $iOffset = 0, int $iLimit = 10, string $sIntent = 'all')
     {
         try {
             return $this->makeRequest('GET', 'utterances', 'limit=' . $iLimit . '&' . 'offset=' . $iOffset . (($sIntent === 'all') ? '' : '&intents=' . $sIntent) );
