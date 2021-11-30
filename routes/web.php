@@ -26,13 +26,69 @@ use Google\Cloud\Speech\V1\RecognitionConfig\AudioEncoding;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/entities', function () {
+    $aStringReplace = [
+        '.' => '--_--',
+        '/' => '_-__-_',
+        '(' => '_-__-',
+        ')' => '-__-_',
+        ' ' => '_',
+        '&' => '--_-_--'
+    ];
+    // _-__-_ = /
+    // --_--_ = .
+    // _-__- = (
+    // -__-_ = )
+    // --_-_-- = &
+    $mValue = [];
+    $aPrograms = (new \App\Services\libraryService(new \App\Repositories\libraryRepository()))->getAllPrograms();
+    $aEntities = (new \App\WitApp())->getEntities();
+
+    foreach ($aPrograms as $sProgram) {
+        $sProgram = utils::convertEntityName($sProgram);
+        $mValue[] = $sProgram;
+    }
+    return $mValue;
+    $mValue = array_diff($mValue, $aEntities);
+    foreach ($mValue as $sProgram) {
+        try {
+//            $mValue[] = (new \App\WitApp())->createEntities($sProgram, $sProgram);
+        } catch (Exception $exception) {
+
+        }
+    }
+
+//    foreach ($aPrograms as $sProgram) {
+//        $sProgram = '_' . str_replace(' ', '_', strtoupper(trim($sProgram))) . '_';
+//        foreach($aStringReplace as $sSymbol => $sPattern) {
+//            $sProgram = str_replace($sPattern, $sSymbol, $sProgram);
+//        }
+//        $mValue[] = $sProgram;
+//    }
+    return $mValue;
+});
 Route::get('/sample', function () {
-    $sText = 'get the suc of bachelor of science in information technology sample kudasai';
+    $sText = 'get the suc of bachelor of science in information technology';
     $sFind = 'bachelor of science in information technology';
     $iIndex = strrpos($sText, $sFind);
     $sSubstring = substr($sText, $iIndex, strlen($sFind));
-    dd($sSubstring);
     $aData = [
+        [
+            'text' => $sText,
+            'intent' => 'getSuc',
+            'entities' => [
+                [
+                    'entity' => '_BACHELOR_OF_SCIENCE_IN_INFORMATION_TECHNOLOGY_:_BACHELOR_OF_SCIENCE_IN_INFORMATION_TECHNOLOGY_',
+                    'start' => $iIndex,
+                    'end' => $iIndex + strlen($sSubstring),
+                    'body' => 'bachelor of science in information technology',
+                    'entities' => []
+                ]
+            ],
+            'traits' => []
+        ]
+    ];
+    $aDataTobe = [
         [
             'text' => 'get the suc of bachelor of science in information technology',
             'intent' => 'getSuc',
@@ -48,7 +104,7 @@ Route::get('/sample', function () {
             'traits' => []
         ]
     ];
-    return (new \App\WitApp())->trainApp($aData);
+    return [$aData, $aDataTobe];
 });
 
 Route::get('/get/data-source', [getDataController::class, 'get']);

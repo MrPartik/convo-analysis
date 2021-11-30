@@ -5,9 +5,9 @@
             cursor: pointer;
         }
     </style>
-    <div id="utterance-library" class="bg-white container mx-auto px-4 sm:px-8" style="text-align: -webkit-center">
+    <div id="utterance-library" class="bg-white container mx-auto px-4 sm:px-8">
         <div class="loading-page" wire:loading.block wire:target="updateUtterance, nextPage, previousPage, reload, showTrainModal, hideTrainModal">Loading&#8230;</div>
-        <div class="py-8">
+        <div class="py-8" style="text-align: -webkit-center">
             <div>
                 <h2 class="text-2xl font-semibold leading-tight">Utterances</h2>
                 <small>Phrases that the users uses to have a conversation with bot.</small>
@@ -126,72 +126,132 @@
                 }
             </script>
         </div>
+        <x-jet-dialog-modal wire:model="bIsTrainModalShown">
+            <x-slot name="title">
+                {{ __('Train Brixbo') }}
+            </x-slot>
+            <x-slot name="content">
+                {{ __('Please provide the necessary fields to train the accuracy of brixbo. This is created for relevant programs/ courses in the app') }}
+                <div class="mt-4" x-data="{}">
+                    @if(array_key_exists('status', $trainResponse) === true)
+                        <label class="block font-medium text-sm {{ ($trainResponse['status'] === true ? 'text-green-700' : 'text-red-700') }}">
+                            {{ $trainResponse['message'] }}
+                        </label>
+                        <br />
+                    @endif
+                    <div class="col-span-6 sm:col-span-4">
+                        <label class="block font-medium text-sm text-gray-700" for="utterance">
+                            Utterance/ Conversation (ex. Get the summary of HEI for BSIT)
+                        </label>
+                        <x-jet-input id="utterance" wire:model.lazy="utteranceText" type="text" class="mt-1 block w-full" placeholder="{{ __('Utterance/ Conversation') }}"/>
+                        <x-jet-input-error for="utteranceText" class="mt-2"/>
+                    </div>
+                    <div class="col-span-6 sm:col-span-4 mt-5">
+                        <label class="block font-medium text-sm text-gray-700" for="entity_to_recall">
+                            Entity to train/ recall Value (ex. BSIT)
+                        </label>
+                        <x-jet-input type="text" wire:model.lazy="entityToRecallValue" class="mt-1 block w-full" placeholder="{{ __('Entity') }}"/>
+                        <x-jet-input-error for="entityToRecallValue" class="mt-2"/>
+                    </div>
+                    <div class="col-span-6 sm:col-span-4 mt-5">
+                        <label class="block font-medium text-sm text-gray-700" for="role">
+                            Intent of the Conversation above (ex. getHei)
+                        </label>
+                        <select id="intent" wire:model="intentValue" class="form-select rounded-md shadow-sm mt-1 block w-full">
+                            <option value="" selected>Select Intent</option>
+                            @foreach($aIntents as $aIntent)
+                                <option value="{{$aIntent['name']}}">{{$aIntent['name']}}</option>
+                            @endforeach
+                        </select>
+                        <x-jet-input-error for="intentValue" class="mt-2"/>
+                    </div>
+                    <div class="col-span-6 sm:col-span-4 mt-5">
+                        <label class="block font-medium text-sm text-gray-700" for="role">
+                            Assign Existing Entity (ex. BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY);
+                            <br/>
+                            <a wire:click="showEntityModal()" class="underline text-sm text-gray-600 hover:text-gray-900" href="javascript:"> Create Entity</a> (if entity is not existing)
+                        </label>
+                        <select id="entities" wire:model = "assignedEntityValue" class="form-select rounded-md shadow-sm mt-1 block w-full">
+                            <option value="" selected>Select Existing Entity</option>
+                            @foreach($aEntities as $sEntity)
+                                <option value="{{$sEntity}}">{{ strtoupper(\App\Library\utils::convertEntityName($sEntity, true)) }}</option>
+                            @endforeach
+                        </select>
+                        <x-jet-input-error for="assignedEntityValue" class="mt-2"/>
+                    </div>
+                </div>
+            </x-slot>
+            <x-slot name="footer">
+                <x-jet-secondary-button wire:click="$toggle('bIsTrainModalShown')" wire:loading.attr="disabled">
+                    {{ __('Nevermind') }}
+                </x-jet-secondary-button>
+
+                <x-jet-button class="ml-2"  wire:click="trainBrixbo" wire:loading.attr="disabled">
+                    {{ __('Train') }}
+                </x-jet-button>
+            </x-slot>
+        </x-jet-dialog-modal>
+
+
+        <x-jet-dialog-modal wire:model="bIsEntityModalShown">
+            <x-slot name="title">
+                {{ __('Add Entity') }}
+            </x-slot>
+            <x-slot name="content">
+                {{ __('If the entity you are looking for is not existing, you need to create it first before proceeding to the next steps.') }}
+                <div class="mt-4" x-data="{}">
+                    <div class="col-span-6 sm:col-span-4 mt-5">
+                        <label class="block font-medium text-sm text-gray-700" for="role">
+                            Programs Existing in Database (ex. BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY);
+                        </label>
+                        <select id="programs" wire:model="entityProgram" class="form-select rounded-md shadow-sm mt-1 block w-full">
+                            <option value="" selected>Select Program</option>
+                            @foreach($aPrograms as $sProgram)
+                                <option value="{{ strtoupper(\App\Library\utils::convertEntityName($sProgram)) }}">{{ strtoupper($sProgram) }}</option>
+                            @endforeach
+                        </select>
+                        <x-jet-input-error for="entityProgram" class="mt-2"/>
+                    </div>
+                    @if(strlen($entityProgram) <= 0)
+                        <div class="col-span-6 sm:col-span-4 mt-5">
+                            <label class="block font-medium text-sm text-gray-700" for="custom_entity">
+                                Custom Entity (optional)
+                            </label>
+                            <x-jet-input id="custom_entity" wire:model.lazy="entityCustomText" type="custom_entity" class="mt-1 block w-full" placeholder="{{ __('Custom Entity') }}"/>
+                            <x-jet-input-error for="entityCustomText" class="mt-2"/>
+                        </div>
+                    @endif
+                </div>
+            </x-slot>
+            <x-slot name="footer">
+                <x-jet-secondary-button wire:click="$toggle('bIsEntityModalShown')" wire:loading.attr="disabled">
+                    {{ __('Cancel') }}
+                </x-jet-secondary-button>
+
+                <x-jet-button class="ml-2" wire:click="saveEntity" wire:loading.attr="disabled">
+                    {{ __('Save') }}
+                </x-jet-button>
+            </x-slot>
+        </x-jet-dialog-modal>
     </div>
-
-
-    <x-jet-dialog-modal wire:model="bIsTrainModalShown">
-        <x-slot name="title">
-            {{ __('Train Brixbo') }}
-        </x-slot>
-        <x-slot name="content">
-            {{ __('Please provide the necessary fields to train the accuracy of brixbo.') }}
-            <div class="mt-4" x-data="{}">
-                <div class="col-span-6 sm:col-span-4">
-                    <label class="block font-medium text-sm text-gray-700" for="utterance">
-                        Utterance/ Conversation (ex. Get the summary of HEI for BSIT)
-                    </label>
-                    <x-jet-input id="utterance" wire:model.lazy="utterance" type="text" class="mt-1 block w-full" placeholder="{{ __('Utterance/ Conversation') }}"/>
-                    <x-jet-input-error for="utterance" class="mt-2"/>
-                </div>
-                <div class="col-span-6 sm:col-span-4 mt-5">
-                    <label class="block font-medium text-sm text-gray-700" for="role">
-                        Intent of the Conversation above (ex. getHei)
-                    </label>
-                    <select id="intent" class="form-select rounded-md shadow-sm mt-1 block w-full">
-                        <option value="" selected>Select Intent</option>
-                        @foreach($aIntents as $aIntent)
-                            <option value="{{$aIntent['name']}}">{{$aIntent['name']}}</option>
-                        @endforeach
-                    </select>
-                    <x-jet-input-error for="intent" class="mt-2"/>
-                </div>
-                <div class="col-span-6 sm:col-span-4 mt-5">
-                    <label class="block font-medium text-sm text-gray-700" for="entity_to_recall">
-                        Entity to train/ recall (ex. BSIT)
-                    </label>
-                    <x-jet-input type="entity_to_recall" class="mt-1 block w-full" placeholder="{{ __('Entity') }}"/>
-                    <x-jet-input-error for="email" class="mt-2"/>
-                </div>
-                <div class="col-span-6 sm:col-span-4 mt-5">
-                    <label class="block font-medium text-sm text-gray-700" for="role">
-                        Assign Entity (ex. BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY)
-                    </label>
-                    <select id="entities" class="form-select rounded-md shadow-sm mt-1 block w-full">
-                        <option value="" selected>Select Entity</option>
-                        @foreach($aEntities as $sEntity)
-                            <option value="{{$sEntity}}">{{ preg_replace('/_|-/', ' ', $sEntity) }}</option>
-                        @endforeach
-                    </select>
-                    <x-jet-input-error for="entities" class="mt-2"/>
-                </div>
-            </div>
-        </x-slot>
-        <x-slot name="footer">
-            <x-jet-secondary-button wire:click="$toggle('bIsTrainModalShown')" wire:loading.attr="disabled">
-                {{ __('Nevermind') }}
-            </x-jet-secondary-button>
-
-            <x-jet-button class="ml-2"  wire:loading.attr="disabled">
-                {{ __('Train') }}
-            </x-jet-button>
-        </x-slot>
-    </x-jet-dialog-modal>
     <script>
-        $('#entities').select2({
-            width: '100%'
+        window.livewire.on('select2',() => {
+            $('[id=entities]').select2({
+                width: '100%'
+            }).off('select2:select').on('select2:select', (e) => {
+                @this.set('assignedEntityValue', e.params.data.id);
+            });
+            $('[id=intent]').select2({
+                width: '100%'
+            }).off('select2:select').on('select2:select', (e) => {
+                @this.set('intentValue', e.params.data.id);
+            });
+            $('[id=programs]').select2({
+                width: '100%'
+            }).off('select2:select').on('select2:select', (e) => {
+                @this.set('entityProgram', e.params.data.id);
+            });
         });
-        $('#intent').select2({
-            width: '100%'
-        });
+
     </script>
 </div>

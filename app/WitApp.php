@@ -72,4 +72,16 @@ class WitApp extends BaseWit
             ];
         }
     }
+
+    public function removeEntity($sData)
+    {
+        try {
+            return $this->makeRequest('DELETE', 'entities/' . $sData, []);
+        } catch (\Exception $oException) {
+            return [
+                'error' => true,
+                'message' => $oException->getMessage()
+            ];
+        }
+    }
 }
