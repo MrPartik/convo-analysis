@@ -1,4 +1,4 @@
-<div class="bg-white p-10" style="background: #ffffffe3;">
+<div class="bg-white p-10" style="background: #ffffffe3; margin-top: 55px">
     <div class="fixed right-0 top-0 m-5">
         <div class="alert-message {{ ($success === '') ? 'hidden' : '' }} flex items-center bg-green-500 border-l-4 border-green-700 py-2 px-3 shadow-md mb-2">
             <!-- message -->
