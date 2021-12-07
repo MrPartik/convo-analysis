@@ -21,7 +21,7 @@
     <script src="{{ url('js/select2.min.js') }}"></script>
 </head>
 <body class="font-sans antialiased">
-<div class="min-h-screen bg-gray-100">
+<div class="min-h-screen bg-gray-100" style="background: url('https://cdn.pixabay.com/photo/2020/11/05/11/26/robotic-5714849_960_720.png') no-repeat center; background-size: cover">
     <div style="position: absolute; right: 25px; top: 25px; z-index: 999"class="alert-message hidden flex items-center bg-green-500 border-l-4 border-black py-2 px-3 shadow-md mb-2">
         <!-- message -->
         <div class="text-white max-w-xs ">
@@ -72,8 +72,7 @@
 
         .scrollbar-thumb-blue::-webkit-scrollbar-thumb {
             --bg-opacity: 1;
-            background-color: #edf2f7;
-            background-color: rgba(237, 242, 247, var(--bg-opacity));
+            background-color: #3341f7;
         }
 
         .scrollbar-thumb-rounded::-webkit-scrollbar-thumb {

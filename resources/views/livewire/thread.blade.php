@@ -4,10 +4,10 @@
         <ul class="tab" style="display: inline; float: left;">
             <li class=" {{ $iDashboardType === 0 ? 'text-white bg-blue-500' : 'text-blue-700 bg-transparent'}}  inline-block  hover:bg-blue-500 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"><a wire:click="setDashboardType(0);" href="javascript:" class=" active">Dashboard</a></li>
             <li class=" {{ $iDashboardType === 1 ? 'text-white bg-blue-500' : 'text-blue-700 bg-transparent'}}  inline-block  hover:bg-blue-500 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"><a wire:click="setDashboardType(1)" href="javascript:" class=" active">HEIs by Academic Year</a></li>
-            <li class="text-blue-700 bg-transparent inline-block  hover:bg-blue-500 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"><a target="_blank" href="https://datastudio.google.com/u/0/reporting/d16141b3-5436-452d-a6a0-687e98dced31" class=" active">Analytics</a></li>
+{{--            <li class="text-blue-700 bg-transparent inline-block  hover:bg-blue-500 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"><a target="_blank" href="https://datastudio.google.com/u/0/reporting/d16141b3-5436-452d-a6a0-687e98dced31" class=" active">Analytics</a></li>--}}
         </ul>
     </div>
-    <div class="{{ $iDashboardType === 0 ? 'block' : 'hidden'}} bg-white p-2 rounded-lg" style="margin-bottom: 30px" >
+    <div class="{{ $iDashboardType === 0 ? 'block' : 'hidden'}} bg-white p-2 rounded-lg" style="margin-bottom: 30px; background: #ffffff82;" >
         <div class="p-5 pt-1 flex-wrap  flex items-center gap-2 justify-center">
             <div class="bg-gradient-to-r flex-auto  w-42 h-42  from-blue-800 to-gray-700 shadow-lg rounded-lg">
                 <div class="md:p-7 p-4">

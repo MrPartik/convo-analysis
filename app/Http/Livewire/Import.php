@@ -29,6 +29,7 @@ class Import extends Component
     public $graduateFile = '';
     public $programFile = '';
     public $success = '';
+    public $bFollowExcelRegion = false;
     private $oFileSystem, $sStoragePath;
 
     public function __construct($id = null)
@@ -157,10 +158,10 @@ class Import extends Component
 //            file_put_contents(\base_path('tmp/'. $oFile->getFilename()), $oFile->getFilename());
 //            ImportExcelBackground::dispatch()->delay('3');
 //            $this->getFile($oFile->getFilename()
-            if ($sType === 'HEI') Excel::import(new ImportHei(HeiModel::class, $sType), $oFile);
-            else if ($sType === 'SUC') Excel::import(new ImportHei(HeiModel::class, 'SUC'), $oFile);
-            else if ($sType === 'LUC') Excel::import(new ImportHei(HeiModel::class, 'LUC'), $oFile);
-            else if ($sType === 'PHEIS') Excel::import(new ImportHei(HeiModel::class, 'PHEIS'), $oFile);
+            if ($sType === 'HEI') Excel::import(new ImportHei(HeiModel::class, $sType, $this->bFollowExcelRegion), $oFile);
+            else if ($sType === 'SUC') Excel::import(new ImportHei(HeiModel::class, 'SUC', $this->bFollowExcelRegion), $oFile);
+            else if ($sType === 'LUC') Excel::import(new ImportHei(HeiModel::class, 'LUC', $this->bFollowExcelRegion), $oFile);
+            else if ($sType === 'PHEIS') Excel::import(new ImportHei(HeiModel::class, 'PHEIS', $this->bFollowExcelRegion), $oFile);
             else if ($sType === 'PROGRAM') Excel::import(new ImportProgram, $oFile);
             else if ($sType === 'YEAR') Excel::import(new ImportAcademicYear, $oFile);
             else if ($sType === 'GRADUATE') Excel::import(new ImportHeiData('GRADUATE'), $oFile);

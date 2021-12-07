@@ -2,7 +2,7 @@
     $sUserRole = Auth::user()->role;
     $sRegion = Auth::user()->region;
 @endphp
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100" style="position: fixed;width: 100%;z-index: 1000;">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -11,14 +11,14 @@
                 <div class="flex-shrink-0 flex items-center mr-5">
                     <x-jet-application-mark class="block h-9 w-auto" />
                 </div>
-                <div class="flex-shrink-0 flex items-center font-semibold">
-                    {{ \App\Constants\RegionConstants::$aRegions[$sRegion] ?? ''}}
-                </div>
+{{--                <div class="flex-shrink-0 flex items-center font-semibold">--}}
+{{--                    {{ \App\Constants\RegionConstants::$aRegions[$sRegion] ?? ''}}--}}
+{{--                </div>--}}
                 <!-- Navigation Links -->
                 @if($sUserRole === 'user')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ \url('user') }}" :active="request()->is('user')">
-                        {{ __('Companion') }}
+                        {{ __('Let\'s Talk') }}
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{ \url('user/dashboard') }}" :active="request()->is('user/dashboard')">
                         {{ __('Dashboard') }}
@@ -138,7 +138,7 @@
         @if($sUserRole === 'user')
             <div class="pt-2 pb-3 space-y-1">
                 <x-jet-responsive-nav-link href="{{ \url('user') }}" :active="request()->is('user')">
-                    {{ __('Companion') }}
+                    {{ __('Let\'s Talk') }}
                 </x-jet-responsive-nav-link>
                 <x-jet-responsive-nav-link href="{{ \url('user/dashboard') }}" :active="request()->is('user/dashboard')">
                     {{ __('Dashboard') }}

@@ -1,4 +1,4 @@
-<div class="bg-white p-10">
+<div class="bg-white p-10" style="background: #ffffffe3;">
     <div class="fixed right-0 top-0 m-5">
         <div class="alert-message {{ ($success === '') ? 'hidden' : '' }} flex items-center bg-green-500 border-l-4 border-green-700 py-2 px-3 shadow-md mb-2">
             <!-- message -->
@@ -237,7 +237,12 @@
                 @endif
             </label>
         </div>
-
+        @if(Auth::user()->role === 'user')
+            <label class="inline-flex items-center">
+                <input type="checkbox" class="form-checkbox" wire:model="bFollowExcelRegion" />
+                <span class="ml-2">You want to follow the region of the excel (the region will get the region in column of the excel provided.)</span>
+            </label>
+        @endif
     </div>
 </div>
 

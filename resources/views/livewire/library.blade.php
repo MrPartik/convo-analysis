@@ -5,7 +5,7 @@
             cursor: pointer;
         }
     </style>
-    <div id="utterance-library" class="bg-white container mx-auto px-4 sm:px-8">
+    <div id="utterance-library" class="bg-white container mx-auto px-4 sm:px-8" style="background: #ffffff82;">
         <div class="loading-page" wire:loading.block wire:target="updateUtterance, nextPage, previousPage, reload, showTrainModal, hideTrainModal">Loading&#8230;</div>
         <div class="py-8" style="text-align: -webkit-center">
             <div>
