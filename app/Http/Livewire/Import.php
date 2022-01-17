@@ -29,7 +29,7 @@ class Import extends Component
     public $graduateFile = '';
     public $programFile = '';
     public $success = '';
-    public $bFollowExcelRegion = false;
+    public $bFollowExcelRegion = true;
     private $oFileSystem, $sStoragePath;
 
     public function __construct($id = null)
