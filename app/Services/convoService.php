@@ -74,7 +74,7 @@ class convoService
                 'error' => 'Something went wrong. Please try again.'
             ];
         }
-        if ($aContent['text'] === null || $aContent['intents'] === [] || (\count($mPrograms[0]) <= 0 && ($aContent['entities'] === null || @$aContent['entities'] === []))) {
+        if ($aContent['text'] === null || $aContent['intents'] === [] || (\count($mPrograms[0]) <= 0 && ($aContent['entities'] === null && @$aContent['entities'] === []))) {
             return [
                 'code' => 501,
                 'error' => 'Please check your command. Please try again.'
