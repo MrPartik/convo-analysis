@@ -89,7 +89,7 @@ class UsersDatatable extends LivewireDatatable
         $oUser->email = $this->email;
         $oUser->role = $this->role;
         $oUser->region = $this->region;
-        $oUser->password = \bcrypt((\env('APP_ENV', 'local') === 'local') ? 'password' : 'password' . rand(20));
+        $oUser->password = \bcrypt((\env('APP_ENV', 'local') === 'local') ? 'password' : 'password' . rand(20, 100));
         if ($oUser->save()) {
             $this->confirmAdd = false;
             $this->clear();

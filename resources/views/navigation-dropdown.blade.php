@@ -154,7 +154,7 @@
                 </x-jet-responsive-nav-link>
             </div>
             <div class="pt-2 pb-3 space-y-1">
-                <x-jet-responsive-nav-link href="{{ \url('admin/import') }}" :active="request()->is('admin/import')">
+                <x-jet-responsive-nav-link href="{{ \url('import') }}" :active="request()->is('import')">
                     {{ __('Import') }}
                 </x-jet-responsive-nav-link>
             </div>
