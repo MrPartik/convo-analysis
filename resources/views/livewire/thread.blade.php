@@ -17,25 +17,25 @@
             </div>
             <div class="bg-gradient-to-r flex-auto  w-42 h-42  from-gray-800 to-yellow-700 shadow-lg rounded-lg">
                 <div class="md:p-7 p-4">
-                    <h2 class="text-lg font-bold text-center text-gray-200 capitalize">{{ \number_format($aAcademicData['SUC']) }}</h2>
+                    <h2 class="text-lg font-bold text-center text-gray-200 capitalize">{{ \number_format($aAcademicData['SUC'] ?? 0) }}</h2>
                     <h3 class="text-sm  text-gray-400  text-center">Total Students in SUCs</h3>
                 </div>
             </div>
             <div class="bg-gradient-to-r flex-auto w-42 h-42  from-red-800 to-gray-700 shadow-lg rounded-lg">
                 <div class="md:p-7 p-4">
-                    <h2 class="text-xl font-bold text-center text-gray-200 capitalize">{{ \number_format($aAcademicData['LUC']) }}</h2>
+                    <h2 class="text-xl font-bold text-center text-gray-200 capitalize">{{ \number_format($aAcademicData['LUC'] ?? 0) }}</h2>
                     <h3 class="text-sm  text-gray-400  text-center">Total Students in LUCs</h3>
                 </div>
             </div>
             <div class="bg-gradient-to-r flex-auto w-42 h-42  from-orange-800 to-gray-700 shadow-lg rounded-lg">
                 <div class="md:p-7 p-4">
-                    <h2 class="text-xl font-bold text-center text-gray-200 capitalize">{{ \number_format($aAcademicData['Private']) }}</h2>
+                    <h2 class="text-xl font-bold text-center text-gray-200 capitalize">{{ \number_format($aAcademicData['Private'] ?? 0) }}</h2>
                     <h3 class="text-sm  text-gray-400  text-center">Total Students in PHEIs</h3>
                 </div>
             </div>
             <div class="bg-gradient-to-r flex-auto  w-42 h-42  from-green-800 to-gray-700 shadow-lg rounded-lg">
                 <div class="md:p-7 p-4">
-                    <h2 class="text-lg font-bold text-center text-gray-200 capitalize" style="">{{ \number_format($aAcademicData['All']) }}</h2>
+                    <h2 class="text-lg font-bold text-center text-gray-200 capitalize" style="">{{ \number_format($aAcademicData['All'] ?? 0) }}</h2>
                     <h3 class="text-sm  text-gray-400  text-center">Total Students</h3>
                 </div>
             </div>
@@ -89,10 +89,10 @@
                                     data: [
                                             @foreach($aAcademicData ?? [] as $mKey => $mVal)
                                             @if($mKey !== 'All')
-                                        {
-                                            name : '{{ $mKey }}',
-                                            y    : {{ $mVal }}
-                                        },
+                                            {
+                                                name : '{{ $mKey }}',
+                                                y    : {{ $mVal }}
+                                            },
                                         @endif
                                         @endforeach
                                     ]
