@@ -69,7 +69,7 @@ class convoService
             ];
         }
         $aContent = $oWit->getIntentByText($sContent);
-        if (count($aContent['intents'] ?? []) <= 0 && count($aContent['entities']) > 0) {
+        if (count($aContent['intents'] ?? []) <= 0 && count($aContent['entities'] ?? []) > 0) {
             $aContent['intents'] = [
                 'name' => 'getHei'
             ];
