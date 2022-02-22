@@ -69,7 +69,7 @@ class convoService
             ];
         }
         $aContent = $oWit->getIntentByText($sContent);
-        if (count($aContent['intents']) <= 0 && count($aContent['entities']) > 0) {
+        if (count($aContent['intents'] ?? []) <= 0 && count($aContent['entities']) > 0) {
             $aContent['intents'] = [
                 'name' => 'getHei'
             ];
@@ -213,11 +213,11 @@ class convoService
         $mInYear = ($mYear === null || \strlen($mYear) <= 0) ? '' : ' in ' . $mYear;
         $mUsingType = (($mType === null || \strlen($mType) <= 0) ? '' : ' using ' . \ucfirst($mType) . ' Data') . $mInYear;
         return [
-            'getHei' => 'Summary of Higher Education Institution (HEI)' . $mUsingType . $mInCourse,
-            'getSuc' => 'Summary of State University and College (SUC)' . $mUsingType . $mInCourse,
-            'getLuc' => 'Summary of Local University and College (LUC)' . $mUsingType . $mInCourse,
+            'getHei'   => 'Summary of Higher Education Institution (HEI)' . $mUsingType . $mInCourse,
+            'getSuc'   => 'Summary of State University and College (SUC)' . $mUsingType . $mInCourse,
+            'getLuc'   => 'Summary of Local University and College (LUC)' . $mUsingType . $mInCourse,
             'getPheis' => 'Summary of Private Higher Education Institution (PHEI)' . $mUsingType . $mInCourse,
-            'getType' => \ucfirst($mType) . ' Data' . $mInYear . $mInCourse
+            'getType'  => \ucfirst($mType) . ' Data' . $mInYear . $mInCourse
         ];
 
     }
