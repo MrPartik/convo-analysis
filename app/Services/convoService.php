@@ -1,6 +1,7 @@
 <?php namespace App\Services;
 
 use App\Library\utils;
+use App\Models\AcademicYearModel;
 use App\Models\ConvoModel;
 use App\Models\HeiModel;
 use App\Models\ProgramModel;
@@ -68,7 +69,12 @@ class convoService
             ];
         }
         $aContent = $oWit->getIntentByText($sContent);
-        if(isset($aContent['error']) === true && $aContent['error'] === true) {
+        if (count($aContent['intents']) <= 0 && count($aContent['entities']) > 0) {
+            $aContent['intents'] = [
+                'name' => 'getHei'
+            ];
+        }
+        if (isset($aContent['error']) === true && $aContent['error'] === true) {
             return [
                 'code' => 500,
                 'error' => 'Something went wrong. Please try again.'
@@ -119,14 +125,14 @@ class convoService
     }
 
     private static function extractEntities($aContent) {
-        \preg_match('/2017|2018|2019|2020/', $aContent['text'], $mYear);
+        \preg_match('/' . implode('|', AcademicYearModel::all()->pluck('year')->toArray() ?? []) . '/', $aContent['text'], $mYear);
         \preg_match_all('/{{[a-z0-9\s]+}}/i', $aContent['text'], $mPrograms);
         $mFromEntityPrograms = \array_filter(array_keys($aContent['entities']), function($sEntity) {
             return preg_match('/^_\w+/', explode(':', $sEntity)[0]);
         });
         $mPrograms = array_merge($mFromEntityPrograms, $mPrograms[0]);
         $sGroupby = preg_replace('/by |and /', ',', \implode(\array_column(@$aContent['entities']['groupBy'] ?? [], 'value')));
-        $sType = @$aContent['entities']['getType'][0]['value'];
+        $sType = @$aContent['entities']['getType:getType'][0]['value'];
         $sCourse = \preg_replace('/{{|}}/', ' ', \implode(', ', $mPrograms));
         $sCourse = utils::convertEntityName($sCourse, true);
         $mYear = @$mYear[0];

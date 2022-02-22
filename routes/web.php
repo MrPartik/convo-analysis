@@ -6,6 +6,7 @@ use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\UserController;
 use App\Library\utils;
+use App\Models\AcademicYearModel;
 use App\Models\ProgramCategoryModel;
 use App\Models\ProgramModel;
 use Illuminate\Support\Facades\Auth;
@@ -27,38 +28,38 @@ use Google\Cloud\Speech\V1\RecognitionConfig\AudioEncoding;
 |
 */
 Route::get('/entities', function () {
-    $aStringReplace = [
-        '.' => '--_--',
-        '/' => '_-__-_',
-        '(' => '_-__-',
-        ')' => '-__-_',
-        ' ' => '_',
-        '&' => '--_-_--'
-    ];
+//    $aStringReplace = [
+//        '.' => '--_--',
+//        '/' => '_-__-_',
+//        '(' => '_-__-',
+//        ')' => '-__-_',
+//        ' ' => '_',
+//        '&' => '--_-_--'
+//    ];
     // _-__-_ = /
     // --_--_ = .
     // _-__- = (
     // -__-_ = )
     // --_-_-- = &
-    $mValue = [];
+//    $mValue = [];
 //    return  (new \App\WitApp())->getIntentByText('get the summary of SUC in Bachelor of library & information science');
-    return  (new \App\WitApp())->getUtterances();
-    $aPrograms = (new \App\Services\libraryService(new \App\Repositories\libraryRepository()))->getAllPrograms();
-    return $aEntities = (new \App\WitApp())->getEntities();
+//    return  (new \App\WitApp())->getUtterances();
+//    $aPrograms = (new \App\Services\libraryService(new \App\Repositories\libraryRepository()))->getAllPrograms();
+//    return $aEntities = (new \App\WitApp())->getEntities();
 
-    foreach ($aPrograms as $sProgram) {
-        $sProgram = utils::convertEntityName($sProgram);
-        $mValue[] = $sProgram;
-    }
-    return $mValue;
-    $mValue = array_diff($mValue, $aEntities);
-    foreach ($mValue as $sProgram) {
-        try {
+//    foreach ($aPrograms as $sProgram) {
+//        $sProgram = utils::convertEntityName($sProgram);
+//        $mValue[] = $sProgram;
+//    }
+//    return $mValue;
+//    $mValue = array_diff($mValue, $aEntities);
+//    foreach ($mValue as $sProgram) {
+//        try {
 //            $mValue[] = (new \App\WitApp())->createEntities($sProgram, $sProgram);
-        } catch (Exception $exception) {
-
-        }
-    }
+//        } catch (Exception $exception) {
+//
+//        }
+//    }
 
 //    foreach ($aPrograms as $sProgram) {
 //        $sProgram = '_' . str_replace(' ', '_', strtoupper(trim($sProgram))) . '_';
@@ -67,7 +68,7 @@ Route::get('/entities', function () {
 //        }
 //        $mValue[] = $sProgram;
 //    }
-    return $mValue;
+//    return $mValue;
 });
 Route::get('/sample', function () {
     $sText = 'get the suc of bachelor of science in information technology';
