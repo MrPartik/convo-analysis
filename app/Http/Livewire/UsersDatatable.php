@@ -25,7 +25,7 @@ class UsersDatatable extends LivewireDatatable
     public $rules = [
         'name'   => 'required | min:6',
         'email'  => 'required | email',
-        'role'   => 'required | in:admin,user',
+        'role'   => 'required | in:admin,user,top',
         'region' => 'required_if:role,user'
     ];
 
