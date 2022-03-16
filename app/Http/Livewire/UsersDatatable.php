@@ -49,9 +49,10 @@ class UsersDatatable extends LivewireDatatable
                 return (strlen($sRegion) <= 0) ? 'None' : $sRegion;
             })->label('Region'),
             DateColumn::name('updated_at')->label('Updated at'),
-            Column::callback(['id'], function ($iId) {
+            Column::callback(['id', 'is_active'], function ($iId, $sIsActive) {
                 return view('livewire.users-datatable', [
                     'id'   => $iId,
+                    'isActive' => intval($sIsActive) === 1,
                     'type' => 'action'
                 ]);
             })->label('Action')
@@ -66,6 +67,12 @@ class UsersDatatable extends LivewireDatatable
         $this->role = $oUser->role;
         $this->iId = $oUser->id;
         $this->region = $oUser->region;
+    }
+
+    public function toggleVisibility(int $iId) {
+        $oUser = UserModel::find($iId);
+        $oUser->is_active = !$oUser->is_active;
+        $oUser->save();
     }
 
     public function showConfirmEdit(int $iId)
