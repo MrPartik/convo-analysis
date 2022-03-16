@@ -1,4 +1,4 @@
-<div id="convo-container" class="lg:w-3/4 md:w-full bg-white container mx-auto px-4 sm:px-8 flex-1 px-6 py-2 justify-between flex flex-col fixed bottom-0 right-0 left-0" style="height: 90vh; background: #ffffffe3;">
+<div id="convo-container" class="lg:w-3/4 md:w-full bg-white container mx-auto px-4 sm:px-8 flex-1 px-6 py-2 justify-between flex flex-col fixed bottom-0 right-0 left-0" style="height: 90vh; background: #ffffff63;">
     <div class="loading-page hidden">Loading&#8230;</div>
     <div id='messages' class="flex flex-col space-y-2 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
         @foreach($convos ?? [] as $convo)

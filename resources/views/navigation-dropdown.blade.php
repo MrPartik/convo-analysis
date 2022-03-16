@@ -2,7 +2,7 @@
     $sUserRole = Auth::user()->role;
     $sRegion = Auth::user()->region;
 @endphp
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100" style="position: fixed;width: 100%; z-index: 999999;">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100" style="position: fixed;width: 100%; z-index: 15;">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -18,27 +18,38 @@
                 @if($sUserRole === 'user')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ \url('user') }}" :active="request()->is('user')">
-                        {{ __('Let\'s Talk') }}
-                    </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ \url('user/dashboard') }}" :active="request()->is('user/dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{ \url('user/library') }}" :active="request()->is('user/library')">
                         {{ __('Library') }}
                     </x-jet-nav-link>
                 </div>
-                @else
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ \url('import') }}" :active="request()->is('import')">
+                            {{ __('Import') }}
+                        </x-jet-nav-link>
+                    </div>
+                @elseif ($sUserRole === 'top')
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ \url('top') }}" :active="request()->is('top')">
+                            {{ __('Let\'s Talk') }}
+                        </x-jet-nav-link>
+                        <x-jet-nav-link href="{{ \url('top/dashboard') }}" :active="request()->is('top/dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-jet-nav-link>
+                    </div>
+                @elseif ($sUserRole === 'admin')
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ \url('admin') }}" :active="request()->is('admin')">
                             {{ __('Users Management') }}
                         </x-jet-nav-link>
                     </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ \url('import') }}" :active="request()->is('import')">
+                            {{ __('Import') }}
+                        </x-jet-nav-link>
+                    </div>
                 @endif
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ \url('import') }}" :active="request()->is('import')">
-                        {{ __('Import') }}
-                    </x-jet-nav-link>
-                </div>
             </div>
 
             <!-- Settings Dropdown -->
@@ -138,16 +149,27 @@
         @if($sUserRole === 'user')
             <div class="pt-2 pb-3 space-y-1">
                 <x-jet-responsive-nav-link href="{{ \url('user') }}" :active="request()->is('user')">
-                    {{ __('Let\'s Talk') }}
-                </x-jet-responsive-nav-link>
-                <x-jet-responsive-nav-link href="{{ \url('user/dashboard') }}" :active="request()->is('user/dashboard')">
                     {{ __('Dashboard') }}
                 </x-jet-responsive-nav-link>
                 <x-jet-responsive-nav-link href="{{ \url('user/library') }}" :active="request()->is('user/library')">
                     {{ __('Library') }}
                 </x-jet-responsive-nav-link>
             </div>
-        @else
+            <div class="pt-2 pb-3 space-y-1">
+                <x-jet-responsive-nav-link href="{{ \url('import') }}" :active="request()->is('import')">
+                    {{ __('Import') }}
+                </x-jet-responsive-nav-link>
+            </div>
+        @elseif ($sUserRole === 'top')
+            <div class="pt-2 pb-3 space-y-1">
+                <x-jet-responsive-nav-link href="{{ \url('top') }}" :active="request()->is('user')">
+                    {{ __('Let\'s Talk') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ \url('top/dashboard') }}" :active="request()->is('user/dashboard')">
+                    {{ __('Dashboard') }}
+                </x-jet-responsive-nav-link>
+            </div>
+        @elseif ($sUserRole === 'admin')
             <div class="pt-2 pb-3 space-y-1">
                 <x-jet-responsive-nav-link href="{{ \url('admin') }}" :active="request()->is('admin')">
                     {{ __('Users Management') }}

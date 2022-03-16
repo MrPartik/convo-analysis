@@ -18,7 +18,7 @@ class userRoleHandler
     public function handle(Request $request, Closure $next)
     {
         $sUserRole = '/' . Auth::user()->role;
-        if ($sUserRole !== $request->route()->getPrefix() && $request->route()->uri !== 'import') {
+        if ($sUserRole !== $request->route()->getPrefix() && ($sUserRole === '/top' && $request->route()->uri === 'import')) {
             abort(403);
         }
         return $next($request);

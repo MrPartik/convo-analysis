@@ -21,8 +21,8 @@
     <script src="{{ url('js/select2.min.js') }}"></script>
 </head>
 <body class="font-sans antialiased">
-<div class="min-h-screen bg-gray-100" style="background: url('https://cdn.pixabay.com/photo/2020/11/05/11/26/robotic-5714849_960_720.png') no-repeat center; background-size: cover">
-    <div style="position: absolute; right: 25px; top: 25px; z-index: 999999"class="alert-message hidden flex items-center bg-green-500 border-l-4 border-black py-2 px-3 shadow-md mb-2">
+<div class="min-h-screen bg-gray-100" style="background: url('/img/robot.jpg') no-repeat center; background-size: cover">
+    <div style="position: absolute; right: 25px; top: 25px; z-index: 15"class="alert-message hidden flex items-center bg-green-500 border-l-4 border-black py-2 px-3 shadow-md mb-2">
         <!-- message -->
         <div class="text-white max-w-xs ">
 

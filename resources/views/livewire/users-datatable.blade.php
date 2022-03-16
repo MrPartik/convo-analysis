@@ -48,7 +48,8 @@
                     </label>
                     <select wire:model="role"  id="role" class="form-select rounded-md shadow-sm mt-1 block w-full">
                         <option value="">Select Role</option>
-                        <option value="user">Top Management</option>
+                        <option value="user">CHED Regional Officer</option>
+                        <option value="top">Top Management</option>
                         <option value="admin">Admin</option>
                     </select>
                     <x-jet-input-error for="role" class="mt-2"/>
@@ -120,7 +121,8 @@
                         User Role
                     </label>
                     <select wire:model.lazy="role"  id="role" class="form-select rounded-md shadow-sm mt-1 block w-full">
-                        <option value="user">Top Management</option>
+                        <option value="user">CHED Regional Officer</option>
+                        <option value="top">Top Management</option>
                         <option value="admin">Admin</option>
                     </select>
                     <x-jet-input-error for="role" class="mt-2"/>

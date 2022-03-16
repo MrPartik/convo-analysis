@@ -122,9 +122,12 @@ Route::get('/logged-in', function () {
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'verified', 'user.role']], function () {
-    Route::group(['prefix' => 'user'], function () {
+    Route::group(['prefix' => 'top'], function () {
         Route::get('/', [ThreadController::class, 'bot_front']);
         Route::get('/dashboard', [ThreadController::class, 'front']);
+    });
+    Route::group(['prefix' => 'user'], function () {
+        Route::get('/', [ThreadController::class, 'front']);
         Route::get('/library', [LibraryController::class, 'front']);
     });
     Route::group(['prefix' => 'admin'], function () {

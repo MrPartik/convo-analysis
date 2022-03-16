@@ -9,7 +9,7 @@
         <div class="loading-page" wire:loading.block wire:target="updateUtterance, nextPage, previousPage, reload, showTrainModal, hideTrainModal">Loading&#8230;</div>
         <div class="py-8" style="text-align: -webkit-center">
             <div>
-                <h2 class="text-2xl font-semibold leading-tight">Utterances</h2>
+                <h2 class="text-2xl font-semibold leading-tight">Message/ Conversation</h2>
                 <small>Phrases that the users uses to have a conversation with bot.</small>
             </div>
             <div class="my-2 flex sm:flex-row flex-col">
@@ -56,16 +56,16 @@
                         <thead>
                         <tr>
                             <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
-                                Text/ Utterance
+                                Message/ Conversation
                             </th>
                             <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
-                                Intent
+                                Intention
                             </th>
                             <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
-                                Entities
+                                Words to train
                             </th>
                             <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
-                                Copy Utterance
+                                Copy Message/ Conversation
                             </th>
                         </tr>
                         </thead>
@@ -141,14 +141,14 @@
                     @endif
                     <div class="col-span-6 sm:col-span-4">
                         <label class="block font-medium text-sm text-gray-700" for="utterance">
-                            Utterance/ Conversation* (ex. Get the summary of HEI for BSIT)
+                            Message/ Conversation* (ex. Get the summary of HEI for BSIT)
                         </label>
                         <x-jet-input id="utterance" wire:model.lazy="utteranceText" type="text" class="mt-1 block w-full" placeholder="{{ __('Utterance/ Conversation') }}"/>
                         <x-jet-input-error for="utteranceText" class="mt-2"/>
                     </div>
                     <div class="col-span-6 sm:col-span-4 mt-5">
                         <label class="block font-medium text-sm text-gray-700" for="entity_to_recall">
-                            Entity to train/ recall Value (ex. BSIT)
+                            Words to train/ recall Value (ex. BSIT)
                         </label>
                         <x-jet-input type="text" wire:model.lazy="entityToRecallValue" class="mt-1 block w-full" placeholder="{{ __('Entity') }}"/>
                         <x-jet-input-error for="entityToRecallValue" class="mt-2"/>
@@ -167,7 +167,7 @@
                     </div>
                     <div class="col-span-6 sm:col-span-4 mt-5">
                         <label class="block font-medium text-sm text-gray-700" for="role">
-                            Assign Existing Entity (ex. BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY);
+                            Assign Existing Words (ex. BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY);
                             <br/>
                             <a wire:click="showEntityModal()" class="underline text-sm text-gray-600 hover:text-gray-900" href="javascript:"> Create Entity</a> (if entity is not existing)
                         </label>
