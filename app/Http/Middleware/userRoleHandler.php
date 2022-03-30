@@ -22,7 +22,7 @@ class userRoleHandler
             auth('web')->logout();
             echo sprintf("<script>alert('%s, please contact the administrator, you have been deactivated.'); location.href='/login';</script>", Auth::user()->name);
         }
-        if ($sUserRole !== $request->route()->getPrefix() && ($sUserRole === '/top' && $request->route()->uri === 'import')) {
+        if (($sUserRole !== $request->route()->getPrefix() && $request->route()->uri !== 'import') || ($sUserRole === '/top' && $request->route()->uri === 'import')) {
             abort(403);
         }
         return $next($request);
