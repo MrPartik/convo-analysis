@@ -43,7 +43,7 @@ class UsersDatatable extends LivewireDatatable
             Column::name('name')->label('Name'),
             Column::name('email')->label('Email'),
             Column::callback(['role'], function ($sRole) {
-                return (\strtolower($sRole) === 'admin') ? 'Admin' : 'Top Management';
+                return (\strtolower($sRole) === 'admin') ? 'Admin' : (((\strtolower($sRole) === 'user')) ? 'CHED Regional Officer' : 'Top Management');
             })->label('Role'),
             Column::callback('region', function($sRegion) {
                 return (strlen($sRegion) <= 0) ? 'None' : $sRegion;
